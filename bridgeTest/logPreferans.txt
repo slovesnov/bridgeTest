@@ -1,0 +1,196 @@
+?code.html to project
+compare using precounting array
+removecard from array
+
+PREFERANS_W
+
+#define PREFERANS_W +3%
+3.08/2.99=1.030100334448161
+
+todo
+can make two versions for cards ordering for mizer and nonmizer games
+==================================
+compare,restoreCard as macros
+make recordhash as macro, index of hash already calculated in probeHash operation, so not need count index again
+restoreCard() from stored value + CUT4LASTLAYERS, acceleration only if together don't know why
+
+remove e1,e2, so don't heed to pass many parameters every time to e1 & e2. Use only one function for every trick
+make only one e() functions for all three layers
+acceleration 2626/2550-1=0.029803921568627
+
+nodes=184,756
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 13.59 13.59kn/sec avgfull=  0.23min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  7.10 26.01kn/sec avgfull=  0.12min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  6.53 28.31kn/sec avgfull=  0.11min ok
+old algorithm fulltime=27.22, overall 20.36kn/sec
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 11.44 16.15kn/sec avgfull=  0.19min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  6.06 30.50kn/sec avgfull=  0.10min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  6.15 30.03kn/sec avgfull=  0.10min ok
+new algorithm fulltime=23.65, overall 23.44kn/sec
+acceleration 15.1% (from 27.22)
+
+ANOTHER TEST
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 12.60 14.67kn/sec avgfull=  0.21min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  6.63 27.88kn/sec avgfull=  0.11min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  6.40 28.85kn/sec avgfull=  0.11min ok
+new algorithm fulltime=25.63, overall 21.63kn/sec
+acceleration -87.6% (from 3.19)
+
+ANOTHER TEST
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 12.32 14.99kn/sec avgfull=  0.21min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  6.70 27.60kn/sec avgfull=  0.11min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  6.42 28.78kn/sec avgfull=  0.11min ok
+new algorithm fulltime=25.44, overall 21.79kn/sec
+acceleration 15.4% (from 29.35)
+
+TEST WITHOUT #define CUT4LASTLAYERS
+nodes=184,756
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 14.54 12.70kn/sec avgfull=  0.24min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  7.58 24.39kn/sec avgfull=  0.13min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  7.08 26.10kn/sec avgfull=  0.12min ok
+old algorithm fulltime=29.20, overall 18.98kn/sec
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 13.04 14.17kn/sec avgfull=  0.22min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  6.83 27.03kn/sec avgfull=  0.11min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  6.55 28.22kn/sec avgfull=  0.11min ok
+new algorithm fulltime=26.42, overall 20.98kn/sec
+acceleration 10.5% (from 29.20)
+== use e1() & e2() rollback test================================
+nodes=184,756
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 14.69 12.58kn/sec avgfull=  0.24min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  7.62 24.24kn/sec avgfull=  0.13min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  7.12 25.95kn/sec avgfull=  0.12min ok
+old algorithm fulltime=29.44, overall 18.83kn/sec
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 12.94 14.28kn/sec avgfull=  0.22min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  6.70 27.58kn/sec avgfull=  0.11min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  6.62 27.91kn/sec avgfull=  0.11min ok
+new algorithm fulltime=26.26, overall 21.11kn/sec
+acceleration 12.1% (from 29.44)
+
+== removecard from array =============
+nodes=184,756
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 12.25 15.08kn/sec avgfull=  0.20min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  6.40 28.87kn/sec avgfull=  0.11min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  6.35 29.10kn/sec avgfull=  0.11min ok
+new algorithm fulltime=25.00, overall 22.17kn/sec
+acceleration -87.2% (from 3.19)
+
+ANOTHER TEST
+nodes=184,756
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 12.18 15.16kn/sec avgfull=  0.20min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  6.44 28.71kn/sec avgfull=  0.11min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  6.55 28.19kn/sec avgfull=  0.11min ok
+new algorithm fulltime=25.17, overall 22.02kn/sec
+acceleration -87.3% (from 3.19)
+
+avg old=(25.63+25.44)/2=25.535
+avg new (25.00+25.17)/2=25.085
+25.535/25.085-1=0.017939007374925 1.7%
+==try c swaps===========
+nodes=184,756 only new algorithm problems1-3
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 11.39 16.22kn/sec avgfull=  0.19min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  5.94 31.08kn/sec avgfull=  0.10min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  5.63 32.80kn/sec avgfull=  0.09min ok
+new algorithm fulltime=22.96, overall 24.14kn/sec
+acceleration -86.1% (from 3.19)
+
+
+
+
+
+==1st move ordering=============================
+for (auto const& t : p) {
+	if (t.length ==1) {
+		ca.push(t[0]); //highest card0 in suit0
+	}
+	else if(t.length >1) {
+		ca.push(t[0]); //highest card0 in suit0
+		ca.push(t[t.length-1]); //lowest
+	}
+}
+for (auto const& t : p){
+	for (j = 1; j < t.length-1; j++) { //all others
+		ca.push(t[j]);
+	}
+}
+nodes=184,756 only new algorithm problems1-3
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 10.94 16.90kn/sec avgfull=  0.18min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  5.73 32.26kn/sec avgfull=  0.10min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  5.65 32.71kn/sec avgfull=  0.09min ok
+nodes=20,000 only new algorithm problems1-4
+7978 2338 233 2062 5021 2308 60 0 0 0 0 time=  1.36 14.74kn/sec avgfull=  0.21min ok
+  906 13958 366 2054 2384 325 7 0 0 0 0 time=  0.84 23.72kn/sec avgfull=  0.13min ok
+     0 0 0 0 226 1643 11300 6799 32 0 0 time=  0.58 34.60kn/sec avgfull=  0.09min ok
+          0 0 0 0 12740 7222 38 0 0 0 0 time=173.66  0.12kn/sec avgfull= 26.74min ok
+new algorithm fulltime=176.44, overall 0.45kn/sec
+acceleration -98.2% (from 3.19)
+
+for (auto const& t : p) {
+	if (t.length > 0) {
+		ca.push(t[0]); //highest card0 in suit0
+	}
+}
+for (auto const& t : p) {
+	for (j = 1; j < t.length; j++) { //all except first one
+		ca.push(t[j]);
+	}
+}
+nodes=184,756 only new algorithm problems1-3
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 11.17 16.54kn/sec avgfull=  0.19min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  5.88 31.41kn/sec avgfull=  0.10min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  5.55 33.27kn/sec avgfull=  0.09min ok
+new algorithm fulltime=22.61, overall 24.52kn/sec
+acceleration -85.9% (from 3.19)
+
+nodes=20,000 only new algorithm problems1-4
+7978 2338 233 2062 5021 2308 60 0 0 0 0 time=  1.45 13.78kn/sec avgfull=  0.22min ok
+  906 13958 366 2054 2384 325 7 0 0 0 0 time=  0.84 23.72kn/sec avgfull=  0.13min ok
+     0 0 0 0 226 1643 11300 6799 32 0 0 time=  0.58 34.66kn/sec avgfull=  0.09min ok
+          0 0 0 0 12740 7222 38 0 0 0 0 time=142.06  0.14kn/sec avgfull= 21.87min ok
+new algorithm fulltime=144.93, overall 0.55kn/sec
+acceleration -97.8% (from 3.19)
+
+==dont know===========
+NDEBUG CONSOLE
+old sorting 1st move
+nodes=184,756 only new algorithm
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 11.25 16.43kn/sec avgfull=  0.19min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  5.96 31.02kn/sec avgfull=  0.10min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  5.82 31.76kn/sec avgfull=  0.10min ok
+new algorithm fulltime=23.02, overall 24.08kn/sec
+acceleration -86.1% (from 3.19)
+
+new sorting 1st move
+nodes=184,756 only new algorithm
+103936 13832 612 9362 35612 20754 648 0 0 0 0 time= 10.66 17.34kn/sec avgfull=  0.18min ok
+ 8544 147660 1340 9050 15156 2876 130 0 0 0 0 time=  5.59 33.05kn/sec avgfull=  0.09min ok
+      0 0 0 0 1016 19625 104962 58993 160 0 0 time=  5.62 32.86kn/sec avgfull=  0.09min ok
+new algorithm fulltime=21.87, overall 25.34kn/sec
+acceleration -85.4% (from 3.19)
+
+==== 4dec2020 сравнение старого и нового методов поиска лучших ходов
+теперь не нужен параллельный поиск карт, так как для каждой карты у нас своя запись ходов
+также теперь есть только две функции для поиска ходов, а не как раньше куча
+0x3aaaa+1=240299, max allowable code
+240299*15/1024/1024=3.437504768371582 - используемая память
+
+поиск ходов прошел эволюцию сначала поиск по массиву, потом двусвяхный список, потом цисловой код, 
+теперь предварительно расситанные ходы
+
+тест запущен при опере, играет радио
+ускорение (3.58-2.32)/3.58=35%
+
+старый способ использует, коды
+nodes=20,000 only new algorithm problems1-3
+7978 2338 233 2062 5021 2308 60 0 0 0 0 time=  1.90 10.54kn/sec avgfull=  0.29min ok
+  906 13958 366 2054 2384 325 7 0 0 0 0 time=  0.95 20.94kn/sec avgfull=  0.15min ok
+     0 0 0 0 226 1643 11300 6799 32 0 0 time=  0.73 27.55kn/sec avgfull=  0.11min ok
+new algorithm fulltime=3.58, overall 16.77kn/sec
+acceleration -10.8% (from 3.19)
+
+новый способ использует, предварительно посчитанные ходы объем памяти 
+nodes=20,000 only new algorithm problems1-3
+7978 2338 233 2062 5021 2308 60 0 0 0 0 time=  1.07 18.73kn/sec avgfull=  0.16min ok
+  906 13958 366 2054 2384 325 7 0 0 0 0 time=  0.75 26.53kn/sec avgfull=  0.12min ok
+     0 0 0 0 226 1643 11300 6799 32 0 0 time=  0.50 40.16kn/sec avgfull=  0.08min ok
+new algorithm fulltime=2.32, overall 25.86kn/sec
+acceleration 37.5% (from 3.19)

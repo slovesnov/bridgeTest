@@ -1,0 +1,31 @@
+file c:/slovesno/bridgeSSD/problems/solveallfoe.bts 1-10000
+ 1 e=13 time= 0.25 move=qd, old e=13 time= 1.26 old slower move=7d trump=1
+ 2 e= 9 time= 0.19 move=ah, old e= 9 time= 0.14 new slower move=ah trump=4
+ 3 e=13 time= 0.08 move=as, old e=13 time= 0.08 same time  move=as trump=0
+ 4 e=12 time= 0.25 move=5h, old e=12 time= 0.23 new slower move=5h trump=4
+ 5 e= 8 time= 0.25 move=3c, old e= 8 time= 0.27 old slower move=3c trump=0
+ 6 e= 8 time= 0.08 move=3h, old e= 8 time= 0.06 new slower move=3h trump=0
+ 7 e=11 time= 3.85 move=kh, old e=11 time= 3.57 new slower move=kh trump=0
+ 8 e= 1 time=17.32 move=qs, old e= 1 time= 9.56 new slower move=qs trump=4
+ 9 e=12 time= 4.23 move=as, old e=12 time= 2.78 new slower move=as trump=4
+10 e=10 time= 0.47 move=8h, old e=10 time= 0.45 new slower move=8h trump=0
+11 e=11 time= 0.95 move=as, old e=11 time= 0.72 new slower move=as trump=2
+12 e= 9 time= 1.23 move=3s, old e= 9 time= 0.92 new slower move=3s trump=4
+13 e=10 time= 2.40 move=7c, old e=10 time= 2.31 new slower move=7c trump=4
+14 e= 2 time= 1.72 move=ks, old e= 2 time= 1.09 new slower move=ks trump=4
+15 e=11 time= 1.41 move=ks, old e=11 time= 1.40 new slower move=ks trump=4
+16 e=12 time= 0.78 move=qs, old e=12 time= 0.59 new slower move=qs trump=2
+17 e=12 time= 3.93 move=qs, old e=12 time= 2.00 new slower move=qs trump=4
+18 e= 5 time=11.23 move=kd, old e= 5 time= 6.44 new slower move=kd trump=1
+19 e= 2 time= 2.09 move=qs, old e= 2 time= 1.70 new slower move=qs trump=4
+20 e=10 time= 0.33 move=5s, old e=10 time= 0.28 new slower move=5s trump=4
+21 e=11 time= 4.73 move=6h, old e=11 time= 4.48 new slower move=6h trump=3
+22 e= 2 time=13.59 move=as, old e= 2 time=13.46 new slower move=as trump=3
+23 e=12 time= 0.39 move=ah, old e=12 time= 0.39 new slower move=ah trump=2
+24 e= 9 time= 2.45 move=ts, old e= 9 time= 2.42 new slower move=ts trump=0
+25 e=12 time= 0.39 move=ad, old e=12 time= 0.42 old slower move=ad trump=0
+26 e=10 time= 0.12 move=8d, old e=10 time= 0.17 old slower move=8d trump=1
+27 e= 8 time= 3.54 move=5s, old e= 8 time= 3.04 new slower move=2h trump=1
+28 e= 4 time= 0.30 move=js, old e= 4 time= 0.23 new slower move=js trump=4
+total new 78.56 old 60.48
+the end

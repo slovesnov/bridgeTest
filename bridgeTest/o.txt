@@ -1,0 +1,133 @@
+nodes=184,756 only new algorithm only misere, only long misere_params(0,2)
+  9.35 19771   0.16 preferansRu4  mizer ok
+ 12.26 15069   0.20 preferansRu5  mizer ok
+new algorithm fulltime=21.61, overall 17102n/sec
+
+nodes=184,756 only new algorithm only misere misere_params(4,2)
+  3.09 59830   0.05 solveallfoe0  mizer ok
+  2.42 76377   0.04 solveallfoe1  mizer ok
+  8.83 20921   0.15 preferansRu4  mizer ok
+ 11.03 16750   0.18 preferansRu5  mizer ok
+new algorithm fulltime=25.37, overall 29132n/sec
+
+nodes=20,000 only new algorithm all problems
+ 35.01   571   5.39 preferansRu6     nt ok
+new algorithm fulltime=35.01, overall 571n/sec
+
+nodes=20,000 only new algorithm all problems
+ 35.93   557   5.53 preferansRu6     nt ok
+new algorithm fulltime=35.93, overall 557n/sec
+
+nodes=20,000 only new algorithm all problems
+ 39.59   505   6.10 preferansRu6     nt ok
+new algorithm fulltime=39.59, overall 505n/sec
+
+nodes=20,000 only new algorithm all problems
+  0.79 25284   0.12 solveallfoe0 misere ok
+  0.59 33613   0.09 solveallfoe1 misere ok
+  0.58 34305   0.09 solveallfoe2 trump3 ok
+ 49.16   407   7.57 solveallfoe3 trump0 ok
+  2.85  7013   0.44 preferansRu0 trump0 ok
+  1.13 17699   0.17 preferansRu2 trump3 ok
+ 12.74  1570   1.96 preferansRu3 trump0 ok
+  2.34  8562   0.36 preferansRu4 misere ok
+  2.36  8467   0.36 preferansRu5 misere ok
+ 35.63   561   5.49 preferansRu6     nt ok
+new algorithm fulltime=108.18, overall 1849n/sec
+
+nodes=20,000 only new algorithm all problems
+  0.72 27816   0.11 solveallfoe0 misere ok
+  0.61 32680   0.09 solveallfoe1 misere ok
+  0.58 34305   0.09 solveallfoe2 trump3 ok
+ 48.22   415   7.42 solveallfoe3 trump0 ok
+  2.82  7090   0.43 preferansRu0 trump0 ok
+  1.15 17391   0.18 preferansRu2 trump3 ok
+ 12.56  1593   1.93 preferansRu3 trump0 ok
+  2.26  8853   0.35 preferansRu4 misere ok
+  2.36  8460   0.36 preferansRu5 misere ok
+ 36.13   554   5.56 preferansRu6     nt ok
+new algorithm fulltime=107.42, overall 1862n/sec
+
+nodes=20,000 only new algorithm all problems
+ 36.27   551   5.58 preferansRu6     nt ok
+new algorithm fulltime=36.27, overall 551n/sec
+
+nodes=20,000 only new algorithm only nt nt_params(0,0)
+  0.80 25126   0.12 solveallfoe0 misere ok
+  0.59 33784   0.09 solveallfoe1 misere ok
+  2.26  8861   0.35 preferansRu4 misere ok
+  2.37  8432   0.37 preferansRu5 misere ok
+new algorithm fulltime=6.02, overall 13296n/sec
+
+nodes=20,000 only new algorithm only nt nt_params(0,0)
+ 36.71   545   5.65 preferansRu6     nt ok
+new algorithm fulltime=36.71, overall 545n/sec
+
+nodes=20,000 only new algorithm only nt nt_params(0,0)
+ 33.31   600   5.13 preferansRu6     nt ok
+new algorithm fulltime=33.31, overall 600n/sec
+
+nodes=20,000 only new algorithm only nt nt_params(0,0)
+ 41.55   481   6.40 preferansRu6     nt ok
+new algorithm fulltime=41.55, overall 481n/sec
+
+nodes=20,000 only new algorithm only nt nt_params(0,0)
+ 47.80   418   7.36 preferansRu6     nt ok
+new algorithm fulltime=47.80, overall 418n/sec
+
+nodes=20,000 only new algorithm only nt nt_params(0,0)
+ 33.77   592   5.20 preferansRu6     nt ok
+new algorithm fulltime=33.77, overall 592n/sec
+
+nodes=20,000 only new algorithm all problems
+  0.66 30534   0.10 solveallfoe0 misere ok
+  0.76 26178   0.12 solveallfoe1 misere ok
+  0.56 35524   0.09 solveallfoe2 trump3 ok
+ 49.11   407   7.56 solveallfoe3 trump0 ok
+  2.78  7202   0.43 preferansRu0 trump0 ok
+  1.12 17778   0.17 preferansRu2 trump3 ok
+ 12.53  1597   1.93 preferansRu3 trump0 ok
+  2.23  8961   0.34 preferansRu4 misere ok
+  2.29  8718   0.35 preferansRu5 misere ok
+ 32.57   614   5.02 preferansRu6     nt ok
+new algorithm fulltime=104.62, overall 1912n/sec
+
+nodes=20,000 only new algorithm all problems
+  0.73 27285   0.11 solveallfoe0 misere ok
+  0.67 29806   0.10 solveallfoe1 misere ok
+  0.72 27855   0.11 solveallfoe2 trump3 ok
+ 46.97   426   7.23 solveallfoe3 trump0 ok
+  2.82  7082   0.43 preferansRu0 trump0 ok
+  1.09 18298   0.17 preferansRu2 trump3 ok
+ 12.32  1623   1.90 preferansRu3 trump0 ok
+  2.19  9153   0.34 preferansRu4 misere ok
+  2.26  8838   0.35 preferansRu5 misere ok
+ 31.86   628   4.90 preferansRu6     nt ok
+new algorithm fulltime=101.64, overall 1968n/sec
+
+nodes=20,000 only new algorithm all problems
+  0.72 27894   0.11 solveallfoe0 misere ok
+  0.55 36630   0.08 solveallfoe1 misere ok
+  0.56 35524   0.09 solveallfoe2 trump3 ok
+ 49.23   406   7.58 solveallfoe3 trump0 ok
+  2.78  7202   0.43 preferansRu0 trump0 ok
+  1.12 17778   0.17 preferansRu2 trump3 ok
+ 12.54  1595   1.93 preferansRu3 trump0 ok
+  2.19  9153   0.34 preferansRu4 misere ok
+  2.29  8718   0.35 preferansRu5 misere ok
+ 32.75   611   5.04 preferansRu6     nt ok
+new algorithm fulltime=104.73, overall 1910n/sec
+
+nodes=20,000 only new algorithm all problems
+  0.84 23697   0.13 solveallfoe0 misere ok
+  0.57 35026   0.09 solveallfoe1 misere ok
+  0.59 33727   0.09 solveallfoe2 trump3 ok
+ 48.13   416   7.41 solveallfoe3 trump0 ok
+  2.83  7072   0.44 preferansRu0 trump0 ok
+  1.13 17746   0.17 preferansRu2 trump3 ok
+ 12.87  1554   1.98 preferansRu3 trump0 ok
+  2.25  8905   0.35 preferansRu4 misere ok
+  2.34  8558   0.36 preferansRu5 misere ok
+ 33.15   603   5.10 preferansRu6     nt ok
+new algorithm fulltime=104.69, overall 1910n/sec
+
