@@ -26,9 +26,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>src/solver</name>
+			<name>solver</name>
 			<type>2</type>
-			<location>C:/slovesno/eclipse/bridge/src/solver</location>
+			<location>C:/Users/user/git/bridge/bridge/src/solver</location>
 		</link>
 	</linkedResources>
 </projectDescription>

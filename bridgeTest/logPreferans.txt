@@ -1,3 +1,42 @@
+solveallfoe0 misere
+solveallfoe1 misere
+solveallfoe2 trump
+solveallfoe3 trump 22.21
+preferansRu0 trump
+preferansRu2 trump
+preferansRu3 trump 5.91
+preferansRu4 misere 1.1
+preferansRu5 misere 1.1
+preferansRu6 NT 15.06
+
+for 20 000,only long
+trump 30sec
+misere 20sec
+NT 15sec
+
+
+nodes=20,000 only new algorithm all problems, only long
+time= 22.21   900n/sec avgfull=  3.42min solveallfoe3 ok
+time=  5.91  3384n/sec avgfull=  0.91min preferansRu3 ok
+time=  1.10 18198n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.10 18215n/sec avgfull=  0.17min preferansRu5 ok
+time= 15.06  1328n/sec avgfull=  2.32min preferansRu6 ok
+new algorithm fulltime=45.38, overall 2204n/sec
+
+nodes=20,000 only new algorithm all problems
+time=  0.31 64516n/sec avgfull=  0.05min solveallfoe0 ok
+time=  0.29 69930n/sec avgfull=  0.04min solveallfoe1 ok
+time=  0.29 69686n/sec avgfull=  0.04min solveallfoe2 ok
+time= 22.20   901n/sec avgfull=  3.42min solveallfoe3 ok
+time=  1.34 14925n/sec avgfull=  0.21min preferansRu0 ok
+time=  0.53 37879n/sec avgfull=  0.08min preferansRu2 ok
+time=  5.82  3438n/sec avgfull=  0.90min preferansRu3 ok
+time=  1.08 18450n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.11 17969n/sec avgfull=  0.17min preferansRu5 ok
+time= 14.92  1340n/sec avgfull=  2.30min preferansRu6 ok
+new algorithm fulltime=47.88, overall 4177n/sec
+
+
 ?code.html to project
 compare using precounting array
 removecard from array

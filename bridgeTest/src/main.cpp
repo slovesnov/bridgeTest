@@ -40,7 +40,7 @@ int PREFERANS_ORDER_OTHER_MOVES_NT=0;
 int PREFERANS_ORDER_FIRST_MOVE_MISERE= 4;
 int PREFERANS_ORDER_OTHER_MOVES_MISERE= 2;
 
-#define BRIDGE_TEST
+//#define BRIDGE_TEST
 
 #ifdef BRIDGE_TEST
 
@@ -423,7 +423,7 @@ int main() {
  * SEARCH_MOVES_PARAMETERS=2 search misere problems
  * SEARCH_MOVES_PARAMETERS not defined - other modes
  */
-//#define SEARCH_MOVES_PARAMETERS 2
+#define SEARCH_MOVES_PARAMETERS 1
 
 /* TYPE 0 - count nodes
  * TYPE 1 - compare old and new algorithm or count for one of the algorithms
@@ -443,13 +443,14 @@ int main() {
 /* SOLVE_TYPE 0 184 756 positions
  * SOLVE_TYPE 1 20 000 positions
  */
-#if SEARCH_MOVES_PARAMETERS==1
+//#if SEARCH_MOVES_PARAMETERS==1
+//#define SOLVE_TYPE 1
+//#elif SEARCH_MOVES_PARAMETERS==2
+//#define SOLVE_TYPE 0
+//#else
+//#define SOLVE_TYPE 1
+//#endif
 #define SOLVE_TYPE 1
-#elif SEARCH_MOVES_PARAMETERS==2
-#define SOLVE_TYPE 0
-#else
-#define SOLVE_TYPE 1
-#endif
 
 /* FP=0 old and new algorithms
  * FP=1 only new algorithm
@@ -460,18 +461,19 @@ const int FP=1;
  * 2 - short table
  * 3 - short table headers
  */
-#define OUTPUT_TYPE 3
+#define OUTPUT_TYPE 2
 
 /* 0 - all problems
  * 1 - only trump problems
  * 2 - only no trump & non misere problems
  * 3 - only misere problems
  */
-#if defined(SEARCH_MOVES_PARAMETERS)
-const int PROBLEM_TYPE=SEARCH_MOVES_PARAMETERS;
-#else
 const int PROBLEM_TYPE=0;
-#endif
+//#if defined(SEARCH_MOVES_PARAMETERS)
+//const int PROBLEM_TYPE=SEARCH_MOVES_PARAMETERS;
+//#else
+//const int PROBLEM_TYPE=0;
+//#endif
 
 const int MAX_PROBLEM=10;
 
@@ -479,7 +481,8 @@ const int MAX_PROBLEM=10;
 const bool WRITE_TO_FILE=true;
 
 #ifdef SEARCH_MOVES_PARAMETERS
-#define ONLY_LONG_PROBLEMS
+//TODO 6may21 make search only long problems
+//#define ONLY_LONG_PROBLEMS
 #else
 //#define ONLY_LONG_PROBLEMS
 #endif
@@ -565,7 +568,7 @@ const DealData dealData[]={
 	{ "KQT7.AQJ.KJ*9.A*J", 0, 2, "preferansRu3",1 },
 	{ "T987.98.987.*A*K8", 5, 2, "preferansRu4",1 },//misere
 	{ "*K*Q8.T987.987.98", 5, 2, "preferansRu5",1 },//misere
-	{ "A*98.AJ7.AJ8.KT*9", NT, 2, "preferansRu6",1 }
+	{ "A*98.AJ7.AJ8.KT*9", NT, 2, "preferansRu6",1 }//NT
 };
 
 const int RESULT_SIZE = 11;
