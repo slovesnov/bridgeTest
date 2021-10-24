@@ -1,10 +1,18 @@
 разработка версии 5.2 началась 7 но€бр€ 2020 закончилась ??
 
-2oct2021
-fixed memory leak in functions localeToUtf8, utf8ToLocale, utfLowerCase, utfLower
+oct2021
+адаптировано под windows 10 так как невозможно писать в файлы куда программа установлена
+добавлен калькул€тор очков дл€ преферанса
+теперь конфиг и вспомогательные картинки хран€тс€ в пользовательском каталоге
+удаленые все вспомогательные файлы bridgeX.css осталс€ только один неизмен€емый файл bridge.css
+все настройки вли€ющие на css стиль хран€тс€ теперь в конфиге
+адаптировано и используетс€ библиотека собственной разработки aslov
+исправлен баг при увеличении/уменьшении размера шрифта (размеры окнон)
+исправлен баг при отрисовки панели лучших ходов если больша€ колода и маленький шрифт
+исходный код теперь на github
 
 since apr2021
-tooltips make as status bar (allow avoid wtring width problems)
+tooltips make as status bar (allow avoid writing width problems)
 fixed dinamical adding/removing of analisys/last trick
 
 [интерфейсна€ часть]

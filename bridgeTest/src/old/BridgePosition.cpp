@@ -1668,7 +1668,7 @@ void BridgePosition::find_suitable_cards() {
 //	const int m=3;
 //	if(counter_suitable_cards1 > m || counter_suitable_cards2 > m || counter_suitable_cards3 > m){
 //		printSuitableCards();
-//		printinfo
+//		printi
 //		exit(0);
 //	}
 
@@ -1910,7 +1910,7 @@ void BridgePosition::find_suitable_cards() {
 //		if(trump==NT){
 //			if(counter_suitable_cards1 > m || counter_suitable_cards2 > m || counter_suitable_cards3 > m){
 //				printSuitableCards();
-//				printinfo
+//				printi
 //				exit(0);
 //			}
 //		}
