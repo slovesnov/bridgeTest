@@ -14,15 +14,15 @@
  * which compiling really fast
  */
 
-#ifndef SOLVER_BRIDGECOMMON_H_
-
 #ifndef BRIDGECONSTANTS_H_
 #define BRIDGECONSTANTS_H_
 
+#ifndef SOLVER_BRIDGECOMMON_H_
 const int NT = 4;
 const int MIZER = NT + 1;
 const int UNKNOWN_ESTIMATE = 100;
 const int MAX_TABLE_CARDS[] = { 4, 3 };
+
 
 enum ESTIMATE {
 	ESTIMATE_NONE,
@@ -31,6 +31,7 @@ enum ESTIMATE {
 	ESTIMATE_ALL_LOCAL,
 	ESTIMATE_ALL_TOTAL
 };
+
 
 enum CARD_INDEX {
 	CARD_INDEX_INVALID = -1,
@@ -45,8 +46,11 @@ enum CARD_INDEX {
 	CARD_INDEX_WEST_INNER
 };
 
+
 const char RANK[] = "akqjt98765432";
 const char SUITS_CHAR[] = "shdcn";
+#endif
+
 typedef void (*SET_ESTIMATION_FUNCTION)(int index, int value);
 
 const char BRIDGE_SIGNAL_FILE_NAME[] = "HwaQbVSv7FG4kxwP.hHT";
@@ -57,4 +61,3 @@ const int BRIDGE_CONSOLE_STATUS_OK = 0;
 const int BRIDGE_CONSOLE_STATUS_USER_BREAK = 1;
 
 #endif /* BRIDGECONSTANTS_H_ */
-#endif

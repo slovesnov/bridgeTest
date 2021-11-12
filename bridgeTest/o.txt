@@ -44,3 +44,68 @@ time=  1.11 17969n/sec avgfull=  0.17min preferansRu5 ok
 time= 14.92  1340n/sec avgfull=  2.30min preferansRu6 ok
 new algorithm fulltime=47.88, overall 4177n/sec
 
+nodes=20,000 only new algorithm all problems
+time=  0.34 58824n/sec avgfull=  0.05min solveallfoe0 ok
+time=  0.29 68966n/sec avgfull=  0.04min solveallfoe1 ok
+time=  0.28 71429n/sec avgfull=  0.04min solveallfoe2 ok
+time= 23.30   858n/sec avgfull=  3.59min solveallfoe3 ok
+time=  1.45 13755n/sec avgfull=  0.22min preferansRu0 ok
+time=  0.57 34965n/sec avgfull=  0.09min preferansRu2 ok
+time=  6.14  3256n/sec avgfull=  0.95min preferansRu3 ok
+time=  1.13 17683n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.14 17559n/sec avgfull=  0.18min preferansRu5 ok
+time= 15.75  1270n/sec avgfull=  2.43min preferansRu6 ok
+new algorithm fulltime=50.40, overall 3968n/sec
+
+nodes=20,000 only new algorithm all problems
+time=  0.33 61162n/sec avgfull=  0.05min solveallfoe0 ok
+time=  0.30 67568n/sec avgfull=  0.05min solveallfoe1 ok
+time=  0.29 69444n/sec avgfull=  0.04min solveallfoe2 ok
+time= 23.13   865n/sec avgfull=  3.56min solveallfoe3 ok
+time=  1.40 14265n/sec avgfull=  0.22min preferansRu0 ok
+time=  0.55 36232n/sec avgfull=  0.08min preferansRu2 ok
+time=  6.02  3324n/sec avgfull=  0.93min preferansRu3 ok
+time=  1.16 17212n/sec avgfull=  0.18min preferansRu4 ok
+time=  1.05 19120n/sec avgfull=  0.16min preferansRu5 ok
+time= 15.84  1262n/sec avgfull=  2.44min preferansRu6 ok
+new algorithm fulltime=50.06, overall 3995n/sec
+
+nodes=20,000 only new algorithm all problems
+time=  0.32 62500n/sec avgfull=  0.05min solveallfoe0 ok
+time=  0.29 69444n/sec avgfull=  0.04min solveallfoe1 ok
+time=  0.28 72464n/sec avgfull=  0.04min solveallfoe2 ok
+time= 23.30   858n/sec avgfull=  3.59min solveallfoe3 ok
+time=  1.45 13793n/sec avgfull=  0.22min preferansRu0 ok
+time=  0.57 34843n/sec avgfull=  0.09min preferansRu2 ok
+time=  6.11  3272n/sec avgfull=  0.94min preferansRu3 ok
+time=  1.13 17699n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.14 17590n/sec avgfull=  0.18min preferansRu5 ok
+time= 15.61  1281n/sec avgfull=  2.40min preferansRu6 ok
+new algorithm fulltime=50.20, overall 3984n/sec
+
+nodes=20,000 only new algorithm all problems
+time=  0.32 62500n/sec avgfull=  0.05min solveallfoe0 ok
+time=  0.29 68027n/sec avgfull=  0.05min solveallfoe1 ok
+time=  0.28 72464n/sec avgfull=  0.04min solveallfoe2 ok
+time= 23.18   863n/sec avgfull=  3.57min solveallfoe3 ok
+time=  1.42 14104n/sec avgfull=  0.22min preferansRu0 ok
+time=  0.57 34904n/sec avgfull=  0.09min preferansRu2 ok
+time=  6.04  3311n/sec avgfull=  0.93min preferansRu3 ok
+time=  1.12 17825n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.09 18282n/sec avgfull=  0.17min preferansRu5 ok
+time= 15.43  1296n/sec avgfull=  2.38min preferansRu6 ok
+new algorithm fulltime=49.75, overall 4020n/sec
+
+nodes=20,000 only new algorithm all problems
+time=  0.31 64725n/sec avgfull=  0.05min solveallfoe0 ok
+time=  0.29 69930n/sec avgfull=  0.04min solveallfoe1 ok
+time=  0.28 72464n/sec avgfull=  0.04min solveallfoe2 ok
+time= 22.55   887n/sec avgfull=  3.47min solveallfoe3 ok
+time=  1.39 14347n/sec avgfull=  0.21min preferansRu0 ok
+time=  0.55 36101n/sec avgfull=  0.09min preferansRu2 ok
+time=  6.08  3288n/sec avgfull=  0.94min preferansRu3 ok
+time=  1.19 16863n/sec avgfull=  0.18min preferansRu4 ok
+time=  1.22 16340n/sec avgfull=  0.19min preferansRu5 ok
+time= 15.54  1287n/sec avgfull=  2.39min preferansRu6 ok
+new algorithm fulltime=49.40, overall 4049n/sec
+

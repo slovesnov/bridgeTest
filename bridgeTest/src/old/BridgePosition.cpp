@@ -8,10 +8,11 @@
  *         homepage: slovesnov.users.sourceforge.net
  */
 
-#include "BridgePosition.h"
 #include <cstdio>
 #include <cstdlib> //exit() function
-#include "BridgeCommon.h" //for printSuitableCards()
+#include <string>
+#include "BridgePosition.h"
+#include "aslov.h"
 
 unsigned short *BridgePosition::st[MAX_SURE_TRICKS_SEQUENCE + 1];
 static int nofbits[4 * 8192]; //nofbits - number of bits in nofbits[suit<<13+card^1fff] times 2

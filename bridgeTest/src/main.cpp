@@ -10,6 +10,7 @@
 #include <vector>
 #include <cassert>
 
+#include "BridgeCommon.h"
 #include "Deal.h"
 #include "Permutations.h"
 
@@ -19,8 +20,8 @@ const char PLAYER_CHAR[] = "nesw";
 
 using T=std::pair<std::string,double>;
 using VT=std::vector<T>;
-bool cmp(T const &a, T const &b) { return a.second < b.second; }
-bool cmp1(T const &a, T const &b) { return a.second > b.second; }
+bool cmpLess(T const &a, T const &b) { return a.second < b.second; }//old name "cmp"
+bool cmpGreater(T const &a, T const &b) { return a.second > b.second; }//old name "cmp1"
 
 using VS=std::vector<std::string>;
 
@@ -733,7 +734,7 @@ double routine(bool movesOptimization=false) {
 	#endif
 	const char* qq[]={"all problems","only trump","only nt","only misere"};
 
-	sa=format("nodes=%s %s %s", intToString(nodes, ',').c_str(), FP==1 ?"only new algorithm":"old+new algorithms"
+	sa=format("nodes=%s %s %s", toString(nodes, ',').c_str(), FP==1 ?"only new algorithm":"old+new algorithms"
 			,qq[PROBLEM_TYPE]
 	);
 
@@ -972,8 +973,11 @@ int main() {
 			PREFERANS_ORDER_FIRST_MOVE_MISERE= i;
 		}
 
-
+		printi
+		fflush(stdout);
 		t=routine(true);
+		printi
+		fflush(stdout);
 		if (PROBLEM_TYPE == 1) {
 			s = format("(%d,%d)",
 					PREFERANS_ORDER_FIRST_MOVE,
@@ -981,6 +985,7 @@ int main() {
 					);
 		}
 		else{
+			//TODO
 			s = format("misere(%d,%d)",
 					PREFERANS_ORDER_FIRST_MOVE_MISERE,
 					PREFERANS_ORDER_OTHER_MOVES_MISERE
@@ -995,7 +1000,7 @@ int main() {
 
 	FILE*f=fopen("o.txt","w+");
 
-	std::sort(v.begin(), v.end(),cmp );
+	std::sort(v.begin(), v.end(),cmpLess );
 	for(auto& a:v){
 		fprintf(f,"%s %.2lf\n",a.first.c_str(),a.second);
 		printf("%s %.2lf\n",a.first.c_str(),a.second);
