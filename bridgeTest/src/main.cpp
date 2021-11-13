@@ -359,7 +359,7 @@ int main() {
 					BRIDGE_ORDER_OTHER_MOVES=j;
 				}
 
-				t=loadProblem("c:/slovesno/eclipse/bridge/problems/solveallfoe.bts",nt?vproblemsNT:vproblems);
+				t=loadProblem("c:/slovesno/eclipse/bridge/problems/solvealldeals.bts",nt?vproblemsNT:vproblems);
 				//t=loadProblem("GeorgeCoffin.bts",vp, 1, 6,true,1);//1 68
 	//			t=loadProblem("GeorgeCoffin.bts",vp, 1, 6,true,1);//1 68
 				if(nt){
@@ -393,7 +393,7 @@ int main() {
 		//loadProblem("ra.bts", 1);
 		//loadProblem("#1.bts", 1);
 		//double loadProblem(const char*fn,int begin,int end=-1,bool movesOptimization=false,int trumpOption=0,VInt*numbers=0){
-		loadProblem("c:/slovesno/eclipse/bridge/problems/solveallfoe.bts", 1,0,false,1);
+		loadProblem("c:/slovesno/eclipse/bridge/problems/solvealldeals.bts", 1,0,false,1);
 //			loadProblem("GeorgeCoffin.bts", 1, 666,false,0);//2 68
 	}
 	else{
@@ -514,14 +514,14 @@ struct DealData{
 };
 
 /* Note problem1 from preferansRu is not used because each player
- * has only seven cards. 4 deals from solveallfoe file, and 6 from preferansRu
+ * has only seven cards. 4 deals from solvealldeals file, and 6 from preferansRu
  *
  * eclipse formatting make dealData array ugly after automatic format so leave normal version here
 const DealData dealData[]={
-	{"T987.T987.#98.*Q*J",5,0,"solveallfoe0"},
-	{"T987.T987.*98.*Q#J",5,0,"solveallfoe1"},
-	{"#A*8*7.AKT.KJ.A987",3,0,"solveallfoe2"},
-	{"AQJ*T8*7.KT8.KJ.9",0,2,"solveallfoe3"},
+	{"T987.T987.#98.*Q*J",5,0,"solvealldeals0"},
+	{"T987.T987.*98.*Q#J",5,0,"solvealldeals1"},
+	{"#A*8*7.AKT.KJ.A987",3,0,"solvealldeals2"},
+	{"AQJ*T8*7.KT8.KJ.9",0,2,"solvealldeals3"},
 
 	{ "QT7.KQJ.A*8*7.KQJ", 0, 2, "preferansRu0" },
 	{ "A*8*7.AKT.KJ.A987", 3, 2, "preferansRu2" },
@@ -559,10 +559,10 @@ const int results[][RESULT_SIZE] = {
 
  */
 const DealData dealData[]={
-	{"T987.T987.#98.*Q*J",5,0,"solveallfoe0",0},//misere
-	{"T987.T987.*98.*Q#J",5,0,"solveallfoe1",0},//misere
-	{"#A*8*7.AKT.KJ.A987",3,0,"solveallfoe2",0},
-	{"AQJ*T8*7.KT8.KJ.9",0,2,"solveallfoe3",1},
+	{"T987.T987.#98.*Q*J",5,0,"solvealldeals0",0},//misere
+	{"T987.T987.*98.*Q#J",5,0,"solvealldeals1",0},//misere
+	{"#A*8*7.AKT.KJ.A987",3,0,"solvealldeals2",0},
+	{"AQJ*T8*7.KT8.KJ.9",0,2,"solvealldeals3",1},
 
 	{ "QT7.KQJ.A*8*7.KQJ", 0, 2, "preferansRu0",0 },
 	{ "A*8*7.AKT.KJ.A987", 3, 2, "preferansRu2",0 },
@@ -575,7 +575,7 @@ const DealData dealData[]={
 const int RESULT_SIZE = 11;
 
 #if SOLVE_TYPE==0
-const int PREFERANS_SOLVE_ALL_FOE_POSITIONS=184756;
+const int PREFERANS_SOLVE_ALL_DEALS_POSITIONS=184756;
 const int results[][RESULT_SIZE] = {
 		{103936, 13832, 612, 9362, 35612, 20754, 648, 0, 0, 0, 0},
 		{8544, 147660, 1340, 9050, 15156, 2876, 130, 0, 0, 0, 0},
@@ -589,7 +589,7 @@ const int results[][RESULT_SIZE] = {
 		{0, 0, 0, 102170, 76768, 5816, 2, 0, 0, 0, 0}
 };
 #else
-const int PREFERANS_SOLVE_ALL_FOE_POSITIONS = 20000;
+const int PREFERANS_SOLVE_ALL_DEALS_POSITIONS = 20000;
 const int results[][RESULT_SIZE] = {
 		{7978, 2338, 233, 2062, 5021, 2308, 60, 0, 0, 0, 0},
 		{906, 13958, 366, 2054, 2384, 325, 7, 0, 0, 0, 0},
@@ -728,7 +728,7 @@ double routine(bool movesOptimization=false) {
 	int r[RESULT_SIZE];
 	bool verbose=!movesOptimization;
 
-	nodes = PREFERANS_SOLVE_ALL_FOE_POSITIONS;
+	nodes = PREFERANS_SOLVE_ALL_DEALS_POSITIONS;
 	#ifdef PREFERANS_NODE_COUNT
 	#error "undef PREFERANS_NODE_COUNT in Preferans.h"
 	#endif
@@ -954,7 +954,7 @@ int main() {
 #ifdef SEARCH_MOVES_PARAMETERS
 	double t;
 
-	for(int i=0;i<MOVES_MANY_SUITS_OPTIONS;i++){
+	for (int i = 0; i < MOVES_MANY_SUITS_OPTIONS; i++) {
 
 		if (PROBLEM_TYPE == 1) {
 			//0-MOVES_MANY_SUITS_OPTIONS
@@ -962,7 +962,7 @@ int main() {
 
 			//0-MOVES_ONE_SUIT_OPTIONS*MOVES_ONE_SUIT_OPTIONS*MOVES_MANY_SUITS_OPTIONS
 			//int preferans_order_other_moves= 13;
-			PREFERANS_ORDER_FIRST_MOVE=i;
+			PREFERANS_ORDER_FIRST_MOVE = i;
 		}
 		else{
 			//0-MOVES_MANY_SUITS_OPTIONS
@@ -970,14 +970,10 @@ int main() {
 
 			//0-MOVES_ONE_SUIT_OPTIONS*MOVES_MANY_SUITS_OPTIONS
 			//int preferans_order_other_moves_misere= 2;
-			PREFERANS_ORDER_FIRST_MOVE_MISERE= i;
+			PREFERANS_ORDER_FIRST_MOVE_MISERE = i;
 		}
 
-		printi
-		fflush(stdout);
 		t=routine(true);
-		printi
-		fflush(stdout);
 		if (PROBLEM_TYPE == 1) {
 			s = format("(%d,%d)",
 					PREFERANS_ORDER_FIRST_MOVE,

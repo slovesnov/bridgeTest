@@ -49,9 +49,10 @@ enum CARD_INDEX {
 
 const char RANK[] = "akqjt98765432";
 const char SUITS_CHAR[] = "shdcn";
+typedef void (*SET_ESTIMATION_FUNCTION)(int index, int value);
+
 #endif
 
-typedef void (*SET_ESTIMATION_FUNCTION)(int index, int value);
 
 const char BRIDGE_SIGNAL_FILE_NAME[] = "HwaQbVSv7FG4kxwP.hHT";
 /* Note if use negative exit status then g_spawn_command_line_sync
