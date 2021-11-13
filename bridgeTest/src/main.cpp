@@ -419,12 +419,23 @@ int main() {
 #include "Preferans.h"
 #include "old/PreferansOld.h"
 
-/* special mode for searching moves parameters can be defined in moves.bat
+/* TODO REMOVE
+ * b4 13nov21 special mode for searching moves parameters can be defined in moves.bat
  * SEARCH_MOVES_PARAMETERS=1 search non misere problems
  * SEARCH_MOVES_PARAMETERS=2 search misere problems
  * SEARCH_MOVES_PARAMETERS not defined - other modes
  */
-#define SEARCH_MOVES_PARAMETERS 1
+
+const int SEARCH_MOVES_PARAMETERS_TRUMP=1;
+const int SEARCH_MOVES_PARAMETERS_NT=2;
+const int SEARCH_MOVES_PARAMETERS_MISERE=3;
+/* special mode for searching moves parameters can be defined in moves.bat
+ * SEARCH_MOVES_PARAMETERS=1 - only trump problems
+ * SEARCH_MOVES_PARAMETERS=2 - only no trump & non misere problems
+ * SEARCH_MOVES_PARAMETERS=3 - only misere problems
+ * SEARCH_MOVES_PARAMETERS not defined - other modes
+ */
+#define SEARCH_MOVES_PARAMETERS 3
 
 /* TYPE 0 - count nodes
  * TYPE 1 - compare old and new algorithm or count for one of the algorithms
@@ -469,12 +480,12 @@ const int FP=1;
  * 2 - only no trump & non misere problems
  * 3 - only misere problems
  */
-const int PROBLEM_TYPE=0;
-//#if defined(SEARCH_MOVES_PARAMETERS)
-//const int PROBLEM_TYPE=SEARCH_MOVES_PARAMETERS;
-//#else
 //const int PROBLEM_TYPE=0;
-//#endif
+#if defined(SEARCH_MOVES_PARAMETERS)
+const int PROBLEM_TYPE=SEARCH_MOVES_PARAMETERS;
+#else
+const int PROBLEM_TYPE=0;
+#endif
 
 const int MAX_PROBLEM=10;
 
@@ -482,7 +493,6 @@ const int MAX_PROBLEM=10;
 const bool WRITE_TO_FILE=true;
 
 #ifdef SEARCH_MOVES_PARAMETERS
-//TODO 6may21 make search only long problems
 //#define ONLY_LONG_PROBLEMS
 #else
 //#define ONLY_LONG_PROBLEMS
@@ -559,17 +569,17 @@ const int results[][RESULT_SIZE] = {
 
  */
 const DealData dealData[]={
-	{"T987.T987.#98.*Q*J",5,0,"solvealldeals0",0},//misere
-	{"T987.T987.*98.*Q#J",5,0,"solvealldeals1",0},//misere
-	{"#A*8*7.AKT.KJ.A987",3,0,"solvealldeals2",0},
-	{"AQJ*T8*7.KT8.KJ.9",0,2,"solvealldeals3",1},
+	{"T987.T987.#98.*Q*J",MISERE,0,"solvealldeals0",false },
+	{"T987.T987.*98.*Q#J",MISERE,0,"solvealldeals1",false },
+	{"#A*8*7.AKT.KJ.A987",3,0,"solvealldeals2",false },
+	{"AQJ*T8*7.KT8.KJ.9",0,2,"solvealldeals3",true },
 
-	{ "QT7.KQJ.A*8*7.KQJ", 0, 2, "preferansRu0",0 },
-	{ "A*8*7.AKT.KJ.A987", 3, 2, "preferansRu2",0 },
-	{ "KQT7.AQJ.KJ*9.A*J", 0, 2, "preferansRu3",1 },
-	{ "T987.98.987.*A*K8", 5, 2, "preferansRu4",1 },//misere
-	{ "*K*Q8.T987.987.98", 5, 2, "preferansRu5",1 },//misere
-	{ "A*98.AJ7.AJ8.KT*9", NT, 2, "preferansRu6",1 }//NT
+	{ "QT7.KQJ.A*8*7.KQJ", 0, 2, "preferansRu0",false },
+	{ "A*8*7.AKT.KJ.A987", 3, 2, "preferansRu2",false },
+	{ "KQT7.AQJ.KJ*9.A*J", 0, 2, "preferansRu3",true },
+	{ "T987.98.987.*A*K8", MISERE, 2, "preferansRu4",true },
+	{ "*K*Q8.T987.987.98", MISERE, 2, "preferansRu5",true },
+	{ "A*98.AJ7.AJ8.KT*9", NT, 2, "preferansRu6",true }
 };
 
 const int RESULT_SIZE = 11;
@@ -954,7 +964,16 @@ int main() {
 #ifdef SEARCH_MOVES_PARAMETERS
 	double t;
 
-	for (int i = 0; i < MOVES_MANY_SUITS_OPTIONS; i++) {
+	int imax;
+	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_MISERE){
+		imax=MOVES_ONE_SUIT_OPTIONS*MOVES_MANY_SUITS_OPTIONS_NT*MOVES_MANY_SUITS_OPTIONS_NT;
+	}
+	else{
+		imax=MOVES_MANY_SUITS_OPTIONS;
+	}
+	clock_t begin=clock();
+
+	for (int i = 0; i < imax; i++) {
 
 		if (PROBLEM_TYPE == 1) {
 			//0-MOVES_MANY_SUITS_OPTIONS
@@ -970,7 +989,13 @@ int main() {
 
 			//0-MOVES_ONE_SUIT_OPTIONS*MOVES_MANY_SUITS_OPTIONS
 			//int preferans_order_other_moves_misere= 2;
-			PREFERANS_ORDER_FIRST_MOVE_MISERE = i;
+			PREFERANS_ORDER_FIRST_MOVE_MISERE = i%MOVES_MANY_SUITS_OPTIONS_NT;
+			PREFERANS_ORDER_OTHER_MOVES_MISERE= i/MOVES_MANY_SUITS_OPTIONS_NT;
+/*
+			 0 <= PREFERANS_ORDER_FIRST_MOVE_MISERE < OM_NT
+			 0 <= PREFERANS_ORDER_OTHER_MOVES_MISERE < O1*OM_NT
+*/
+
 		}
 
 		t=routine(true);
@@ -981,7 +1006,6 @@ int main() {
 					);
 		}
 		else{
-			//TODO
 			s = format("misere(%d,%d)",
 					PREFERANS_ORDER_FIRST_MOVE_MISERE,
 					PREFERANS_ORDER_OTHER_MOVES_MISERE
@@ -989,6 +1013,14 @@ int main() {
 		}
 		v.push_back({s,t});
 		printf("%s %.2lf\n",s.c_str(),t);
+
+		double duration=timeElapse(begin);
+		/* for i+1 steps take duration, avg time for one step duration/(i+1)
+		 * total steps imax so left imax-i-1 steps or duration*(imax-i-1)/(i+1)
+		 */
+		auto s=secondsToString(duration*(imax-i-1)/(i+1));
+		printf("time %.3lf, left %s\n",duration,s.c_str());
+
 		fflush(stdout);
 	}
 

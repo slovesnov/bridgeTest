@@ -50,3 +50,213 @@ time=  1.20 16736n/sec avgfull=  0.18min preferansRu5 ok
 time= 15.37  1301n/sec avgfull=  2.37min preferansRu6 ok
 new algorithm fulltime=49.10, overall 4073n/sec
 
+nodes=20,000 only new algorithm only misere misere_params(0,2)
+time=  0.33 60606n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.27 74074n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.10 18182n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.15 17346n/sec avgfull=  0.18min preferansRu5 ok
+new algorithm fulltime=2.85, overall 28041n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(1,2)
+time=  0.33 60606n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.28 70175n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.15 17422n/sec avgfull=  0.18min preferansRu4 ok
+time=  1.05 18957n/sec avgfull=  0.16min preferansRu5 ok
+new algorithm fulltime=2.82, overall 28389n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(2,2)
+time=  0.34 58309n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.29 68027n/sec avgfull=  0.05min solvealldeals1 ok
+time=  1.14 17483n/sec avgfull=  0.18min preferansRu4 ok
+time=  1.12 17809n/sec avgfull=  0.17min preferansRu5 ok
+new algorithm fulltime=2.90, overall 27548n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(0,0)
+time=  0.30 66890n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.29 69204n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.10 18100n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.11 18067n/sec avgfull=  0.17min preferansRu5 ok
+new algorithm fulltime=2.80, overall 28571n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(1,0)
+time=  0.31 64103n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.29 68259n/sec avgfull=  0.05min solvealldeals1 ok
+time=  1.11 18002n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.05 18957n/sec avgfull=  0.16min preferansRu5 ok
+new algorithm fulltime=2.77, overall 28870n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(2,0)
+time=  0.31 64309n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.30 66445n/sec avgfull=  0.05min solvealldeals1 ok
+time=  1.16 17286n/sec avgfull=  0.18min preferansRu4 ok
+time=  1.15 17361n/sec avgfull=  0.18min preferansRu5 ok
+new algorithm fulltime=2.92, overall 27388n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(3,0)
+time=  0.31 65147n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.30 67568n/sec avgfull=  0.05min solvealldeals1 ok
+time=  1.11 18018n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.09 18315n/sec avgfull=  0.17min preferansRu5 ok
+new algorithm fulltime=2.81, overall 28520n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(4,0)
+time=  0.30 65574n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.28 70423n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.10 18165n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.11 18034n/sec avgfull=  0.17min preferansRu5 ok
+new algorithm fulltime=2.80, overall 28582n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(5,0)
+time=  0.31 64935n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.28 70175n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.11 17953n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.07 18762n/sec avgfull=  0.16min preferansRu5 ok
+new algorithm fulltime=2.77, overall 28850n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(6,0)
+time=  0.31 64725n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.29 69204n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.10 18198n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.03 19436n/sec avgfull=  0.16min preferansRu5 ok
+new algorithm fulltime=2.73, overall 29347n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(7,0)
+time=  0.31 64309n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.29 69444n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.11 18067n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.12 17857n/sec avgfull=  0.17min preferansRu5 ok
+new algorithm fulltime=2.83, overall 28309n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(8,0)
+time=  0.32 63091n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.30 66225n/sec avgfull=  0.05min solvealldeals1 ok
+time=  1.19 16764n/sec avgfull=  0.18min preferansRu4 ok
+time=  1.11 18067n/sec avgfull=  0.17min preferansRu5 ok
+new algorithm fulltime=2.92, overall 27407n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(9,0)
+time=  0.31 64935n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.28 70423n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.11 17953n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.16 17301n/sec avgfull=  0.18min preferansRu5 ok
+new algorithm fulltime=2.86, overall 27952n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(0,0)
+time=  0.30 65574n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.29 69930n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.09 18332n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.12 17921n/sec avgfull=  0.17min preferansRu5 ok
+new algorithm fulltime=2.80, overall 28592n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(1,0)
+time=  0.31 64516n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.29 68259n/sec avgfull=  0.05min solvealldeals1 ok
+time=  1.09 18265n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.02 19666n/sec avgfull=  0.16min preferansRu5 ok
+new algorithm fulltime=2.71, overall 29466n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(2,0)
+time=  0.31 64103n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.29 69204n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.12 17794n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.12 17889n/sec avgfull=  0.17min preferansRu5 ok
+new algorithm fulltime=2.84, overall 28139n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(3,0)
+time=  0.30 66445n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.28 70423n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.10 18215n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.06 18904n/sec avgfull=  0.16min preferansRu5 ok
+new algorithm fulltime=2.74, overall 29186n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(0,0)
+time=  0.31 64516n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.29 68729n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.09 18315n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.10 18132n/sec avgfull=  0.17min preferansRu5 ok
+new algorithm fulltime=2.80, overall 28612n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(1,0)
+time=  0.31 64309n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.29 69204n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.11 18034n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.02 19608n/sec avgfull=  0.16min preferansRu5 ok
+new algorithm fulltime=2.73, overall 29315n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(2,0)
+time=  0.33 61538n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.29 68729n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.15 17376n/sec avgfull=  0.18min preferansRu4 ok
+time=  1.18 17021n/sec avgfull=  0.18min preferansRu5 ok
+new algorithm fulltime=2.94, overall 27192n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(3,0)
+time=  0.33 60060n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.31 63898n/sec avgfull=  0.05min solvealldeals1 ok
+time=  1.21 16474n/sec avgfull=  0.19min preferansRu4 ok
+time=  1.34 14959n/sec avgfull=  0.21min preferansRu5 ok
+new algorithm fulltime=3.20, overall 25023n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(4,0)
+time=  0.38 52770n/sec avgfull=  0.06min solvealldeals0 ok
+time=  0.34 59172n/sec avgfull=  0.05min solvealldeals1 ok
+time=  1.24 16194n/sec avgfull=  0.19min preferansRu4 ok
+time=  1.24 16090n/sec avgfull=  0.19min preferansRu5 ok
+new algorithm fulltime=3.20, overall 25039n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(5,0)
+time=  0.33 60976n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.32 63091n/sec avgfull=  0.05min solvealldeals1 ok
+time=  1.11 17937n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.05 18993n/sec avgfull=  0.16min preferansRu5 ok
+new algorithm fulltime=2.81, overall 28439n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(6,0)
+time=  0.30 66007n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.28 70175n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.09 18399n/sec avgfull=  0.17min preferansRu4 ok
+time=  2.39  8382n/sec avgfull=  0.37min preferansRu5 ok
+new algorithm fulltime=4.06, overall 19700n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(7,0)
+time=  0.32 62305n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.34 58997n/sec avgfull=  0.05min solvealldeals1 ok
+time=  1.09 18298n/sec avgfull=  0.17min preferansRu4 ok
+time=  1.10 18182n/sec avgfull=  0.17min preferansRu5 ok
+new algorithm fulltime=2.85, overall 28041n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(8,0)
+time=  0.30 66007n/sec avgfull=  0.05min solvealldeals0 ok
+time=  0.28 70922n/sec avgfull=  0.04min solvealldeals1 ok
+time=  1.08 18467n/sec avgfull=  0.17min preferansRu4 ok
+time=  6.04  3311n/sec avgfull=  0.93min preferansRu5 ok
+new algorithm fulltime=7.71, overall 10379n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(9,0)
+time=  0.54 37106n/sec avgfull=  0.08min solvealldeals0 ok
+time=  0.54 37106n/sec avgfull=  0.08min solvealldeals1 ok
+time=  1.70 11744n/sec avgfull=  0.26min preferansRu4 ok
+time=22684.54     1n/sec avgfull=3492.59min preferansRu5 ok
+new algorithm fulltime=22687.32, overall 4n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(0,1)
+time=  0.84 23810n/sec avgfull=  0.13min solvealldeals0 ok
+time=  0.66 30257n/sec avgfull=  0.10min solvealldeals1 ok
+time=  1.96 10199n/sec avgfull=  0.30min preferansRu4 ok
+time=  1.83 10899n/sec avgfull=  0.28min preferansRu5 ok
+new algorithm fulltime=5.30, overall 15103n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(1,1)
+time=  0.43 46620n/sec avgfull=  0.07min solvealldeals0 ok
+time=  0.44 45767n/sec avgfull=  0.07min solvealldeals1 ok
+time=  1.80 11099n/sec avgfull=  0.28min preferansRu4 ok
+time=  1.65 12114n/sec avgfull=  0.25min preferansRu5 ok
+new algorithm fulltime=4.32, overall 18523n/sec
+
+nodes=20,000 only new algorithm only misere misere_params(2,1)
+time=  0.37 53908n/sec avgfull=  0.06min solvealldeals0 ok
+time=  0.35 57307n/sec avgfull=  0.05min solvealldeals1 ok
+time=  1.42 14114n/sec avgfull=  0.22min preferansRu4 ok
+time=  1.27 15773n/sec avgfull=  0.20min preferansRu5 ok
+new algorithm fulltime=3.41, overall 23495n/sec
+
