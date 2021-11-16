@@ -1,0 +1,60 @@
+s = format("%d misere(%d,%d)"
+		,i
+		,PREFERANS_ORDER_FIRST_MOVE_MISERE
+		,PREFERANS_ORDER_OTHER_MOVES_MISERE
+
+15 misere(5,1) 3.280 2
+
+
+from moves_one_suit.h{
+	total MOVES_ONE_SUIT_OPTIONS options
+
+	0 high->low
+	1 low, high->low
+	2 high, low, high->low
+
+	3 low->high
+	4 high, low->high
+	5 low, high, low->high
+}
+
+from moves_many_suits.h{
+	total MOVES_MANY_SUITS_OPTIONS_NT options
+
+	0 high0->low0, high1->low1...
+	1 low0, low1..., high0->low0, high1->low1...
+	2 high0, high1..., high0->low0, high1->low1...
+	3 low0, high0, low1, high1..., high0->low0, high1->low1...
+	4 high0, low0, high1, low1..., high0->low0, high1->low1...
+
+	5 low0->high0, low1->high1...
+	6 low0, low1..., low0->high0, low1->high1...
+	7 high0, high1..., low0->high0, low1->high1...
+	8 low0, high0, low1, high1..., low0->high0, low1->high1...
+	9 high0, low0, high1, low1..., low0->high0, low1->high1...
+}
+
+void Preferans::suitableCardsMisere(int suit, int w, SC& c) {
+#define ORDER PREFERANS_ORDER_OTHER_MOVES_MISERE
+#include "moves.h"
+}
+
+from "moves.h"{
+	#define O ( ORDER % MOVES_ONE_SUIT_OPTIONS )
+	#include "moves_one_suit.h"
+
+	#ifdef PREFERANS_TRUMP_GAME
+		#define O ( ORDER / MOVES_ONE_SUIT_OPTIONS) % MOVES_ONE_SUIT_OPTIONS
+		#include "moves_one_suit.h"
+	#endif
+
+
+#ifdef PREFERANS_TRUMP_GAME
+	#define O	( ORDER / MOVES_ONE_SUIT_OPTIONS / MOVES_ONE_SUIT_OPTIONS)
+#else
+	#define O	( ORDER / MOVES_ONE_SUIT_OPTIONS )
+#endif
+
+#include "moves_many_suits.h"
+
+}

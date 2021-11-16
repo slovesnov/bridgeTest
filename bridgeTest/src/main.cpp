@@ -9,16 +9,23 @@
 #include <algorithm>
 #include <vector>
 #include <cassert>
+#include <share.h>//_SH_DENYWR
+#include <unistd.h> //usleep
+#include <sys/stat.h>//stat
 
 #include "BridgeCommon.h"
 #include "Deal.h"
 #include "Permutations.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 bool signalFileExists(){return false;}
 
 const char PLAYER_CHAR[] = "nesw";
 
-using T=std::pair<std::string,double>;
+using T=std::pair<int,double>;
 using VT=std::vector<T>;
 bool cmpLess(T const &a, T const &b) { return a.second < b.second; }//old name "cmp"
 bool cmpGreater(T const &a, T const &b) { return a.second > b.second; }//old name "cmp1"
@@ -419,12 +426,9 @@ int main() {
 #include "Preferans.h"
 #include "old/PreferansOld.h"
 
-/* TODO REMOVE
- * b4 13nov21 special mode for searching moves parameters can be defined in moves.bat
- * SEARCH_MOVES_PARAMETERS=1 search non misere problems
- * SEARCH_MOVES_PARAMETERS=2 search misere problems
- * SEARCH_MOVES_PARAMETERS not defined - other modes
- */
+const char SHARED_FILE_NAME[]="shared.txt";
+const char SHARED_FILE_NAME_RESULTS[]="results.txt";
+const char FILE_NAME_RESULTS_SORTED[]="resultsSorted.txt";
 
 const int SEARCH_MOVES_PARAMETERS_TRUMP=1;
 const int SEARCH_MOVES_PARAMETERS_NT=2;
@@ -435,7 +439,8 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
  * SEARCH_MOVES_PARAMETERS=3 - only misere problems
  * SEARCH_MOVES_PARAMETERS not defined - other modes
  */
-#define SEARCH_MOVES_PARAMETERS 3
+//TODO
+//#define SEARCH_MOVES_PARAMETERS 2
 
 /* TYPE 0 - count nodes
  * TYPE 1 - compare old and new algorithm or count for one of the algorithms
@@ -445,7 +450,7 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
 #if defined(SEARCH_MOVES_PARAMETERS)
 #define TYPE 1
 #else
-#define TYPE 2
+#define TYPE 1
 #endif
 
 #if TYPE==3
@@ -462,7 +467,7 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
 //#else
 //#define SOLVE_TYPE 1
 //#endif
-#define SOLVE_TYPE 1
+#define SOLVE_TYPE 0
 
 /* FP=0 old and new algorithms
  * FP=1 only new algorithm
@@ -493,11 +498,13 @@ const int MAX_PROBLEM=10;
 const bool WRITE_TO_FILE=true;
 
 #ifdef SEARCH_MOVES_PARAMETERS
-//#define ONLY_LONG_PROBLEMS
+	#define ONLY_LONG_PROBLEMS
 #else
-//#define ONLY_LONG_PROBLEMS
+	//#define ONLY_LONG_PROBLEMS
 #endif
 
+//after SOLVE_TYPE is defined
+#include "DealData.h"
 
 #if TYPE==0
 enum {
@@ -505,115 +512,6 @@ enum {
 };
 const char SUITS_CHAR[] = "shdcn";//Base.h
 #elif TYPE==1
-
-struct DealData{
-	std::string deal;
-	int trump;//0..3,NT - no trump, NT+1 - misere and no trump
-	int first;
-	std::string comment;
-	bool longProblem;
-
-	bool misere()const{
-		return trump==NT+1;
-	}
-
-	bool nt()const{
-		return trump>=NT;
-	}
-
-};
-
-/* Note problem1 from preferansRu is not used because each player
- * has only seven cards. 4 deals from solvealldeals file, and 6 from preferansRu
- *
- * eclipse formatting make dealData array ugly after automatic format so leave normal version here
-const DealData dealData[]={
-	{"T987.T987.#98.*Q*J",5,0,"solvealldeals0"},
-	{"T987.T987.*98.*Q#J",5,0,"solvealldeals1"},
-	{"#A*8*7.AKT.KJ.A987",3,0,"solvealldeals2"},
-	{"AQJ*T8*7.KT8.KJ.9",0,2,"solvealldeals3"},
-
-	{ "QT7.KQJ.A*8*7.KQJ", 0, 2, "preferansRu0" },
-	{ "A*8*7.AKT.KJ.A987", 3, 2, "preferansRu2" },
-	{ "KQT7.AQJ.KJ*9.A*J", 0, 2, "preferansRu3" },
-	{ "T987.98.987.*A*K8", 5, 2, "preferansRu4" },
-	{ "*K*Q8.T987.987.98", 5, 2, "preferansRu5" },
-	{ "A*98.AJ7.AJ8.KT*9", 4, 2, "preferansRu6" }
-};
-
-const int results[][RESULT_SIZE] = {
-		{103936, 13832, 612, 9362, 35612, 20754, 648, 0, 0, 0, 0},
-		{8544, 147660, 1340, 9050, 15156, 2876, 130, 0, 0, 0, 0},
-		{0, 0, 0, 0, 1016, 19625, 104962, 58993, 160, 0, 0},
-		{0, 0, 0, 3015, 134666, 46917, 158, 0, 0, 0, 0},
-		{441, 4547, 18204, 78510, 78762, 4292, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 1376, 29432, 100086, 53802, 60, 0, 0},
-		{0, 0, 0, 0, 1226, 75131, 104670, 3699, 30, 0, 0},
-		{80407, 977, 23345, 49263, 22306, 8207, 251, 0, 0, 0, 0},
-		{80407, 977, 23345, 49263, 22306, 8207, 251, 0, 0, 0, 0},
-		{0, 0, 0, 102170, 76768, 5816, 2, 0, 0, 0, 0}
-};
-
-const int results[][RESULT_SIZE] = {
-		{7978, 2338, 233, 2062, 5021, 2308, 60, 0, 0, 0, 0},
-		{906, 13958, 366, 2054, 2384, 325, 7, 0, 0, 0, 0},
-		{0, 0, 0, 0, 226, 1643, 11300, 6799, 32, 0, 0},
-		{0, 0, 0, 0, 12740, 7222, 38, 0, 0, 0, 0},
-		{0, 229, 828, 9058, 9807, 78, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 523, 4578, 9569, 5318, 12, 0, 0},
-		{0, 0, 0, 0, 398, 14262, 5173, 167, 0, 0, 0},
-		{3345, 454, 4914, 7402, 3117, 742, 26, 0, 0, 0, 0},
-		{6259, 241, 2728, 5349, 3523, 1774, 126, 0, 0, 0, 0},
-		{0, 0, 0, 10895, 8338, 767, 0, 0, 0, 0, 0}
-};
-
- */
-const DealData dealData[]={
-	{"T987.T987.#98.*Q*J",MISERE,0,"solvealldeals0",false },
-	{"T987.T987.*98.*Q#J",MISERE,0,"solvealldeals1",false },
-	{"#A*8*7.AKT.KJ.A987",3,0,"solvealldeals2",false },
-	{"AQJ*T8*7.KT8.KJ.9",0,2,"solvealldeals3",true },
-
-	{ "QT7.KQJ.A*8*7.KQJ", 0, 2, "preferansRu0",false },
-	{ "A*8*7.AKT.KJ.A987", 3, 2, "preferansRu2",false },
-	{ "KQT7.AQJ.KJ*9.A*J", 0, 2, "preferansRu3",true },
-	{ "T987.98.987.*A*K8", MISERE, 2, "preferansRu4",true },
-	{ "*K*Q8.T987.987.98", MISERE, 2, "preferansRu5",true },
-	{ "A*98.AJ7.AJ8.KT*9", NT, 2, "preferansRu6",true }
-};
-
-const int RESULT_SIZE = 11;
-
-#if SOLVE_TYPE==0
-const int PREFERANS_SOLVE_ALL_DEALS_POSITIONS=184756;
-const int results[][RESULT_SIZE] = {
-		{103936, 13832, 612, 9362, 35612, 20754, 648, 0, 0, 0, 0},
-		{8544, 147660, 1340, 9050, 15156, 2876, 130, 0, 0, 0, 0},
-		{0, 0, 0, 0, 1016, 19625, 104962, 58993, 160, 0, 0},
-		{0, 0, 0, 3015, 134666, 46917, 158, 0, 0, 0, 0},
-		{441, 4547, 18204, 78510, 78762, 4292, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 1376, 29432, 100086, 53802, 60, 0, 0},
-		{0, 0, 0, 0, 1226, 75131, 104670, 3699, 30, 0, 0},
-		{80407, 977, 23345, 49263, 22306, 8207, 251, 0, 0, 0, 0},
-		{80407, 977, 23345, 49263, 22306, 8207, 251, 0, 0, 0, 0},
-		{0, 0, 0, 102170, 76768, 5816, 2, 0, 0, 0, 0}
-};
-#else
-const int PREFERANS_SOLVE_ALL_DEALS_POSITIONS = 20000;
-const int results[][RESULT_SIZE] = {
-		{7978, 2338, 233, 2062, 5021, 2308, 60, 0, 0, 0, 0},
-		{906, 13958, 366, 2054, 2384, 325, 7, 0, 0, 0, 0},
-		{0, 0, 0, 0, 226, 1643, 11300, 6799, 32, 0, 0},
-		{0, 0, 0, 0, 12740, 7222, 38, 0, 0, 0, 0},
-		{0, 229, 828, 9058, 9807, 78, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 523, 4578, 9569, 5318, 12, 0, 0},
-		{0, 0, 0, 0, 398, 14262, 5173, 167, 0, 0, 0},
-		{3345, 454, 4914, 7402, 3117, 742, 26, 0, 0, 0, 0},
-		{6259, 241, 2728, 5349, 3523, 1774, 126, 0, 0, 0, 0},
-		{0, 0, 0, 10895, 8338, 767, 0, 0, 0, 0, 0}
-};
-
-#endif
 
 void run(int nodes, int problem, bool old,int*result);
 #else
@@ -957,40 +855,103 @@ double routine(bool movesOptimization=false) {
 	return tt;
 }
 
-int main() {
-	VT v;
-	std::string s;
+FILE* openSharedFile(const char* fileName,const char *mode){
+	FILE*f;
+	double seconds=.05;
+	unsigned microseconds=seconds*1000*1000;
+	while( (f=_fsopen(fileName,mode,_SH_DENYWR))==NULL && errno==EACCES){
+		usleep(microseconds);
+	}
+	if(f==NULL){
+		printf("f==NULL error%d\n",errno);
+	}
+	return f;
+}
 
+bool fileExists (const char* path) {
+  struct stat buffer;
+  return (stat (path, &buffer) == 0);
+}
+
+int getNextProceedValue(){
+	auto f=openSharedFile(SHARED_FILE_NAME,"r+");
+	int v;
+	fscanf(f,"%d",&v);
+	fseek(f,0,SEEK_SET);
+	fprintf(f,"%d",v+1);
+	fclose(f);
+	return v;
+}
+
+void proceedResultFile();
+
+std::pair<int, int> parseTwoParameters(int i, int n =
+		MOVES_MANY_SUITS_OPTIONS_NT) {
+	return {i%n, i/n};
+}
+
+std::vector<int> parseThreeParameters(int i) {
+	auto [a,second]=parseTwoParameters(i);
+	auto [b,c]=parseTwoParameters(second,MOVES_ONE_SUIT_OPTIONS);
+	return {a, b, c };
+}
+
+void printDealDataFromFile(const char* path);
+
+int main(int argc, char *argv[]) {
 #ifdef SEARCH_MOVES_PARAMETERS
-	double t;
+	int i,upper,thread;
+	std::string s;
+	double time,duration;
+	int cores=getNumberOfCores();
+	VT v;
 
-	int imax;
-	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_MISERE){
-		imax=MOVES_ONE_SUIT_OPTIONS*MOVES_MANY_SUITS_OPTIONS_NT*MOVES_MANY_SUITS_OPTIONS_NT;
+	if(argc==1){
+//		printl(PREFERANS_SOLVE_ALL_DEALS_POSITIONS);
+//		fflush(stdout);
+//		time=routine(true);
+//		printl(time);
+		proceedResultFile();
+		return 0;
+	}
+
+	if(argc!=2){
+		printl("error argc!=2");
+		return 0;
+	}
+
+	thread=atoi(argv[1]);
+
+	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_NT || SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_MISERE){
+		upper = MOVES_ONE_SUIT_OPTIONS * MOVES_MANY_SUITS_OPTIONS_NT
+				* MOVES_MANY_SUITS_OPTIONS_NT;
 	}
 	else{
-		imax=MOVES_MANY_SUITS_OPTIONS;
+		upper = MOVES_MANY_SUITS_OPTIONS;
 	}
+
+	if(!fileExists(SHARED_FILE_NAME)){
+		printl("error shared file not exists");
+		return 0;
+	}
+
+#ifdef _WIN32
+	//prevents windows 10 threads sleep
+	//stackoverflow.com/questions/34836406/how-to-prevent-windows-from-going-to-sleep-when-my-c-application-is-running
+	SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_AWAYMODE_REQUIRED);
+#endif
+
 	clock_t begin=clock();
-
-	for (int i = 0; i < imax; i++) {
-
-		if (PROBLEM_TYPE == 1) {
-			//0-MOVES_MANY_SUITS_OPTIONS
-			//int preferans_order_first_move= 0;
-
-			//0-MOVES_ONE_SUIT_OPTIONS*MOVES_ONE_SUIT_OPTIONS*MOVES_MANY_SUITS_OPTIONS
-			//int preferans_order_other_moves= 13;
-			PREFERANS_ORDER_FIRST_MOVE = i;
+	while ( (i=getNextProceedValue()) < upper ) {
+		if (PROBLEM_TYPE == 2) {
+			auto p=parseTwoParameters(i);
+			PREFERANS_ORDER_FIRST_MOVE_NT = p.first;
+			PREFERANS_ORDER_OTHER_MOVES_NT= p.second;
 		}
 		else{
-			//0-MOVES_MANY_SUITS_OPTIONS
-			//int  preferans_order_first_move_misere= 4;
-
-			//0-MOVES_ONE_SUIT_OPTIONS*MOVES_MANY_SUITS_OPTIONS
-			//int preferans_order_other_moves_misere= 2;
-			PREFERANS_ORDER_FIRST_MOVE_MISERE = i%MOVES_MANY_SUITS_OPTIONS_NT;
-			PREFERANS_ORDER_OTHER_MOVES_MISERE= i/MOVES_MANY_SUITS_OPTIONS_NT;
+			auto p=parseTwoParameters(i);
+			PREFERANS_ORDER_FIRST_MOVE_MISERE = p.first;
+			PREFERANS_ORDER_OTHER_MOVES_MISERE= p.second;
 /*
 			 0 <= PREFERANS_ORDER_FIRST_MOVE_MISERE < OM_NT
 			 0 <= PREFERANS_ORDER_OTHER_MOVES_MISERE < O1*OM_NT
@@ -998,45 +959,33 @@ int main() {
 
 		}
 
-		t=routine(true);
-		if (PROBLEM_TYPE == 1) {
-			s = format("(%d,%d)",
-					PREFERANS_ORDER_FIRST_MOVE,
-					PREFERANS_ORDER_OTHER_MOVES
-					);
-		}
-		else{
-			s = format("misere(%d,%d)",
-					PREFERANS_ORDER_FIRST_MOVE_MISERE,
-					PREFERANS_ORDER_OTHER_MOVES_MISERE
-					);
-		}
-		v.push_back({s,t});
-		printf("%s %.2lf\n",s.c_str(),t);
+		//time=randomDouble(0,100);
+		time=routine(true);
 
-		double duration=timeElapse(begin);
+		v.push_back({i,time});
+		duration=timeElapse(begin);
 		/* for i+1 steps take duration, avg time for one step duration/(i+1)
-		 * total steps imax so left imax-i-1 steps or duration*(imax-i-1)/(i+1)
+		 * total steps upper so left upper-i-1 steps or duration*(upper-i-1)/(i+1)
+		 * divide on number of cores because runnign cores threads
 		 */
-		auto s=secondsToString(duration*(imax-i-1)/(i+1));
-		printf("time %.3lf, left %s\n",duration,s.c_str());
+		s=secondsToString(duration*(upper-i-1)/(i+1)/cores);
+		printf("i=%d %.2lf time %.3lf, left %s\n",i,time,duration,s.c_str());
 
 		fflush(stdout);
 	}
 
-	printf("ordered\n");
 
-	FILE*f=fopen("o.txt","w+");
-
-	std::sort(v.begin(), v.end(),cmpLess );
+	FILE*f=openSharedFile(SHARED_FILE_NAME_RESULTS,"a");
 	for(auto& a:v){
-		fprintf(f,"%s %.2lf\n",a.first.c_str(),a.second);
-		printf("%s %.2lf\n",a.first.c_str(),a.second);
+		s=format("%d %.2lf %d\n",a.first,a.second,thread);
+		fprintf(f,s.c_str());
+		printf(s.c_str());
 	}
 	fclose(f);
 
 #else
-	routine();
+	printDealDataFromFile("c:/Users/user/git/bridge/bridge/bridge/problems/preferansRu.bts");
+//	printDealDataFromFile("c:/Users/user/git/bridge/bridge/bridge/problems/solvealldeals.pts");
 #endif
 }
 
@@ -1343,3 +1292,263 @@ void generate () {
 
 #endif //TYPE
 #endif //BRIDGE_TEST
+
+struct MovesOrderData{
+	int n;
+	double time;
+	int thread;
+	std::string toString() const {
+		auto v=parseThreeParameters(n);
+		std::string s=joinV(v,',');
+		return format("%3d (%s) %.3lf %d",n,s.c_str(),time,thread);
+	}
+
+	bool operator<(MovesOrderData &a) {
+		return time < a.time;
+	}
+};
+
+bool cmpMovesOrderDataN(MovesOrderData const &a, MovesOrderData const &b) { return a.n < b.n; }
+bool cmpMovesOrderDataTime(MovesOrderData const &a, MovesOrderData const &b) { return a.time < b.time; }
+
+std::istream &operator>>(std::istream &is, MovesOrderData &a){
+    is>>a.n>>a.time>>a.thread;
+    return is;
+}
+
+std::ostream& operator<<(std::ostream& os, const MovesOrderData& a){
+    os << a.toString();
+    return os;
+}
+
+void proceedResultFile(){
+	MovesOrderData st;
+	std::vector<MovesOrderData> v;
+	int i;
+	std::vector<int> t;
+	int cores=getNumberOfCores();
+	for (i = 0; i < cores; i++) {
+		t.push_back(0);
+	}
+	std::ifstream infile(SHARED_FILE_NAME_RESULTS);
+	while (infile >> st) {
+		t[st.thread]++;
+		v.push_back(st);
+	}
+
+	printl(v.size());
+
+	std::sort(v.begin(),v.end(),cmpMovesOrderDataN);
+
+	int prev=0;
+	for(auto a:v){
+		if(a.n!=prev){
+			println("error %d %d",a.n,prev);
+			break;
+		}
+		prev++;
+	}
+
+	std::sort(v.begin(),v.end());
+	std::ofstream o(FILE_NAME_RESULTS_SORTED);
+	for(auto a:v){
+		o<<a<<"\n";
+	}
+
+	i=0;
+	for(auto a:t){
+		println("%d %d",i,a);
+		i++;
+	}
+
+}
+
+//output file problems to DealData array strings like { "T987.T987.#98.*Q*J", MISERE, 0, "solvealldeals1-1", false },
+void printDealDataFromFile(const char* _path){
+	std::string s,deal,q;
+	DealData d;
+	d.longProblem=true;
+	MapStringString map;
+	MapStringString::iterator it;
+	int i,j,k,absentIndex,playerIndex;
+	VInt vSpecialCards;
+	bool absentCards[32];
+	char absent;
+	const char*p;
+	VString vs,v1;
+	s=_path;
+	std::string path=replaceAll(s, "/", "\\");
+	std::ifstream in(path);
+	assert(in.good());
+
+	auto clearAbsentCards=[&absentCards](){
+		for(auto& a:absentCards){
+			a=true;
+		}
+	};
+
+	clearAbsentCards();
+
+	while(std::getline(in,s)){
+		if(s[0]=='%'){
+			continue;
+		}
+
+		if(s.empty()){
+			it = map.find ("absent");
+			absent=it==map.end()?'s':it->second[0];
+			absentIndex=indexOf(tolower(absent),PLAYER_CHAR);
+			assert(absentIndex!=-1);
+
+			s=map["player"];
+			assert(!s.empty());
+			playerIndex=indexOf(tolower(s[0]),PLAYER_CHAR);
+
+			assert(absentIndex!=playerIndex);
+
+			s=map["deal"];
+			assert(!s.empty());
+			vs=split(s);
+//			out=vs[0]=="2";
+			for(i=1;i<int(vs.size());i++){
+				j=0;
+				for(p=vs[i].c_str();*p;p++){
+					char c=*p;
+					if(c=='.'){
+						j++;
+						assert(j<4);
+					}
+					else{
+						k=indexOf(tolower(c),RANK);
+						assert(k!=-1);
+						absentCards[j*8+k]=false;
+					}
+				}
+			}
+			for(i=0;i<32;i++){
+				if(absentCards[i]){
+					vSpecialCards.push_back(i);
+//					printzn(i,' ',RANK[i%8],SUITS_CHAR[i/8]);
+				}
+			}
+			if(vSpecialCards.size()!=2){//10cards
+				goto l1539;
+			}
+
+			//can be turns=0 && play=CQ it's ok
+			s=map["turns"];
+			assert(!s.empty());
+			if(s=="0"){
+				i=-1;
+			}
+			else{
+				assert(s=="1");
+				s=map["play"];
+				assert(!s.empty());
+				i=indexOf(tolower(s[0]),SUITS_CHAR);
+				assert(i<4 && i!=-1);
+				j=indexOf(tolower(s[1]),RANK);
+				assert(j<8 && j!=-1);
+				i=i*8+j;
+			}
+			vSpecialCards.push_back(i);
+
+			i=playerIndex<absentIndex ? playerIndex : playerIndex-1;
+			assert(i+1<int(vs.size()));
+			s=vs[i+1];
+			v1=split(s,'.');
+			assert(v1.size()==4);
+			//add vSpecialCards
+			i=0;
+			for(auto a:vSpecialCards){
+				if(a==-1 && i==2){
+					break;
+				}
+				j=a/8;//suit
+				assert(j>=0 && j<int(v1.size()));
+				int card=a%8;
+				char c=toupper(RANK[card]);
+				std::string & q=v1[j];
+				j=indexOf(c,q);
+				if(i==2){
+					assert(j!=-1);
+					q=q.substr(0, j)+"#"+q.substr(j);
+				}
+				else{
+					assert(j==-1);
+					k=0;
+					for(auto a:q){
+						if(a!='*' && indexOf(tolower(a),RANK)>card){
+							break;
+						}
+						k++;
+					}
+					q = q.substr(0, k) + "*" + (c + q.substr(k));
+				}
+
+				i++;
+			}
+			d.deal=joinV(v1,'.');
+
+
+			s=map["contract"];
+			assert(!s.empty());
+			//mizer old files support
+			d.trump = s == "misere" || s=="mizer" ?
+					MISERE :
+					(s.substr(1) == "NT" ? NT : indexOf(tolower(s[1]), SUITS_CHAR));
+
+			d.comment=getFileInfo(path, FILEINFO::SHORT_NAME)+" "+vs[0];
+
+			s=map["play"];
+			if(s.length()==1){
+				if(s=="N"){
+					i=0;
+				}
+				else if(s=="E"){
+					i=1;
+				}
+				else if(s=="W"){
+					i=2;
+				}
+				else{
+					assert(0);
+				}
+			}
+			else{
+				j=indexOf(tolower(s[0]),SUITS_CHAR);
+				assert(j>=0 && j<4);
+				for(i=1;i<int(vs.size());i++){
+					v1 = split(vs[i], '.');
+					assert(v1.size() == 4);
+					if (indexOf(s[1], v1[j]) != -1) {
+						i--;//starts from 1 so i--
+						break;
+					}
+				}
+			}
+			d.first=i;
+
+			printl(d.cppString());
+
+
+//			for(auto [a,b]:map){
+//				printl(a,"#",b)
+//			}
+//			printl("next problem");
+//			printi;
+l1539:
+			map.clear();
+			clearAbsentCards();
+			vSpecialCards.clear();
+
+			//break;
+		}
+		else{
+			auto p=s.find(' ');
+			map[s.substr(0, p)]=s.substr(p+1);
+
+			//printzi("#",s.substr(0, p),"#",s.substr(p+1),"#");
+		}
+	}
+}
