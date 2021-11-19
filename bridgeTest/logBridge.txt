@@ -54,9 +54,10 @@
 добавился предварительный расчет ходов
 добавились отсечения нижних 4х слоев в бридже и 3х в преферансе, раньше было 3 и 2 соответсвенно
 в качестве кодов мастей в бридже теперь использется 32х битное число, по кодам находятся ходы и они же используются для индекса хеш-таблицы. Раньше для кодов мастей использовалить двусвязные списки, а также параллельно битовые коды мастей, по которым находился индекс хеш-таблицы
-добавлены отдельные алгоритмы для игр с козырем, бескозырных игр и мизерных игр для преферанса
+добавлены отдельные алгоритмы для игр с козырем, бескозырных игр и мизерных игр для преферанса. Теперь в алгоритме не требуется проверка на тип игры с козырем или без козыря, или мизер для преферанса
 для каждого типа алгорима подбираются параметры для статистического упорядочивания ходов
-приложение стало 64х битным. Так как каждый объект класса Bridge требует около 280мб памяти, то если на компьютере 6 и больше ядер, то 32х битному приложению не хватало бы памяти, поэтому приложение стало 64х битным 
+во внутреннем представлении козырь, если он есть, всегда равен нулю для бриджа и преферанса. Теперь требуется только две таблицы сравнения карт, вместо пяти, одна для игр с козырем, другая для игр без козыря в том числе и для мизерных игр
+приложение стало 64х битным. Так как каждый объект класса Bridge требует около 280мб памяти, то если на компьютере 6 и больше ядер, то 32х битному приложению не хватало бы памяти
 теперь не нужен проект bridgeConsole (он удален)
 ускорен решатель задач по преферансу. Описание в <a href="?bridge_logic52">логической части</a>
 более подробно обо всех изменениях в новой версии можно прочитать в <a href="?bridge_logic52">логической части</a>
@@ -116,8 +117,9 @@ preliminary calculation of moves was added
 added cutoffs of lower 4 layers in bridge and 3 layers in preferans, earlier it was 3 and 2 accordingly
 32-bit numbers are now used as suit codes in bridge, they are used to find moves and also for hash table index. Previously, for suit codes used doubly linked lists, as well as parallel bit codes of suits, which were used to find the hash table index.
 separate algorithms are added for games with trump, NT games and misere games for preference
-for each type of algorithm the parameters for statistical ordering of moves are adjusted
-the application became 64-bit. As each object of the Bridge class requires about 280 MB of memory, if a computer has 6 or more cores, the 32-bit application would not have enough memory, so the application became 64-bit 
+for each type of algorithm the parameters for statistical ordering of moves are adjusted. Now the algorithm does not require a check on the type of game with or without trump, or misere for preference
+in the internal representation trump, if there is one, is always zero for bridge and preference. Now only two card comparison tables are required instead of five, one for games with trump, the other for games without trump, including misere games
+the application became 64-bit. As each object of the Bridge class requires about 280 MB of memory, if a computer has 6 or more cores, the 32-bit application would not have enough memory
 the bridgeConsole project is no longer needed (it was removed)
 the preferans task solver has been speeded up, read more details can be found in the description of the <a href="?bridge_logic52">logical part</a>
 you can read more about all the changes in the new version in the <a href="?bridge_logic52">logical part</a>

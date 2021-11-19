@@ -1942,3 +1942,1931 @@ nodes=184,756 only new algorithm only nt, only long nt_params(0,0)
 time= 83.23  2220n/sec avgfull=  1.39min preferansRu7 ok
 new algorithm fulltime=83.23, overall 2220n/sec
 
+nodes=184,756 only new algorithm only nt, only long nt_params(2,0)
+time= 97.12  1902n/sec avgfull=  1.62min preferansRu7 ok
+new algorithm fulltime=97.12, overall 1902n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,0)
+time=102.40  1804n/sec avgfull=  1.71min preferansRu7 ok
+new algorithm fulltime=102.40, overall 1804n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,0)
+time=106.89  1728n/sec avgfull=  1.78min preferansRu7 ok
+new algorithm fulltime=106.89, overall 1728n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,0)
+time= 90.04  2052n/sec avgfull=  1.50min preferansRu7 ok
+new algorithm fulltime=90.04, overall 2052n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,0)
+time= 97.02  1904n/sec avgfull=  1.62min preferansRu7 ok
+new algorithm fulltime=97.02, overall 1904n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,0)
+time= 97.87  1888n/sec avgfull=  1.63min preferansRu7 ok
+new algorithm fulltime=97.87, overall 1888n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,0)
+time=138.33  1336n/sec avgfull=  2.31min preferansRu7 ok
+new algorithm fulltime=138.33, overall 1336n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,0)
+time=140.20  1318n/sec avgfull=  2.34min preferansRu7 ok
+new algorithm fulltime=140.20, overall 1318n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,0)
+time=156.02  1184n/sec avgfull=  2.60min preferansRu7 ok
+new algorithm fulltime=156.02, overall 1184n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,0)
+time= 94.26  1960n/sec avgfull=  1.57min preferansRu7 ok
+new algorithm fulltime=94.26, overall 1960n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,0)
+time=103.68  1782n/sec avgfull=  1.73min preferansRu7 ok
+new algorithm fulltime=103.68, overall 1782n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,0)
+time=144.31  1280n/sec avgfull=  2.41min preferansRu7 ok
+new algorithm fulltime=144.31, overall 1280n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,0)
+time=163.50  1130n/sec avgfull=  2.73min preferansRu7 ok
+new algorithm fulltime=163.50, overall 1130n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,1)
+time=127.16  1453n/sec avgfull=  2.12min preferansRu7 ok
+new algorithm fulltime=127.16, overall 1453n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,1)
+time=156.52  1180n/sec avgfull=  2.61min preferansRu7 ok
+new algorithm fulltime=156.52, overall 1180n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,1)
+time=123.44  1497n/sec avgfull=  2.06min preferansRu7 ok
+new algorithm fulltime=123.44, overall 1497n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,1)
+time=135.31  1365n/sec avgfull=  2.26min preferansRu7 ok
+new algorithm fulltime=135.31, overall 1365n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,1)
+time=157.30  1175n/sec avgfull=  2.62min preferansRu7 ok
+new algorithm fulltime=157.30, overall 1175n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,1)
+time=161.64  1143n/sec avgfull=  2.69min preferansRu7 ok
+new algorithm fulltime=161.64, overall 1143n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,1)
+time=169.77  1088n/sec avgfull=  2.83min preferansRu7 ok
+new algorithm fulltime=169.77, overall 1088n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,1)
+time=134.19  1377n/sec avgfull=  2.24min preferansRu7 ok
+new algorithm fulltime=134.19, overall 1377n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,1)
+time=164.20  1125n/sec avgfull=  2.74min preferansRu7 ok
+new algorithm fulltime=164.20, overall 1125n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,2)
+time=116.49  1586n/sec avgfull=  1.94min preferansRu7 ok
+new algorithm fulltime=116.49, overall 1586n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,1)
+time=141.30  1308n/sec avgfull=  2.36min preferansRu7 ok
+new algorithm fulltime=141.30, overall 1308n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,2)
+time=107.29  1722n/sec avgfull=  1.79min preferansRu7 ok
+new algorithm fulltime=107.29, overall 1722n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,2)
+time=117.92  1567n/sec avgfull=  1.97min preferansRu7 ok
+new algorithm fulltime=117.92, overall 1567n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,2)
+time=187.10   987n/sec avgfull=  3.12min preferansRu7 ok
+new algorithm fulltime=187.10, overall 987n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,2)
+time=165.85  1114n/sec avgfull=  2.76min preferansRu7 ok
+new algorithm fulltime=165.85, overall 1114n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,2)
+time=108.11  1709n/sec avgfull=  1.80min preferansRu7 ok
+new algorithm fulltime=108.11, overall 1709n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,2)
+time=167.74  1101n/sec avgfull=  2.80min preferansRu7 ok
+new algorithm fulltime=167.74, overall 1101n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,2)
+time=189.08   977n/sec avgfull=  3.15min preferansRu7 ok
+new algorithm fulltime=189.08, overall 977n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,2)
+time=118.82  1555n/sec avgfull=  1.98min preferansRu7 ok
+new algorithm fulltime=118.82, overall 1555n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,3)
+time=138.97  1329n/sec avgfull=  2.32min preferansRu7 ok
+new algorithm fulltime=138.97, overall 1329n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,2)
+time=166.57  1109n/sec avgfull=  2.78min preferansRu7 ok
+new algorithm fulltime=166.57, overall 1109n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,3)
+time=163.82  1128n/sec avgfull=  2.73min preferansRu7 ok
+new algorithm fulltime=163.82, overall 1128n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,3)
+time=133.67  1382n/sec avgfull=  2.23min preferansRu7 ok
+new algorithm fulltime=133.67, overall 1382n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,3)
+time=139.69  1323n/sec avgfull=  2.33min preferansRu7 ok
+new algorithm fulltime=139.69, overall 1323n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,3)
+time=160.55  1151n/sec avgfull=  2.68min preferansRu7 ok
+new algorithm fulltime=160.55, overall 1151n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,3)
+time=161.97  1141n/sec avgfull=  2.70min preferansRu7 ok
+new algorithm fulltime=161.97, overall 1141n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,3)
+time=164.92  1120n/sec avgfull=  2.75min preferansRu7 ok
+new algorithm fulltime=164.92, overall 1120n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,3)
+time=134.82  1370n/sec avgfull=  2.25min preferansRu7 ok
+new algorithm fulltime=134.82, overall 1370n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,3)
+time=161.45  1144n/sec avgfull=  2.69min preferansRu7 ok
+new algorithm fulltime=161.45, overall 1144n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,4)
+time=116.56  1585n/sec avgfull=  1.94min preferansRu7 ok
+new algorithm fulltime=116.56, overall 1585n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,3)
+time=140.59  1314n/sec avgfull=  2.34min preferansRu7 ok
+new algorithm fulltime=140.59, overall 1314n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,4)
+time=107.25  1723n/sec avgfull=  1.79min preferansRu7 ok
+new algorithm fulltime=107.25, overall 1723n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,4)
+time=117.80  1568n/sec avgfull=  1.96min preferansRu7 ok
+new algorithm fulltime=117.80, overall 1568n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,4)
+time=186.69   990n/sec avgfull=  3.11min preferansRu7 ok
+new algorithm fulltime=186.69, overall 990n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,4)
+time=166.21  1112n/sec avgfull=  2.77min preferansRu7 ok
+new algorithm fulltime=166.21, overall 1112n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,4)
+time=108.11  1709n/sec avgfull=  1.80min preferansRu7 ok
+new algorithm fulltime=108.11, overall 1709n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,4)
+time=167.92  1100n/sec avgfull=  2.80min preferansRu7 ok
+new algorithm fulltime=167.92, overall 1100n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,4)
+time=189.76   974n/sec avgfull=  3.16min preferansRu7 ok
+new algorithm fulltime=189.76, overall 974n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,4)
+time=118.52  1559n/sec avgfull=  1.98min preferansRu7 ok
+new algorithm fulltime=118.52, overall 1559n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,5)
+time=138.48  1334n/sec avgfull=  2.31min preferansRu7 ok
+new algorithm fulltime=138.48, overall 1334n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,4)
+time=167.13  1105n/sec avgfull=  2.79min preferansRu7 ok
+new algorithm fulltime=167.13, overall 1105n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,5)
+time=132.23  1397n/sec avgfull=  2.20min preferansRu7 ok
+new algorithm fulltime=132.23, overall 1397n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,5)
+time=168.92  1094n/sec avgfull=  2.82min preferansRu7 ok
+new algorithm fulltime=168.92, overall 1094n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,5)
+time=162.79  1135n/sec avgfull=  2.71min preferansRu7 ok
+new algorithm fulltime=162.79, overall 1135n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,5)
+time=139.84  1321n/sec avgfull=  2.33min preferansRu7 ok
+new algorithm fulltime=139.84, overall 1321n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,5)
+time=133.60  1383n/sec avgfull=  2.23min preferansRu7 ok
+new algorithm fulltime=133.60, overall 1383n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,5)
+time=164.44  1124n/sec avgfull=  2.74min preferansRu7 ok
+new algorithm fulltime=164.44, overall 1124n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,6)
+time= 73.47  2515n/sec avgfull=  1.22min preferansRu7 ok
+new algorithm fulltime=73.47, overall 2515n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,5)
+time=171.74  1076n/sec avgfull=  2.86min preferansRu7 ok
+new algorithm fulltime=171.74, overall 1076n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,5)
+time=163.19  1132n/sec avgfull=  2.72min preferansRu7 ok
+new algorithm fulltime=163.19, overall 1132n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,6)
+time= 67.86  2722n/sec avgfull=  1.13min preferansRu7 ok
+new algorithm fulltime=67.86, overall 2722n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,5)
+time=141.18  1309n/sec avgfull=  2.35min preferansRu7 ok
+new algorithm fulltime=141.18, overall 1309n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,6)
+time= 74.58  2477n/sec avgfull=  1.24min preferansRu7 ok
+new algorithm fulltime=74.58, overall 2477n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,6)
+time=109.87  1682n/sec avgfull=  1.83min preferansRu7 ok
+new algorithm fulltime=109.87, overall 1682n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,6)
+time=124.23  1487n/sec avgfull=  2.07min preferansRu7 ok
+new algorithm fulltime=124.23, overall 1487n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,6)
+time= 68.83  2684n/sec avgfull=  1.15min preferansRu7 ok
+new algorithm fulltime=68.83, overall 2684n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,6)
+time=111.69  1654n/sec avgfull=  1.86min preferansRu7 ok
+new algorithm fulltime=111.69, overall 1654n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,6)
+time=125.77  1469n/sec avgfull=  2.10min preferansRu7 ok
+new algorithm fulltime=125.77, overall 1469n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,6)
+time= 74.92  2466n/sec avgfull=  1.25min preferansRu7 ok
+new algorithm fulltime=74.92, overall 2466n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,6)
+time=110.65  1670n/sec avgfull=  1.84min preferansRu7 ok
+new algorithm fulltime=110.65, overall 1670n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,7)
+time=104.01  1776n/sec avgfull=  1.73min preferansRu7 ok
+new algorithm fulltime=104.01, overall 1776n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,7)
+time= 99.22  1862n/sec avgfull=  1.65min preferansRu7 ok
+new algorithm fulltime=99.22, overall 1862n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,7)
+time=126.51  1460n/sec avgfull=  2.11min preferansRu7 ok
+new algorithm fulltime=126.51, overall 1460n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,7)
+time=104.41  1769n/sec avgfull=  1.74min preferansRu7 ok
+new algorithm fulltime=104.41, overall 1769n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,7)
+time=121.50  1521n/sec avgfull=  2.02min preferansRu7 ok
+new algorithm fulltime=121.50, overall 1521n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,7)
+time=123.16  1500n/sec avgfull=  2.05min preferansRu7 ok
+new algorithm fulltime=123.16, overall 1500n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,7)
+time=128.10  1442n/sec avgfull=  2.14min preferansRu7 ok
+new algorithm fulltime=128.10, overall 1442n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,7)
+time= 99.81  1851n/sec avgfull=  1.66min preferansRu7 ok
+new algorithm fulltime=99.81, overall 1851n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,7)
+time=122.20  1512n/sec avgfull=  2.04min preferansRu7 ok
+new algorithm fulltime=122.20, overall 1512n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,8)
+time= 76.97  2400n/sec avgfull=  1.28min preferansRu7 ok
+new algorithm fulltime=76.97, overall 2400n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,7)
+time=105.25  1755n/sec avgfull=  1.75min preferansRu7 ok
+new algorithm fulltime=105.25, overall 1755n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,8)
+time= 70.51  2620n/sec avgfull=  1.18min preferansRu7 ok
+new algorithm fulltime=70.51, overall 2620n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,8)
+time=131.16  1409n/sec avgfull=  2.19min preferansRu7 ok
+new algorithm fulltime=131.16, overall 1409n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,8)
+time= 78.22  2362n/sec avgfull=  1.30min preferansRu7 ok
+new algorithm fulltime=78.22, overall 2362n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,8)
+time=115.63  1598n/sec avgfull=  1.93min preferansRu7 ok
+new algorithm fulltime=115.63, overall 1598n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,8)
+time= 70.98  2603n/sec avgfull=  1.18min preferansRu7 ok
+new algorithm fulltime=70.98, overall 2603n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,8)
+time=117.55  1572n/sec avgfull=  1.96min preferansRu7 ok
+new algorithm fulltime=117.55, overall 1572n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,8)
+time=132.69  1392n/sec avgfull=  2.21min preferansRu7 ok
+new algorithm fulltime=132.69, overall 1392n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,8)
+time= 78.23  2362n/sec avgfull=  1.30min preferansRu7 ok
+new algorithm fulltime=78.23, overall 2362n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,8)
+time=116.41  1587n/sec avgfull=  1.94min preferansRu7 ok
+new algorithm fulltime=116.41, overall 1587n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,9)
+time=103.55  1784n/sec avgfull=  1.73min preferansRu7 ok
+new algorithm fulltime=103.55, overall 1784n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,9)
+time= 99.90  1849n/sec avgfull=  1.66min preferansRu7 ok
+new algorithm fulltime=99.90, overall 1849n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,9)
+time=121.25  1524n/sec avgfull=  2.02min preferansRu7 ok
+new algorithm fulltime=121.25, overall 1524n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,9)
+time=104.04  1776n/sec avgfull=  1.73min preferansRu7 ok
+new algorithm fulltime=104.04, overall 1776n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,9)
+time=119.20  1550n/sec avgfull=  1.99min preferansRu7 ok
+new algorithm fulltime=119.20, overall 1550n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,9)
+time=120.57  1532n/sec avgfull=  2.01min preferansRu7 ok
+new algorithm fulltime=120.57, overall 1532n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,9)
+time=122.53  1508n/sec avgfull=  2.04min preferansRu7 ok
+new algorithm fulltime=122.53, overall 1508n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,9)
+time=100.66  1836n/sec avgfull=  1.68min preferansRu7 ok
+new algorithm fulltime=100.66, overall 1836n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,10)
+time= 77.43  2386n/sec avgfull=  1.29min preferansRu7 ok
+new algorithm fulltime=77.43, overall 2386n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,9)
+time=120.38  1535n/sec avgfull=  2.01min preferansRu7 ok
+new algorithm fulltime=120.38, overall 1535n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,9)
+time=104.93  1761n/sec avgfull=  1.75min preferansRu7 ok
+new algorithm fulltime=104.93, overall 1761n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,10)
+time= 71.06  2600n/sec avgfull=  1.18min preferansRu7 ok
+new algorithm fulltime=71.06, overall 2600n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,10)
+time= 78.46  2355n/sec avgfull=  1.31min preferansRu7 ok
+new algorithm fulltime=78.46, overall 2355n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,10)
+time=132.71  1392n/sec avgfull=  2.21min preferansRu7 ok
+new algorithm fulltime=132.71, overall 1392n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,10)
+time=117.04  1579n/sec avgfull=  1.95min preferansRu7 ok
+new algorithm fulltime=117.04, overall 1579n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,10)
+time= 71.81  2573n/sec avgfull=  1.20min preferansRu7 ok
+new algorithm fulltime=71.81, overall 2573n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,10)
+time=118.54  1559n/sec avgfull=  1.98min preferansRu7 ok
+new algorithm fulltime=118.54, overall 1559n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,10)
+time=134.78  1371n/sec avgfull=  2.25min preferansRu7 ok
+new algorithm fulltime=134.78, overall 1371n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,10)
+time= 79.03  2338n/sec avgfull=  1.32min preferansRu7 ok
+new algorithm fulltime=79.03, overall 2338n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,10)
+time=117.65  1570n/sec avgfull=  1.96min preferansRu7 ok
+new algorithm fulltime=117.65, overall 1570n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,11)
+time=104.52  1768n/sec avgfull=  1.74min preferansRu7 ok
+new algorithm fulltime=104.52, overall 1768n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,11)
+time= 99.92  1849n/sec avgfull=  1.67min preferansRu7 ok
+new algorithm fulltime=99.92, overall 1849n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,11)
+time=127.42  1450n/sec avgfull=  2.12min preferansRu7 ok
+new algorithm fulltime=127.42, overall 1450n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,11)
+time=105.39  1753n/sec avgfull=  1.76min preferansRu7 ok
+new algorithm fulltime=105.39, overall 1753n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,11)
+time=122.13  1513n/sec avgfull=  2.04min preferansRu7 ok
+new algorithm fulltime=122.13, overall 1513n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,11)
+time=124.00  1490n/sec avgfull=  2.07min preferansRu7 ok
+new algorithm fulltime=124.00, overall 1490n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,11)
+time=100.24  1843n/sec avgfull=  1.67min preferansRu7 ok
+new algorithm fulltime=100.24, overall 1843n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,11)
+time=129.53  1426n/sec avgfull=  2.16min preferansRu7 ok
+new algorithm fulltime=129.53, overall 1426n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,11)
+time=122.87  1504n/sec avgfull=  2.05min preferansRu7 ok
+new algorithm fulltime=122.87, overall 1504n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,11)
+time=106.01  1743n/sec avgfull=  1.77min preferansRu7 ok
+new algorithm fulltime=106.01, overall 1743n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,12)
+time=133.04  1389n/sec avgfull=  2.22min preferansRu7 ok
+new algorithm fulltime=133.04, overall 1389n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,12)
+time=122.07  1514n/sec avgfull=  2.03min preferansRu7 ok
+new algorithm fulltime=122.07, overall 1514n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,12)
+time=134.31  1376n/sec avgfull=  2.24min preferansRu7 ok
+new algorithm fulltime=134.31, overall 1376n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,12)
+time=189.25   976n/sec avgfull=  3.15min preferansRu7 ok
+new algorithm fulltime=189.25, overall 976n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,12)
+time=209.36   882n/sec avgfull=  3.49min preferansRu7 ok
+new algorithm fulltime=209.36, overall 882n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,12)
+time=123.31  1498n/sec avgfull=  2.06min preferansRu7 ok
+new algorithm fulltime=123.31, overall 1498n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,12)
+time=191.67   964n/sec avgfull=  3.19min preferansRu7 ok
+new algorithm fulltime=191.67, overall 964n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,12)
+time=212.78   868n/sec avgfull=  3.55min preferansRu7 ok
+new algorithm fulltime=212.78, overall 868n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,12)
+time=135.31  1365n/sec avgfull=  2.26min preferansRu7 ok
+new algorithm fulltime=135.31, overall 1365n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,13)
+time=160.73  1150n/sec avgfull=  2.68min preferansRu7 ok
+new algorithm fulltime=160.73, overall 1150n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,12)
+time=190.01   972n/sec avgfull=  3.17min preferansRu7 ok
+new algorithm fulltime=190.01, overall 972n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,13)
+time=153.17  1206n/sec avgfull=  2.55min preferansRu7 ok
+new algorithm fulltime=153.17, overall 1206n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,13)
+time=199.37   927n/sec avgfull=  3.32min preferansRu7 ok
+new algorithm fulltime=199.37, overall 927n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,13)
+time=162.41  1138n/sec avgfull=  2.71min preferansRu7 ok
+new algorithm fulltime=162.41, overall 1138n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,13)
+time=192.46   960n/sec avgfull=  3.21min preferansRu7 ok
+new algorithm fulltime=192.46, overall 960n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,13)
+time=154.52  1196n/sec avgfull=  2.58min preferansRu7 ok
+new algorithm fulltime=154.52, overall 1196n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,13)
+time=194.84   948n/sec avgfull=  3.25min preferansRu7 ok
+new algorithm fulltime=194.84, overall 948n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,13)
+time=201.93   915n/sec avgfull=  3.37min preferansRu7 ok
+new algorithm fulltime=201.93, overall 915n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,14)
+time=139.31  1326n/sec avgfull=  2.32min preferansRu7 ok
+new algorithm fulltime=139.31, overall 1326n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,13)
+time=193.85   953n/sec avgfull=  3.23min preferansRu7 ok
+new algorithm fulltime=193.85, overall 953n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,13)
+time=163.40  1131n/sec avgfull=  2.72min preferansRu7 ok
+new algorithm fulltime=163.40, overall 1131n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,14)
+time=126.92  1456n/sec avgfull=  2.12min preferansRu7 ok
+new algorithm fulltime=126.92, overall 1456n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,14)
+time=198.76   930n/sec avgfull=  3.31min preferansRu7 ok
+new algorithm fulltime=198.76, overall 930n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,14)
+time=140.64  1314n/sec avgfull=  2.34min preferansRu7 ok
+new algorithm fulltime=140.64, overall 1314n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,14)
+time=221.25   835n/sec avgfull=  3.69min preferansRu7 ok
+new algorithm fulltime=221.25, overall 835n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,14)
+time=127.98  1444n/sec avgfull=  2.13min preferansRu7 ok
+new algorithm fulltime=127.98, overall 1444n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,14)
+time=201.19   918n/sec avgfull=  3.35min preferansRu7 ok
+new algorithm fulltime=201.19, overall 918n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,14)
+time=224.46   823n/sec avgfull=  3.74min preferansRu7 ok
+new algorithm fulltime=224.46, overall 823n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,14)
+time=142.01  1301n/sec avgfull=  2.37min preferansRu7 ok
+new algorithm fulltime=142.01, overall 1301n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,15)
+time=161.44  1144n/sec avgfull=  2.69min preferansRu7 ok
+new algorithm fulltime=161.44, overall 1144n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,14)
+time=199.97   924n/sec avgfull=  3.33min preferansRu7 ok
+new algorithm fulltime=199.97, overall 924n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,15)
+time=154.49  1196n/sec avgfull=  2.57min preferansRu7 ok
+new algorithm fulltime=154.49, overall 1196n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,15)
+time=192.98   957n/sec avgfull=  3.22min preferansRu7 ok
+new algorithm fulltime=192.98, overall 957n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,15)
+time=190.63   969n/sec avgfull=  3.18min preferansRu7 ok
+new algorithm fulltime=190.63, overall 969n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,15)
+time=162.24  1139n/sec avgfull=  2.70min preferansRu7 ok
+new algorithm fulltime=162.24, overall 1139n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,15)
+time=192.51   960n/sec avgfull=  3.21min preferansRu7 ok
+new algorithm fulltime=192.51, overall 960n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,15)
+time=156.06  1184n/sec avgfull=  2.60min preferansRu7 ok
+new algorithm fulltime=156.06, overall 1184n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,15)
+time=195.33   946n/sec avgfull=  3.26min preferansRu7 ok
+new algorithm fulltime=195.33, overall 946n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,15)
+time=191.51   965n/sec avgfull=  3.19min preferansRu7 ok
+new algorithm fulltime=191.51, overall 965n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,16)
+time=139.88  1321n/sec avgfull=  2.33min preferansRu7 ok
+new algorithm fulltime=139.88, overall 1321n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,15)
+time=163.20  1132n/sec avgfull=  2.72min preferansRu7 ok
+new algorithm fulltime=163.20, overall 1132n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,16)
+time=127.33  1451n/sec avgfull=  2.12min preferansRu7 ok
+new algorithm fulltime=127.33, overall 1451n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,16)
+time=141.61  1305n/sec avgfull=  2.36min preferansRu7 ok
+new algorithm fulltime=141.61, overall 1305n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,16)
+time=222.50   830n/sec avgfull=  3.71min preferansRu7 ok
+new algorithm fulltime=222.50, overall 830n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,16)
+time=199.98   924n/sec avgfull=  3.33min preferansRu7 ok
+new algorithm fulltime=199.98, overall 924n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,16)
+time=129.10  1431n/sec avgfull=  2.15min preferansRu7 ok
+new algorithm fulltime=129.10, overall 1431n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,16)
+time=203.11   910n/sec avgfull=  3.39min preferansRu7 ok
+new algorithm fulltime=203.11, overall 910n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,16)
+time=226.00   817n/sec avgfull=  3.77min preferansRu7 ok
+new algorithm fulltime=226.00, overall 817n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,16)
+time=142.36  1298n/sec avgfull=  2.37min preferansRu7 ok
+new algorithm fulltime=142.36, overall 1298n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,17)
+time=161.22  1146n/sec avgfull=  2.69min preferansRu7 ok
+new algorithm fulltime=161.22, overall 1146n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,16)
+time=201.02   919n/sec avgfull=  3.35min preferansRu7 ok
+new algorithm fulltime=201.02, overall 919n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,17)
+time=153.64  1203n/sec avgfull=  2.56min preferansRu7 ok
+new algorithm fulltime=153.64, overall 1203n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,17)
+time=199.90   924n/sec avgfull=  3.33min preferansRu7 ok
+new algorithm fulltime=199.90, overall 924n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,17)
+time=193.08   957n/sec avgfull=  3.22min preferansRu7 ok
+new algorithm fulltime=193.08, overall 957n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,17)
+time=162.81  1135n/sec avgfull=  2.71min preferansRu7 ok
+new algorithm fulltime=162.81, overall 1135n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,17)
+time=195.80   944n/sec avgfull=  3.26min preferansRu7 ok
+new algorithm fulltime=195.80, overall 944n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,17)
+time=155.59  1187n/sec avgfull=  2.59min preferansRu7 ok
+new algorithm fulltime=155.59, overall 1187n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,18)
+time= 76.12  2427n/sec avgfull=  1.27min preferansRu7 ok
+new algorithm fulltime=76.12, overall 2427n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,17)
+time=202.56   912n/sec avgfull=  3.38min preferansRu7 ok
+new algorithm fulltime=202.56, overall 912n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,18)
+time= 70.56  2618n/sec avgfull=  1.18min preferansRu7 ok
+new algorithm fulltime=70.56, overall 2618n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,17)
+time=193.85   953n/sec avgfull=  3.23min preferansRu7 ok
+new algorithm fulltime=193.85, overall 953n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,17)
+time=163.56  1130n/sec avgfull=  2.73min preferansRu7 ok
+new algorithm fulltime=163.56, overall 1130n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,18)
+time= 76.94  2401n/sec avgfull=  1.28min preferansRu7 ok
+new algorithm fulltime=76.94, overall 2401n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,18)
+time=113.38  1630n/sec avgfull=  1.89min preferansRu7 ok
+new algorithm fulltime=113.38, overall 1630n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,18)
+time=128.17  1441n/sec avgfull=  2.14min preferansRu7 ok
+new algorithm fulltime=128.17, overall 1441n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,18)
+time= 70.48  2621n/sec avgfull=  1.17min preferansRu7 ok
+new algorithm fulltime=70.48, overall 2621n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,18)
+time=115.29  1603n/sec avgfull=  1.92min preferansRu7 ok
+new algorithm fulltime=115.29, overall 1603n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,18)
+time= 77.53  2383n/sec avgfull=  1.29min preferansRu7 ok
+new algorithm fulltime=77.53, overall 2383n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,18)
+time=129.81  1423n/sec avgfull=  2.16min preferansRu7 ok
+new algorithm fulltime=129.81, overall 1423n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,18)
+time=113.65  1626n/sec avgfull=  1.89min preferansRu7 ok
+new algorithm fulltime=113.65, overall 1626n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,19)
+time=106.63  1733n/sec avgfull=  1.78min preferansRu7 ok
+new algorithm fulltime=106.63, overall 1733n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,19)
+time=129.21  1430n/sec avgfull=  2.15min preferansRu7 ok
+new algorithm fulltime=129.21, overall 1430n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,19)
+time=101.56  1819n/sec avgfull=  1.69min preferansRu7 ok
+new algorithm fulltime=101.56, overall 1819n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,19)
+time=106.95  1728n/sec avgfull=  1.78min preferansRu7 ok
+new algorithm fulltime=106.95, overall 1728n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,19)
+time=123.97  1490n/sec avgfull=  2.07min preferansRu7 ok
+new algorithm fulltime=123.97, overall 1490n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,19)
+time=125.98  1467n/sec avgfull=  2.10min preferansRu7 ok
+new algorithm fulltime=125.98, overall 1467n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,19)
+time=131.57  1404n/sec avgfull=  2.19min preferansRu7 ok
+new algorithm fulltime=131.57, overall 1404n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,19)
+time=101.84  1814n/sec avgfull=  1.70min preferansRu7 ok
+new algorithm fulltime=101.84, overall 1814n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,20)
+time= 79.04  2338n/sec avgfull=  1.32min preferansRu7 ok
+new algorithm fulltime=79.04, overall 2338n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,19)
+time=125.13  1477n/sec avgfull=  2.09min preferansRu7 ok
+new algorithm fulltime=125.13, overall 1477n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,19)
+time=107.45  1719n/sec avgfull=  1.79min preferansRu7 ok
+new algorithm fulltime=107.45, overall 1719n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,20)
+time= 72.25  2557n/sec avgfull=  1.20min preferansRu7 ok
+new algorithm fulltime=72.25, overall 2557n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,20)
+time=133.91  1380n/sec avgfull=  2.23min preferansRu7 ok
+new algorithm fulltime=133.91, overall 1380n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,20)
+time= 79.72  2317n/sec avgfull=  1.33min preferansRu7 ok
+new algorithm fulltime=79.72, overall 2317n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,20)
+time= 72.67  2542n/sec avgfull=  1.21min preferansRu7 ok
+new algorithm fulltime=72.67, overall 2542n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,20)
+time=117.83  1568n/sec avgfull=  1.96min preferansRu7 ok
+new algorithm fulltime=117.83, overall 1568n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,20)
+time=120.16  1538n/sec avgfull=  2.00min preferansRu7 ok
+new algorithm fulltime=120.16, overall 1538n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,20)
+time=135.85  1360n/sec avgfull=  2.26min preferansRu7 ok
+new algorithm fulltime=135.85, overall 1360n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,20)
+time= 80.16  2305n/sec avgfull=  1.34min preferansRu7 ok
+new algorithm fulltime=80.16, overall 2305n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,20)
+time=118.38  1561n/sec avgfull=  1.97min preferansRu7 ok
+new algorithm fulltime=118.38, overall 1561n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,21)
+time=105.28  1755n/sec avgfull=  1.75min preferansRu7 ok
+new algorithm fulltime=105.28, overall 1755n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,21)
+time=123.83  1492n/sec avgfull=  2.06min preferansRu7 ok
+new algorithm fulltime=123.83, overall 1492n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,21)
+time=101.79  1815n/sec avgfull=  1.70min preferansRu7 ok
+new algorithm fulltime=101.79, overall 1815n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,21)
+time=105.83  1746n/sec avgfull=  1.76min preferansRu7 ok
+new algorithm fulltime=105.83, overall 1746n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,21)
+time=121.58  1520n/sec avgfull=  2.03min preferansRu7 ok
+new algorithm fulltime=121.58, overall 1520n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,21)
+time=122.60  1507n/sec avgfull=  2.04min preferansRu7 ok
+new algorithm fulltime=122.60, overall 1507n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,21)
+time=102.24  1807n/sec avgfull=  1.70min preferansRu7 ok
+new algorithm fulltime=102.24, overall 1807n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,21)
+time=124.54  1483n/sec avgfull=  2.08min preferansRu7 ok
+new algorithm fulltime=124.54, overall 1483n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,22)
+time= 79.41  2327n/sec avgfull=  1.32min preferansRu7 ok
+new algorithm fulltime=79.41, overall 2327n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,21)
+time=122.68  1506n/sec avgfull=  2.04min preferansRu7 ok
+new algorithm fulltime=122.68, overall 1506n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,21)
+time=106.33  1738n/sec avgfull=  1.77min preferansRu7 ok
+new algorithm fulltime=106.33, overall 1738n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,22)
+time= 72.77  2539n/sec avgfull=  1.21min preferansRu7 ok
+new algorithm fulltime=72.77, overall 2539n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,22)
+time= 80.25  2302n/sec avgfull=  1.34min preferansRu7 ok
+new algorithm fulltime=80.25, overall 2302n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,22)
+time=134.94  1369n/sec avgfull=  2.25min preferansRu7 ok
+new algorithm fulltime=134.94, overall 1369n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,22)
+time=118.64  1557n/sec avgfull=  1.98min preferansRu7 ok
+new algorithm fulltime=118.64, overall 1557n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,22)
+time=121.11  1525n/sec avgfull=  2.02min preferansRu7 ok
+new algorithm fulltime=121.11, overall 1525n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,22)
+time= 73.67  2508n/sec avgfull=  1.23min preferansRu7 ok
+new algorithm fulltime=73.67, overall 2508n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,22)
+time=137.01  1349n/sec avgfull=  2.28min preferansRu7 ok
+new algorithm fulltime=137.01, overall 1349n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,22)
+time= 80.95  2282n/sec avgfull=  1.35min preferansRu7 ok
+new algorithm fulltime=80.95, overall 2282n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,22)
+time=120.19  1537n/sec avgfull=  2.00min preferansRu7 ok
+new algorithm fulltime=120.19, overall 1537n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,23)
+time=106.37  1737n/sec avgfull=  1.77min preferansRu7 ok
+new algorithm fulltime=106.37, overall 1737n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,23)
+time=100.95  1830n/sec avgfull=  1.68min preferansRu7 ok
+new algorithm fulltime=100.95, overall 1830n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,23)
+time=129.39  1428n/sec avgfull=  2.16min preferansRu7 ok
+new algorithm fulltime=129.39, overall 1428n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,23)
+time=106.23  1739n/sec avgfull=  1.77min preferansRu7 ok
+new algorithm fulltime=106.23, overall 1739n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,23)
+time=123.45  1497n/sec avgfull=  2.06min preferansRu7 ok
+new algorithm fulltime=123.45, overall 1497n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,23)
+time=125.13  1477n/sec avgfull=  2.09min preferansRu7 ok
+new algorithm fulltime=125.13, overall 1477n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,23)
+time=101.46  1821n/sec avgfull=  1.69min preferansRu7 ok
+new algorithm fulltime=101.46, overall 1821n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,23)
+time=130.50  1416n/sec avgfull=  2.17min preferansRu7 ok
+new algorithm fulltime=130.50, overall 1416n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,23)
+time=124.32  1486n/sec avgfull=  2.07min preferansRu7 ok
+new algorithm fulltime=124.32, overall 1486n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,23)
+time=106.96  1727n/sec avgfull=  1.78min preferansRu7 ok
+new algorithm fulltime=106.96, overall 1727n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,24)
+time=113.11  1633n/sec avgfull=  1.89min preferansRu7 ok
+new algorithm fulltime=113.11, overall 1633n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,24)
+time=105.33  1754n/sec avgfull=  1.76min preferansRu7 ok
+new algorithm fulltime=105.33, overall 1754n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,24)
+time=115.09  1605n/sec avgfull=  1.92min preferansRu7 ok
+new algorithm fulltime=115.09, overall 1605n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,24)
+time=159.09  1161n/sec avgfull=  2.65min preferansRu7 ok
+new algorithm fulltime=159.09, overall 1161n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,24)
+time=177.71  1040n/sec avgfull=  2.96min preferansRu7 ok
+new algorithm fulltime=177.71, overall 1040n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,24)
+time=106.21  1740n/sec avgfull=  1.77min preferansRu7 ok
+new algorithm fulltime=106.21, overall 1740n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,24)
+time=160.81  1149n/sec avgfull=  2.68min preferansRu7 ok
+new algorithm fulltime=160.81, overall 1149n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,24)
+time=180.24  1025n/sec avgfull=  3.00min preferansRu7 ok
+new algorithm fulltime=180.24, overall 1025n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,24)
+time=115.16  1604n/sec avgfull=  1.92min preferansRu7 ok
+new algorithm fulltime=115.16, overall 1604n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,25)
+time=138.91  1330n/sec avgfull=  2.32min preferansRu7 ok
+new algorithm fulltime=138.91, overall 1330n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,24)
+time=159.98  1155n/sec avgfull=  2.67min preferansRu7 ok
+new algorithm fulltime=159.98, overall 1155n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,25)
+time=132.26  1397n/sec avgfull=  2.20min preferansRu7 ok
+new algorithm fulltime=132.26, overall 1397n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,25)
+time=169.51  1090n/sec avgfull=  2.83min preferansRu7 ok
+new algorithm fulltime=169.51, overall 1090n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,25)
+time=161.97  1141n/sec avgfull=  2.70min preferansRu7 ok
+new algorithm fulltime=161.97, overall 1141n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,25)
+time=140.02  1320n/sec avgfull=  2.33min preferansRu7 ok
+new algorithm fulltime=140.02, overall 1320n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,25)
+time=164.59  1123n/sec avgfull=  2.74min preferansRu7 ok
+new algorithm fulltime=164.59, overall 1123n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,25)
+time=133.27  1386n/sec avgfull=  2.22min preferansRu7 ok
+new algorithm fulltime=133.27, overall 1386n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,25)
+time=171.91  1075n/sec avgfull=  2.87min preferansRu7 ok
+new algorithm fulltime=171.91, overall 1075n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,26)
+time=118.41  1560n/sec avgfull=  1.97min preferansRu7 ok
+new algorithm fulltime=118.41, overall 1560n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,25)
+time=163.76  1128n/sec avgfull=  2.73min preferansRu7 ok
+new algorithm fulltime=163.76, overall 1128n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,25)
+time=140.74  1313n/sec avgfull=  2.35min preferansRu7 ok
+new algorithm fulltime=140.74, overall 1313n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,26)
+time=109.31  1690n/sec avgfull=  1.82min preferansRu7 ok
+new algorithm fulltime=109.31, overall 1690n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,26)
+time=119.86  1541n/sec avgfull=  2.00min preferansRu7 ok
+new algorithm fulltime=119.86, overall 1541n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,26)
+time=187.90   983n/sec avgfull=  3.13min preferansRu7 ok
+new algorithm fulltime=187.90, overall 983n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,26)
+time=167.88  1100n/sec avgfull=  2.80min preferansRu7 ok
+new algorithm fulltime=167.88, overall 1100n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,26)
+time=110.20  1676n/sec avgfull=  1.84min preferansRu7 ok
+new algorithm fulltime=110.20, overall 1676n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,26)
+time=169.56  1090n/sec avgfull=  2.83min preferansRu7 ok
+new algorithm fulltime=169.56, overall 1090n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,26)
+time=190.91   968n/sec avgfull=  3.18min preferansRu7 ok
+new algorithm fulltime=190.91, overall 968n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,26)
+time=120.56  1532n/sec avgfull=  2.01min preferansRu7 ok
+new algorithm fulltime=120.56, overall 1532n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,27)
+time=139.70  1323n/sec avgfull=  2.33min preferansRu7 ok
+new algorithm fulltime=139.70, overall 1323n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,26)
+time=168.59  1096n/sec avgfull=  2.81min preferansRu7 ok
+new algorithm fulltime=168.59, overall 1096n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,27)
+time=134.55  1373n/sec avgfull=  2.24min preferansRu7 ok
+new algorithm fulltime=134.55, overall 1373n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,27)
+time=165.16  1119n/sec avgfull=  2.75min preferansRu7 ok
+new algorithm fulltime=165.16, overall 1119n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,27)
+time=161.67  1143n/sec avgfull=  2.69min preferansRu7 ok
+new algorithm fulltime=161.67, overall 1143n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,27)
+time=140.74  1313n/sec avgfull=  2.35min preferansRu7 ok
+new algorithm fulltime=140.74, overall 1313n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,27)
+time=164.23  1125n/sec avgfull=  2.74min preferansRu7 ok
+new algorithm fulltime=164.23, overall 1125n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,27)
+time=136.97  1349n/sec avgfull=  2.28min preferansRu7 ok
+new algorithm fulltime=136.97, overall 1349n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,27)
+time=168.03  1100n/sec avgfull=  2.80min preferansRu7 ok
+new algorithm fulltime=168.03, overall 1100n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,27)
+time=163.24  1132n/sec avgfull=  2.72min preferansRu7 ok
+new algorithm fulltime=163.24, overall 1132n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,27)
+time=141.91  1302n/sec avgfull=  2.37min preferansRu7 ok
+new algorithm fulltime=141.91, overall 1302n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,28)
+time=120.17  1538n/sec avgfull=  2.00min preferansRu7 ok
+new algorithm fulltime=120.17, overall 1538n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,28)
+time=111.20  1661n/sec avgfull=  1.85min preferansRu7 ok
+new algorithm fulltime=111.20, overall 1661n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,28)
+time=122.48  1508n/sec avgfull=  2.04min preferansRu7 ok
+new algorithm fulltime=122.48, overall 1508n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,28)
+time=192.31   961n/sec avgfull=  3.21min preferansRu7 ok
+new algorithm fulltime=192.31, overall 961n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,28)
+time=169.96  1087n/sec avgfull=  2.83min preferansRu7 ok
+new algorithm fulltime=169.96, overall 1087n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,28)
+time=112.53  1642n/sec avgfull=  1.88min preferansRu7 ok
+new algorithm fulltime=112.53, overall 1642n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,28)
+time=172.57  1071n/sec avgfull=  2.88min preferansRu7 ok
+new algorithm fulltime=172.57, overall 1071n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,28)
+time=194.01   952n/sec avgfull=  3.23min preferansRu7 ok
+new algorithm fulltime=194.01, overall 952n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,28)
+time=122.54  1508n/sec avgfull=  2.04min preferansRu7 ok
+new algorithm fulltime=122.54, overall 1508n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,29)
+time=140.24  1317n/sec avgfull=  2.34min preferansRu7 ok
+new algorithm fulltime=140.24, overall 1317n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,28)
+time=171.11  1080n/sec avgfull=  2.85min preferansRu7 ok
+new algorithm fulltime=171.11, overall 1080n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,29)
+time=134.20  1377n/sec avgfull=  2.24min preferansRu7 ok
+new algorithm fulltime=134.20, overall 1377n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,29)
+time=171.64  1076n/sec avgfull=  2.86min preferansRu7 ok
+new algorithm fulltime=171.64, overall 1076n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,29)
+time=163.15  1132n/sec avgfull=  2.72min preferansRu7 ok
+new algorithm fulltime=163.15, overall 1132n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,29)
+time=141.92  1302n/sec avgfull=  2.37min preferansRu7 ok
+new algorithm fulltime=141.92, overall 1302n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,29)
+time=166.84  1107n/sec avgfull=  2.78min preferansRu7 ok
+new algorithm fulltime=166.84, overall 1107n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,29)
+time=134.97  1369n/sec avgfull=  2.25min preferansRu7 ok
+new algorithm fulltime=134.97, overall 1369n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,29)
+time=173.19  1067n/sec avgfull=  2.89min preferansRu7 ok
+new algorithm fulltime=173.19, overall 1067n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,30)
+time= 76.22  2424n/sec avgfull=  1.27min preferansRu7 ok
+new algorithm fulltime=76.22, overall 2424n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,29)
+time=140.99  1310n/sec avgfull=  2.35min preferansRu7 ok
+new algorithm fulltime=140.99, overall 1310n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,29)
+time=165.04  1119n/sec avgfull=  2.75min preferansRu7 ok
+new algorithm fulltime=165.04, overall 1119n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,30)
+time= 69.62  2654n/sec avgfull=  1.16min preferansRu7 ok
+new algorithm fulltime=69.62, overall 2654n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,30)
+time= 76.90  2403n/sec avgfull=  1.28min preferansRu7 ok
+new algorithm fulltime=76.90, overall 2403n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,30)
+time=127.42  1450n/sec avgfull=  2.12min preferansRu7 ok
+new algorithm fulltime=127.42, overall 1450n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,30)
+time=112.59  1641n/sec avgfull=  1.88min preferansRu7 ok
+new algorithm fulltime=112.59, overall 1641n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,30)
+time= 70.58  2618n/sec avgfull=  1.18min preferansRu7 ok
+new algorithm fulltime=70.58, overall 2618n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,30)
+time=114.43  1615n/sec avgfull=  1.91min preferansRu7 ok
+new algorithm fulltime=114.43, overall 1615n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,30)
+time=128.68  1436n/sec avgfull=  2.14min preferansRu7 ok
+new algorithm fulltime=128.68, overall 1436n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,30)
+time= 77.08  2397n/sec avgfull=  1.28min preferansRu7 ok
+new algorithm fulltime=77.08, overall 2397n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,30)
+time=113.57  1627n/sec avgfull=  1.89min preferansRu7 ok
+new algorithm fulltime=113.57, overall 1627n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,31)
+time=105.37  1753n/sec avgfull=  1.76min preferansRu7 ok
+new algorithm fulltime=105.37, overall 1753n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,31)
+time=128.53  1437n/sec avgfull=  2.14min preferansRu7 ok
+new algorithm fulltime=128.53, overall 1437n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,31)
+time=100.53  1838n/sec avgfull=  1.68min preferansRu7 ok
+new algorithm fulltime=100.53, overall 1838n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,31)
+time=106.32  1738n/sec avgfull=  1.77min preferansRu7 ok
+new algorithm fulltime=106.32, overall 1738n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,31)
+time=123.61  1495n/sec avgfull=  2.06min preferansRu7 ok
+new algorithm fulltime=123.61, overall 1495n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,31)
+time=125.52  1472n/sec avgfull=  2.09min preferansRu7 ok
+new algorithm fulltime=125.52, overall 1472n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,31)
+time=130.53  1415n/sec avgfull=  2.18min preferansRu7 ok
+new algorithm fulltime=130.53, overall 1415n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,31)
+time=100.85  1832n/sec avgfull=  1.68min preferansRu7 ok
+new algorithm fulltime=100.85, overall 1832n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,32)
+time= 78.88  2342n/sec avgfull=  1.31min preferansRu7 ok
+new algorithm fulltime=78.88, overall 2342n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,31)
+time=124.30  1486n/sec avgfull=  2.07min preferansRu7 ok
+new algorithm fulltime=124.30, overall 1486n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,31)
+time=106.72  1731n/sec avgfull=  1.78min preferansRu7 ok
+new algorithm fulltime=106.72, overall 1731n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,32)
+time= 72.20  2559n/sec avgfull=  1.20min preferansRu7 ok
+new algorithm fulltime=72.20, overall 2559n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,32)
+time=133.79  1381n/sec avgfull=  2.23min preferansRu7 ok
+new algorithm fulltime=133.79, overall 1381n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,32)
+time= 79.81  2315n/sec avgfull=  1.33min preferansRu7 ok
+new algorithm fulltime=79.81, overall 2315n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,32)
+time=117.55  1572n/sec avgfull=  1.96min preferansRu7 ok
+new algorithm fulltime=117.55, overall 1572n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,32)
+time= 72.60  2545n/sec avgfull=  1.21min preferansRu7 ok
+new algorithm fulltime=72.60, overall 2545n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,32)
+time=119.40  1547n/sec avgfull=  1.99min preferansRu7 ok
+new algorithm fulltime=119.40, overall 1547n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,32)
+time=135.16  1367n/sec avgfull=  2.25min preferansRu7 ok
+new algorithm fulltime=135.16, overall 1367n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,32)
+time= 80.18  2304n/sec avgfull=  1.34min preferansRu7 ok
+new algorithm fulltime=80.18, overall 2304n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,32)
+time=118.52  1559n/sec avgfull=  1.98min preferansRu7 ok
+new algorithm fulltime=118.52, overall 1559n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,33)
+time=104.87  1762n/sec avgfull=  1.75min preferansRu7 ok
+new algorithm fulltime=104.87, overall 1762n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,33)
+time=101.24  1825n/sec avgfull=  1.69min preferansRu7 ok
+new algorithm fulltime=101.24, overall 1825n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,33)
+time=123.18  1500n/sec avgfull=  2.05min preferansRu7 ok
+new algorithm fulltime=123.18, overall 1500n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,33)
+time=105.63  1749n/sec avgfull=  1.76min preferansRu7 ok
+new algorithm fulltime=105.63, overall 1749n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,33)
+time=121.47  1521n/sec avgfull=  2.02min preferansRu7 ok
+new algorithm fulltime=121.47, overall 1521n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,33)
+time=123.02  1502n/sec avgfull=  2.05min preferansRu7 ok
+new algorithm fulltime=123.02, overall 1502n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,33)
+time=124.31  1486n/sec avgfull=  2.07min preferansRu7 ok
+new algorithm fulltime=124.31, overall 1486n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,33)
+time=102.13  1809n/sec avgfull=  1.70min preferansRu7 ok
+new algorithm fulltime=102.13, overall 1809n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,34)
+time= 79.44  2326n/sec avgfull=  1.32min preferansRu7 ok
+new algorithm fulltime=79.44, overall 2326n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,33)
+time=122.03  1514n/sec avgfull=  2.03min preferansRu7 ok
+new algorithm fulltime=122.03, overall 1514n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,33)
+time=106.79  1730n/sec avgfull=  1.78min preferansRu7 ok
+new algorithm fulltime=106.79, overall 1730n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,34)
+time= 72.72  2541n/sec avgfull=  1.21min preferansRu7 ok
+new algorithm fulltime=72.72, overall 2541n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,34)
+time= 80.47  2296n/sec avgfull=  1.34min preferansRu7 ok
+new algorithm fulltime=80.47, overall 2296n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,34)
+time=119.14  1551n/sec avgfull=  1.99min preferansRu7 ok
+new algorithm fulltime=119.14, overall 1551n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,34)
+time=135.23  1366n/sec avgfull=  2.25min preferansRu7 ok
+new algorithm fulltime=135.23, overall 1366n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,34)
+time= 73.14  2526n/sec avgfull=  1.22min preferansRu7 ok
+new algorithm fulltime=73.14, overall 2526n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,34)
+time=120.78  1530n/sec avgfull=  2.01min preferansRu7 ok
+new algorithm fulltime=120.78, overall 1530n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,34)
+time=137.09  1348n/sec avgfull=  2.28min preferansRu7 ok
+new algorithm fulltime=137.09, overall 1348n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,34)
+time= 81.07  2279n/sec avgfull=  1.35min preferansRu7 ok
+new algorithm fulltime=81.07, overall 2279n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,34)
+time=119.92  1541n/sec avgfull=  2.00min preferansRu7 ok
+new algorithm fulltime=119.92, overall 1541n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,35)
+time=106.47  1735n/sec avgfull=  1.77min preferansRu7 ok
+new algorithm fulltime=106.47, overall 1735n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,35)
+time=101.08  1828n/sec avgfull=  1.68min preferansRu7 ok
+new algorithm fulltime=101.08, overall 1828n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,35)
+time=128.85  1434n/sec avgfull=  2.15min preferansRu7 ok
+new algorithm fulltime=128.85, overall 1434n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,35)
+time=123.83  1492n/sec avgfull=  2.06min preferansRu7 ok
+new algorithm fulltime=123.83, overall 1492n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,35)
+time=106.64  1733n/sec avgfull=  1.78min preferansRu7 ok
+new algorithm fulltime=106.64, overall 1733n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,35)
+time=101.53  1820n/sec avgfull=  1.69min preferansRu7 ok
+new algorithm fulltime=101.53, overall 1820n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,35)
+time=125.53  1472n/sec avgfull=  2.09min preferansRu7 ok
+new algorithm fulltime=125.53, overall 1472n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,35)
+time=130.91  1411n/sec avgfull=  2.18min preferansRu7 ok
+new algorithm fulltime=130.91, overall 1411n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,36)
+time= 73.80  2504n/sec avgfull=  1.23min preferansRu7 ok
+new algorithm fulltime=73.80, overall 2504n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,35)
+time=124.16  1488n/sec avgfull=  2.07min preferansRu7 ok
+new algorithm fulltime=124.16, overall 1488n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,35)
+time=107.21  1723n/sec avgfull=  1.79min preferansRu7 ok
+new algorithm fulltime=107.21, overall 1723n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,36)
+time= 67.96  2718n/sec avgfull=  1.13min preferansRu7 ok
+new algorithm fulltime=67.96, overall 2718n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,36)
+time= 74.91  2466n/sec avgfull=  1.25min preferansRu7 ok
+new algorithm fulltime=74.91, overall 2466n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,36)
+time=110.24  1676n/sec avgfull=  1.84min preferansRu7 ok
+new algorithm fulltime=110.24, overall 1676n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,36)
+time=124.23  1487n/sec avgfull=  2.07min preferansRu7 ok
+new algorithm fulltime=124.23, overall 1487n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,36)
+time= 68.66  2691n/sec avgfull=  1.14min preferansRu7 ok
+new algorithm fulltime=68.66, overall 2691n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,36)
+time=111.60  1655n/sec avgfull=  1.86min preferansRu7 ok
+new algorithm fulltime=111.60, overall 1655n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,36)
+time=125.82  1468n/sec avgfull=  2.10min preferansRu7 ok
+new algorithm fulltime=125.82, overall 1468n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,36)
+time= 75.15  2459n/sec avgfull=  1.25min preferansRu7 ok
+new algorithm fulltime=75.15, overall 2459n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,36)
+time=110.44  1673n/sec avgfull=  1.84min preferansRu7 ok
+new algorithm fulltime=110.44, overall 1673n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,37)
+time=104.04  1776n/sec avgfull=  1.73min preferansRu7 ok
+new algorithm fulltime=104.04, overall 1776n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,37)
+time= 99.05  1865n/sec avgfull=  1.65min preferansRu7 ok
+new algorithm fulltime=99.05, overall 1865n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,37)
+time=126.70  1458n/sec avgfull=  2.11min preferansRu7 ok
+new algorithm fulltime=126.70, overall 1458n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,37)
+time=104.84  1762n/sec avgfull=  1.75min preferansRu7 ok
+new algorithm fulltime=104.84, overall 1762n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,37)
+time=121.85  1516n/sec avgfull=  2.03min preferansRu7 ok
+new algorithm fulltime=121.85, overall 1516n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,37)
+time=123.13  1501n/sec avgfull=  2.05min preferansRu7 ok
+new algorithm fulltime=123.13, overall 1501n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,37)
+time= 99.71  1853n/sec avgfull=  1.66min preferansRu7 ok
+new algorithm fulltime=99.71, overall 1853n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,37)
+time=128.64  1436n/sec avgfull=  2.14min preferansRu7 ok
+new algorithm fulltime=128.64, overall 1436n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,37)
+time=122.49  1508n/sec avgfull=  2.04min preferansRu7 ok
+new algorithm fulltime=122.49, overall 1508n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,38)
+time= 77.14  2395n/sec avgfull=  1.29min preferansRu7 ok
+new algorithm fulltime=77.14, overall 2395n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,37)
+time=105.46  1752n/sec avgfull=  1.76min preferansRu7 ok
+new algorithm fulltime=105.46, overall 1752n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,38)
+time= 70.84  2608n/sec avgfull=  1.18min preferansRu7 ok
+new algorithm fulltime=70.84, overall 2608n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,38)
+time= 78.31  2359n/sec avgfull=  1.31min preferansRu7 ok
+new algorithm fulltime=78.31, overall 2359n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,38)
+time=131.43  1406n/sec avgfull=  2.19min preferansRu7 ok
+new algorithm fulltime=131.43, overall 1406n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,38)
+time=116.21  1590n/sec avgfull=  1.94min preferansRu7 ok
+new algorithm fulltime=116.21, overall 1590n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,38)
+time= 70.84  2608n/sec avgfull=  1.18min preferansRu7 ok
+new algorithm fulltime=70.84, overall 2608n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,38)
+time=118.26  1562n/sec avgfull=  1.97min preferansRu7 ok
+new algorithm fulltime=118.26, overall 1562n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,38)
+time=134.43  1374n/sec avgfull=  2.24min preferansRu7 ok
+new algorithm fulltime=134.43, overall 1374n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,38)
+time= 78.48  2354n/sec avgfull=  1.31min preferansRu7 ok
+new algorithm fulltime=78.48, overall 2354n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,39)
+time=104.79  1763n/sec avgfull=  1.75min preferansRu7 ok
+new algorithm fulltime=104.79, overall 1763n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,38)
+time=117.39  1574n/sec avgfull=  1.96min preferansRu7 ok
+new algorithm fulltime=117.39, overall 1574n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,39)
+time=100.80  1833n/sec avgfull=  1.68min preferansRu7 ok
+new algorithm fulltime=100.80, overall 1833n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,39)
+time=122.11  1513n/sec avgfull=  2.04min preferansRu7 ok
+new algorithm fulltime=122.11, overall 1513n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,39)
+time=104.36  1770n/sec avgfull=  1.74min preferansRu7 ok
+new algorithm fulltime=104.36, overall 1770n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,39)
+time=120.44  1534n/sec avgfull=  2.01min preferansRu7 ok
+new algorithm fulltime=120.44, overall 1534n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,39)
+time=121.46  1521n/sec avgfull=  2.02min preferansRu7 ok
+new algorithm fulltime=121.46, overall 1521n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,39)
+time=123.23  1499n/sec avgfull=  2.05min preferansRu7 ok
+new algorithm fulltime=123.23, overall 1499n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,39)
+time=100.90  1831n/sec avgfull=  1.68min preferansRu7 ok
+new algorithm fulltime=100.90, overall 1831n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,40)
+time= 78.04  2367n/sec avgfull=  1.30min preferansRu7 ok
+new algorithm fulltime=78.04, overall 2367n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,39)
+time=120.50  1533n/sec avgfull=  2.01min preferansRu7 ok
+new algorithm fulltime=120.50, overall 1533n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,39)
+time=105.20  1756n/sec avgfull=  1.75min preferansRu7 ok
+new algorithm fulltime=105.20, overall 1756n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,40)
+time= 71.31  2591n/sec avgfull=  1.19min preferansRu7 ok
+new algorithm fulltime=71.31, overall 2591n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,40)
+time= 78.86  2343n/sec avgfull=  1.31min preferansRu7 ok
+new algorithm fulltime=78.86, overall 2343n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,40)
+time=117.53  1572n/sec avgfull=  1.96min preferansRu7 ok
+new algorithm fulltime=117.53, overall 1572n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,40)
+time=133.40  1385n/sec avgfull=  2.22min preferansRu7 ok
+new algorithm fulltime=133.40, overall 1385n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,40)
+time= 71.73  2576n/sec avgfull=  1.20min preferansRu7 ok
+new algorithm fulltime=71.73, overall 2576n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,40)
+time=119.32  1548n/sec avgfull=  1.99min preferansRu7 ok
+new algorithm fulltime=119.32, overall 1548n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,40)
+time=134.66  1372n/sec avgfull=  2.24min preferansRu7 ok
+new algorithm fulltime=134.66, overall 1372n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,40)
+time= 79.32  2329n/sec avgfull=  1.32min preferansRu7 ok
+new algorithm fulltime=79.32, overall 2329n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,40)
+time=118.03  1565n/sec avgfull=  1.97min preferansRu7 ok
+new algorithm fulltime=118.03, overall 1565n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,41)
+time=104.62  1766n/sec avgfull=  1.74min preferansRu7 ok
+new algorithm fulltime=104.62, overall 1766n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,41)
+time= 99.38  1859n/sec avgfull=  1.66min preferansRu7 ok
+new algorithm fulltime=99.38, overall 1859n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,41)
+time=127.19  1453n/sec avgfull=  2.12min preferansRu7 ok
+new algorithm fulltime=127.19, overall 1453n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,41)
+time=105.19  1756n/sec avgfull=  1.75min preferansRu7 ok
+new algorithm fulltime=105.19, overall 1756n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,41)
+time=121.98  1515n/sec avgfull=  2.03min preferansRu7 ok
+new algorithm fulltime=121.98, overall 1515n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,41)
+time=124.06  1489n/sec avgfull=  2.07min preferansRu7 ok
+new algorithm fulltime=124.06, overall 1489n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,41)
+time=100.14  1845n/sec avgfull=  1.67min preferansRu7 ok
+new algorithm fulltime=100.14, overall 1845n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,41)
+time=129.05  1432n/sec avgfull=  2.15min preferansRu7 ok
+new algorithm fulltime=129.05, overall 1432n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,41)
+time=123.14  1500n/sec avgfull=  2.05min preferansRu7 ok
+new algorithm fulltime=123.14, overall 1500n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,41)
+time=106.44  1736n/sec avgfull=  1.77min preferansRu7 ok
+new algorithm fulltime=106.44, overall 1736n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,42)
+time=133.98  1379n/sec avgfull=  2.23min preferansRu7 ok
+new algorithm fulltime=133.98, overall 1379n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,42)
+time=122.76  1505n/sec avgfull=  2.05min preferansRu7 ok
+new algorithm fulltime=122.76, overall 1505n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,42)
+time=134.99  1369n/sec avgfull=  2.25min preferansRu7 ok
+new algorithm fulltime=134.99, overall 1369n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,42)
+time=189.34   976n/sec avgfull=  3.16min preferansRu7 ok
+new algorithm fulltime=189.34, overall 976n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,42)
+time=210.00   880n/sec avgfull=  3.50min preferansRu7 ok
+new algorithm fulltime=210.00, overall 880n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,42)
+time=123.66  1494n/sec avgfull=  2.06min preferansRu7 ok
+new algorithm fulltime=123.66, overall 1494n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,42)
+time=191.59   964n/sec avgfull=  3.19min preferansRu7 ok
+new algorithm fulltime=191.59, overall 964n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,42)
+time=212.20   871n/sec avgfull=  3.54min preferansRu7 ok
+new algorithm fulltime=212.20, overall 871n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,42)
+time=135.77  1361n/sec avgfull=  2.26min preferansRu7 ok
+new algorithm fulltime=135.77, overall 1361n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,42)
+time=189.95   973n/sec avgfull=  3.17min preferansRu7 ok
+new algorithm fulltime=189.95, overall 973n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,43)
+time=159.63  1157n/sec avgfull=  2.66min preferansRu7 ok
+new algorithm fulltime=159.63, overall 1157n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,43)
+time=152.17  1214n/sec avgfull=  2.54min preferansRu7 ok
+new algorithm fulltime=152.17, overall 1214n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,43)
+time=197.68   935n/sec avgfull=  3.29min preferansRu7 ok
+new algorithm fulltime=197.68, overall 935n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,43)
+time=161.34  1145n/sec avgfull=  2.69min preferansRu7 ok
+new algorithm fulltime=161.34, overall 1145n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,43)
+time=191.00   967n/sec avgfull=  3.18min preferansRu7 ok
+new algorithm fulltime=191.00, overall 967n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,43)
+time=153.43  1204n/sec avgfull=  2.56min preferansRu7 ok
+new algorithm fulltime=153.43, overall 1204n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,43)
+time=194.07   952n/sec avgfull=  3.23min preferansRu7 ok
+new algorithm fulltime=194.07, overall 952n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,43)
+time=200.83   920n/sec avgfull=  3.35min preferansRu7 ok
+new algorithm fulltime=200.83, overall 920n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,44)
+time=139.91  1321n/sec avgfull=  2.33min preferansRu7 ok
+new algorithm fulltime=139.91, overall 1321n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,43)
+time=192.37   960n/sec avgfull=  3.21min preferansRu7 ok
+new algorithm fulltime=192.37, overall 960n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,43)
+time=162.75  1135n/sec avgfull=  2.71min preferansRu7 ok
+new algorithm fulltime=162.75, overall 1135n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,44)
+time=127.66  1447n/sec avgfull=  2.13min preferansRu7 ok
+new algorithm fulltime=127.66, overall 1447n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,44)
+time=198.35   931n/sec avgfull=  3.31min preferansRu7 ok
+new algorithm fulltime=198.35, overall 931n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,44)
+time=141.45  1306n/sec avgfull=  2.36min preferansRu7 ok
+new algorithm fulltime=141.45, overall 1306n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,44)
+time=221.21   835n/sec avgfull=  3.69min preferansRu7 ok
+new algorithm fulltime=221.21, overall 835n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,44)
+time=128.62  1436n/sec avgfull=  2.14min preferansRu7 ok
+new algorithm fulltime=128.62, overall 1436n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,44)
+time=200.33   922n/sec avgfull=  3.34min preferansRu7 ok
+new algorithm fulltime=200.33, overall 922n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,44)
+time=223.88   825n/sec avgfull=  3.73min preferansRu7 ok
+new algorithm fulltime=223.88, overall 825n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,44)
+time=141.89  1302n/sec avgfull=  2.36min preferansRu7 ok
+new algorithm fulltime=141.89, overall 1302n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,45)
+time=160.50  1151n/sec avgfull=  2.67min preferansRu7 ok
+new algorithm fulltime=160.50, overall 1151n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,44)
+time=199.01   928n/sec avgfull=  3.32min preferansRu7 ok
+new algorithm fulltime=199.01, overall 928n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,45)
+time=153.63  1203n/sec avgfull=  2.56min preferansRu7 ok
+new algorithm fulltime=153.63, overall 1203n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,45)
+time=192.94   958n/sec avgfull=  3.22min preferansRu7 ok
+new algorithm fulltime=192.94, overall 958n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,45)
+time=190.20   971n/sec avgfull=  3.17min preferansRu7 ok
+new algorithm fulltime=190.20, overall 971n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,45)
+time=161.39  1145n/sec avgfull=  2.69min preferansRu7 ok
+new algorithm fulltime=161.39, overall 1145n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,45)
+time=191.92   963n/sec avgfull=  3.20min preferansRu7 ok
+new algorithm fulltime=191.92, overall 963n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,45)
+time=155.00  1192n/sec avgfull=  2.58min preferansRu7 ok
+new algorithm fulltime=155.00, overall 1192n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,45)
+time=194.33   951n/sec avgfull=  3.24min preferansRu7 ok
+new algorithm fulltime=194.33, overall 951n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,45)
+time=191.24   966n/sec avgfull=  3.19min preferansRu7 ok
+new algorithm fulltime=191.24, overall 966n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,46)
+time=140.65  1314n/sec avgfull=  2.34min preferansRu7 ok
+new algorithm fulltime=140.65, overall 1314n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,45)
+time=162.75  1135n/sec avgfull=  2.71min preferansRu7 ok
+new algorithm fulltime=162.75, overall 1135n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,46)
+time=127.85  1445n/sec avgfull=  2.13min preferansRu7 ok
+new algorithm fulltime=127.85, overall 1445n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,46)
+time=142.03  1301n/sec avgfull=  2.37min preferansRu7 ok
+new algorithm fulltime=142.03, overall 1301n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,46)
+time=222.14   832n/sec avgfull=  3.70min preferansRu7 ok
+new algorithm fulltime=222.14, overall 832n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,46)
+time=200.05   924n/sec avgfull=  3.33min preferansRu7 ok
+new algorithm fulltime=200.05, overall 924n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,46)
+time=128.99  1432n/sec avgfull=  2.15min preferansRu7 ok
+new algorithm fulltime=128.99, overall 1432n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,46)
+time=202.10   914n/sec avgfull=  3.37min preferansRu7 ok
+new algorithm fulltime=202.10, overall 914n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,46)
+time=225.66   819n/sec avgfull=  3.76min preferansRu7 ok
+new algorithm fulltime=225.66, overall 819n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(9,46)
+time=143.20  1290n/sec avgfull=  2.39min preferansRu7 ok
+new algorithm fulltime=143.20, overall 1290n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,47)
+time=160.19  1153n/sec avgfull=  2.67min preferansRu7 ok
+new algorithm fulltime=160.19, overall 1153n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(8,46)
+time=201.16   918n/sec avgfull=  3.35min preferansRu7 ok
+new algorithm fulltime=201.16, overall 918n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(2,47)
+time=152.49  1212n/sec avgfull=  2.54min preferansRu7 ok
+new algorithm fulltime=152.49, overall 1212n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(1,47)
+time=198.43   931n/sec avgfull=  3.31min preferansRu7 ok
+new algorithm fulltime=198.43, overall 931n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(3,47)
+time=192.26   961n/sec avgfull=  3.20min preferansRu7 ok
+new algorithm fulltime=192.26, overall 961n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(4,47)
+time=162.33  1138n/sec avgfull=  2.71min preferansRu7 ok
+new algorithm fulltime=162.33, overall 1138n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(5,47)
+time=195.09   947n/sec avgfull=  3.25min preferansRu7 ok
+new algorithm fulltime=195.09, overall 947n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(7,47)
+time=154.29  1197n/sec avgfull=  2.57min preferansRu7 ok
+new algorithm fulltime=154.29, overall 1197n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(0,48)
+time= 76.39  2419n/sec avgfull=  1.27min preferansRu7 ok
+new algorithm fulltime=76.39, overall 2419n/sec
+
+nodes=184,756 only new algorithm only nt, only long nt_params(6,47)
+time=202.41   913n/sec avgfull=  3.37min preferansRu7 ok
+new algorithm fulltime=202.41, overall 913n/sec
+

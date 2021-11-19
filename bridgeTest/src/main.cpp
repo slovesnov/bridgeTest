@@ -440,7 +440,7 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
  * SEARCH_MOVES_PARAMETERS not defined - other modes
  */
 //TODO
-//#define SEARCH_MOVES_PARAMETERS 2
+#define SEARCH_MOVES_PARAMETERS 2
 
 /* TYPE 0 - count nodes
  * TYPE 1 - compare old and new algorithm or count for one of the algorithms
@@ -901,9 +901,9 @@ void printDealDataFromFile(const char* path);
 int main(int argc, char *argv[]) {
 #ifdef SEARCH_MOVES_PARAMETERS
 	int i,upper,thread;
-	std::string s;
+	std::string s,s1,sa;
 	double time,duration;
-	int cores=getNumberOfCores();
+	//int cores=getNumberOfCores();
 	VT v;
 
 	if(argc==1){
@@ -935,11 +935,7 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-#ifdef _WIN32
-	//prevents windows 10 threads sleep
-	//stackoverflow.com/questions/34836406/how-to-prevent-windows-from-going-to-sleep-when-my-c-application-is-running
-	SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_AWAYMODE_REQUIRED);
-#endif
+	preventThreadSleep();
 
 	clock_t begin=clock();
 	while ( (i=getNextProceedValue()) < upper ) {
@@ -964,14 +960,20 @@ int main(int argc, char *argv[]) {
 
 		v.push_back({i,time});
 		duration=timeElapse(begin);
-		/* for i+1 steps take duration, avg time for one step duration/(i+1)
+		/* for i+1 steps take duration, average time for one step duration/(i+1)
 		 * total steps upper so left upper-i-1 steps or duration*(upper-i-1)/(i+1)
-		 * divide on number of cores because runnign cores threads
+		 * not need to divide on number of cores
 		 */
-		s=secondsToString(duration*(upper-i-1)/(i+1)/cores);
-		printf("i=%d %.2lf time %.3lf, left %s\n",i,time,duration,s.c_str());
-
+		s=secondsToString(duration*(upper-i-1)/(i+1));
+		s1=secondsToString(time);
+		sa=format("i=%d %.2lf time %s, left %s\n",i,s1.c_str(),duration,s.c_str());
+		printf(sa.c_str());
 		fflush(stdout);
+
+		s=format("o%d.txt",thread);
+		FILE*f=fopen(s.c_str(),"a");
+		fprintf(f,sa.c_str());
+		fclose(f);
 	}
 
 
