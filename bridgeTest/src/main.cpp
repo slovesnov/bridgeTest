@@ -495,7 +495,7 @@ const int PROBLEM_TYPE=0;
 const int MAX_PROBLEM=10;
 
 //#define SHOW_ACCELERATION
-const bool WRITE_TO_FILE=true;
+const bool WRITE_TO_FILE=0;
 
 #ifdef SEARCH_MOVES_PARAMETERS
 	#define ONLY_LONG_PROBLEMS
@@ -897,12 +897,13 @@ std::vector<int> parseThreeParameters(int i) {
 }
 
 void printDealDataFromFile(const char* path);
+void proceedOFiles();
 
 int main(int argc, char *argv[]) {
 #ifdef SEARCH_MOVES_PARAMETERS
-	int i,upper,thread;
+	int i,upper,thread,start;
 	std::string s,s1,sa;
-	double time,duration;
+	double time,durationTotal=0;
 	//int cores=getNumberOfCores();
 	VT v;
 
@@ -911,16 +912,19 @@ int main(int argc, char *argv[]) {
 //		fflush(stdout);
 //		time=routine(true);
 //		printl(time);
-		proceedResultFile();
+		proceedOFiles();
+		//proceedResultFile();
 		return 0;
 	}
 
-	if(argc!=2){
-		printl("error argc!=2");
+	if(argc!=3){
+		printl("error argc!=3");
 		return 0;
 	}
 
 	thread=atoi(argv[1]);
+	start=atoi(argv[2]);
+	printv(thread,start)
 
 	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_NT || SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_MISERE){
 		upper = MOVES_ONE_SUIT_OPTIONS * MOVES_MANY_SUITS_OPTIONS_NT
@@ -937,7 +941,6 @@ int main(int argc, char *argv[]) {
 
 	preventThreadSleep();
 
-	clock_t begin=clock();
 	while ( (i=getNextProceedValue()) < upper ) {
 		if (PROBLEM_TYPE == 2) {
 			auto p=parseTwoParameters(i);
@@ -959,14 +962,14 @@ int main(int argc, char *argv[]) {
 		time=routine(true);
 
 		v.push_back({i,time});
-		duration=timeElapse(begin);
-		/* for i+1 steps take duration, average time for one step duration/(i+1)
-		 * total steps upper so left upper-i-1 steps or duration*(upper-i-1)/(i+1)
+		durationTotal+=time;
+		/* for i+1-start steps take durationTotal, average time for one step durationTotal/(i+1-start)
+		 * total steps upper-start so left upper-i-1 steps or durationTotal*(upper-i-1)/(i+1-start)
 		 * not need to divide on number of cores
 		 */
-		s=secondsToString(duration*(upper-i-1)/(i+1));
+		s=secondsToString(durationTotal*(upper-i-1)/(i+1-start));
 		s1=secondsToString(time);
-		sa=format("i=%d %.2lf time %s, left %s\n",i,s1.c_str(),duration,s.c_str());
+		sa=format("i=%d %.3lf time %s, left %s\n",i,time,s1.c_str(),s.c_str());
 		printf(sa.c_str());
 		fflush(stdout);
 
@@ -975,6 +978,7 @@ int main(int argc, char *argv[]) {
 		fprintf(f,sa.c_str());
 		fclose(f);
 	}
+	printv(i,upper)
 
 
 	FILE*f=openSharedFile(SHARED_FILE_NAME_RESULTS,"a");
@@ -1552,5 +1556,65 @@ l1539:
 
 			//printzi("#",s.substr(0, p),"#",s.substr(p+1),"#");
 		}
+	}
+}
+
+void proceedOFiles(){
+	std::string s;
+	int i,j;
+	double vd;
+	VT v;
+
+	for(i=0;i<6;i++){
+		std::ifstream f("o"+std::to_string(i)+".txt");
+		if(!f.is_open()){
+			printl("error");
+			break;
+		}
+
+		while( std::getline( f, s ) ){
+			if(sscanf(s.c_str(),"i=%d %lf",&j,&vd)!=2){
+				printl("error");
+			}
+			v.push_back({j,vd});
+//			break;
+		}
+	}
+
+	std::sort(v.begin(), v.end(), [](const auto &a, const auto &b) {
+		return a.first < b.first;
+	});
+
+	j=int(v.size());
+	for(i=0;i<j;i++){
+		if(v[i].first!=i){
+			printi
+			break;
+		}
+	}
+	if(i==j){
+		//shared is ok
+		printan("run.bat",i);
+	}
+	else{
+		//need to modify o%d & shared
+		printan("run.bat",std::min(i,j),i,j);
+	}
+
+	std::sort(v.begin(), v.end(), [](const auto &a, const auto &b) {
+		return a.second < b.second;
+	});
+
+//	printl(map.size())
+	i=0;
+	const int V=3;
+	for (const auto& a : v) {
+		if(i<V || v.size()-i-1<V){
+			g_print("%3d %7.3lf\n",a.first,a.second);
+		}
+		else if(i==V){
+			printl("...")
+		}
+		i++;
 	}
 }
