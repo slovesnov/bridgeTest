@@ -427,8 +427,6 @@ int main() {
 #include "old/PreferansOld.h"
 
 const char SHARED_FILE_NAME[]="shared.txt";
-const char SHARED_FILE_NAME_RESULTS[]="results.txt";
-const char FILE_NAME_RESULTS_SORTED[]="resultsSorted.txt";
 
 const int SEARCH_MOVES_PARAMETERS_TRUMP=1;
 const int SEARCH_MOVES_PARAMETERS_NT=2;
@@ -883,8 +881,6 @@ int getNextProceedValue(){
 	return v;
 }
 
-void proceedResultFile();
-
 std::pair<int, int> parseTwoParameters(int i, int n =
 		MOVES_MANY_SUITS_OPTIONS_NT) {
 	return {i%n, i/n};
@@ -923,7 +919,6 @@ int main(int argc, char *argv[]) {
 //		time=routine(true);
 //		printl(time);
 		proceedOFiles();
-		//proceedResultFile();
 		return 0;
 	}
 
@@ -983,14 +978,6 @@ int main(int argc, char *argv[]) {
 	}
 	printv(i,upper)
 
-
-	FILE*f=openSharedFile(SHARED_FILE_NAME_RESULTS,"a");
-	for(auto& a:v){
-		s=format("%d %.2lf %d\n",a.first,a.second,thread);
-		fprintf(f,s.c_str());
-		printf(s.c_str());
-	}
-	fclose(f);
 
 #else
 	printDealDataFromFile("c:/Users/user/git/bridge/bridge/bridge/problems/preferansRu.bts");
@@ -1301,76 +1288,6 @@ void generate () {
 
 #endif //TYPE
 #endif //BRIDGE_TEST
-
-struct MovesOrderData{
-	int n;
-	double time;
-	int thread;
-	std::string toString() const {
-		auto v=parseThreeParameters(n);
-		std::string s=joinV(v,',');
-		return format("%3d (%s) %.3lf %d",n,s.c_str(),time,thread);
-	}
-
-	bool operator<(MovesOrderData &a) {
-		return time < a.time;
-	}
-};
-
-bool cmpMovesOrderDataN(MovesOrderData const &a, MovesOrderData const &b) { return a.n < b.n; }
-bool cmpMovesOrderDataTime(MovesOrderData const &a, MovesOrderData const &b) { return a.time < b.time; }
-
-std::istream &operator>>(std::istream &is, MovesOrderData &a){
-    is>>a.n>>a.time>>a.thread;
-    return is;
-}
-
-std::ostream& operator<<(std::ostream& os, const MovesOrderData& a){
-    os << a.toString();
-    return os;
-}
-
-void proceedResultFile(){
-	MovesOrderData st;
-	std::vector<MovesOrderData> v;
-	int i;
-	std::vector<int> t;
-	int cores=getNumberOfCores();
-	for (i = 0; i < cores; i++) {
-		t.push_back(0);
-	}
-	std::ifstream infile(SHARED_FILE_NAME_RESULTS);
-	while (infile >> st) {
-		t[st.thread]++;
-		v.push_back(st);
-	}
-
-	printl(v.size());
-
-	std::sort(v.begin(),v.end(),cmpMovesOrderDataN);
-
-	int prev=0;
-	for(auto a:v){
-		if(a.n!=prev){
-			println("error %d %d",a.n,prev);
-			break;
-		}
-		prev++;
-	}
-
-	std::sort(v.begin(),v.end());
-	std::ofstream o(FILE_NAME_RESULTS_SORTED);
-	for(auto a:v){
-		o<<a<<"\n";
-	}
-
-	i=0;
-	for(auto a:t){
-		println("%d %d",i,a);
-		i++;
-	}
-
-}
 
 //output file problems to DealData array strings like { "T987.T987.#98.*Q*J", MISERE, 0, "solvealldeals1-1", false },
 void printDealDataFromFile(const char* _path){
