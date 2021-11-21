@@ -899,6 +899,16 @@ std::vector<int> parseThreeParameters(int i) {
 void printDealDataFromFile(const char* path);
 void proceedOFiles();
 
+int getUpper(){
+	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_NT || SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_MISERE){
+		return MOVES_ONE_SUIT_OPTIONS * MOVES_MANY_SUITS_OPTIONS_NT
+				* MOVES_MANY_SUITS_OPTIONS_NT;
+	}
+	else{
+		return MOVES_MANY_SUITS_OPTIONS;
+	}
+}
+
 int main(int argc, char *argv[]) {
 #ifdef SEARCH_MOVES_PARAMETERS
 	int i,upper,thread,start;
@@ -925,14 +935,7 @@ int main(int argc, char *argv[]) {
 	thread=atoi(argv[1]);
 	start=atoi(argv[2]);
 	printv(thread,start)
-
-	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_NT || SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_MISERE){
-		upper = MOVES_ONE_SUIT_OPTIONS * MOVES_MANY_SUITS_OPTIONS_NT
-				* MOVES_MANY_SUITS_OPTIONS_NT;
-	}
-	else{
-		upper = MOVES_MANY_SUITS_OPTIONS;
-	}
+	upper=getUpper();
 
 	if(!fileExists(SHARED_FILE_NAME)){
 		printl("error shared file not exists");
@@ -1594,10 +1597,16 @@ void proceedOFiles(){
 	}
 	if(i==j){
 		//shared is ok
-		printan("run.bat",i);
+		if(i==getUpper()){
+			printan("counts are finished");
+		}
+		else{
+			printan("run.bat",i);
+		}
 	}
 	else{
-		//need to modify o%d & shared
+		//need to modify o_i & shared.txt
+		printan("need to modify o_i & shared.txt");
 		printan("run.bat",std::min(i,j),i,j);
 	}
 
@@ -1610,7 +1619,8 @@ void proceedOFiles(){
 	const int V=3;
 	for (const auto& a : v) {
 		if(i<V || v.size()-i-1<V){
-			g_print("%3d %7.3lf\n",a.first,a.second);
+			s = joinV(parseThreeParameters(a.first), ',');
+			g_print("%3d (%s) %7.3lf\n", a.first, s.c_str(), a.second);
 		}
 		else if(i==V){
 			printl("...")
