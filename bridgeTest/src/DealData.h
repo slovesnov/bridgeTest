@@ -45,7 +45,7 @@ const DealData dealData[]={
 	{ "#A*8*7.AKT.KJ.A987", 3,      0, "solvealldeals2", false },
 	{ "AQJ*T8*7.KT8.KJ.9", 0,       2, "solvealldeals3", true },
 
-		//comments from library problems/solvealldeals.pts
+		//comments from library problems/preferansRu.bts
 	{ "QT7.KQJ.A*8*7.KQJ", 0,      2, "preferansRu1",false },
 	{ "A*8*7.AKT.KJ.A987", 3,      2, "preferansRu3",false },
 	{ "KQT7.AQJ.KJ*9.A*J", 0,      2, "preferansRu4",true },

@@ -432,7 +432,7 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
  * SEARCH_MOVES_PARAMETERS not defined - other modes
  */
 //TODO
-#define SEARCH_MOVES_PARAMETERS 2
+#define SEARCH_MOVES_PARAMETERS 3
 
 /* TYPE 0 - count nodes
  * TYPE 1 - compare old and new algorithm or count for one of the algorithms
