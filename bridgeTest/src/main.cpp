@@ -17,10 +17,6 @@
 #include "Deal.h"
 #include "Permutations.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
-
 bool signalFileExists(){return false;}
 
 const char PLAYER_CHAR[] = "nesw";
@@ -29,8 +25,6 @@ using T=std::pair<int,double>;
 using VT=std::vector<T>;
 bool cmpLess(T const &a, T const &b) { return a.second < b.second; }//old name "cmp"
 bool cmpGreater(T const &a, T const &b) { return a.second > b.second; }//old name "cmp1"
-
-using VS=std::vector<std::string>;
 
 int BRIDGE_ORDER_FIRST_MOVE=2;
 int BRIDGE_ORDER_OTHER_MOVES=36;
@@ -270,7 +264,7 @@ void sortfiles(){
 	std::string tm = "time=";
 	std::string files[]={"oldmoves.txt","newmoves.txt","newmoves_oldWithoutSureAndQuick.txt","oldmoves_oldWithoutSureAndQuick.txt"};
 	VT a;
-	VS vs;
+	VString vs;
 	for(auto file:files){
 		vs.clear();
 		a.clear();
