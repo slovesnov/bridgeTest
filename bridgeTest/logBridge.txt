@@ -5,7 +5,7 @@
 приложение адаптировано под windows 10 так как невозможно писать в файлы куда программа установлена
 в связи с изменением алгоритма приложение будет работать только под 64-битный windows
 добавлен калькулятор математического ожидания стоимости контрактов для опции "решить все расклады"
-опция "решить все расклады" добавлена для бриджа. Пару игроков с неизвестными картами можно выбирать. Можно делать поиск, когда у пары осталась хотя бы одна карта
+опция "решить все расклады" добавлена для бриджа. Пару игроков с неизвестными картами можно выбирать, карты у игроков можно фиксировать. Можно делать поиск, когда у пары осталась хотя бы одна карта
 опция "решить все расклады" расширена для преферанса, теперь можно делать поиск, когда осталась хотя бы одна карта у вистующих/ловцов мизера
 добавлена панель оптимальных ходов, на которые можно нажать, чтобы сделать несколько из них
 добавлен калькулятор очков для преферанса
@@ -18,6 +18,7 @@
 добавлено меню задача/открыть из библиотеки
 добавлено меню дополнительно/сбросить настройки
 функция оценки всех ходов ускорена для бриджа, так как стала многозадачной, для нее также теперь используется сокращенный интервал поиска
+для опции "решить все расклады" добавился экспорт результатов расчетов в csv файл, также добавлен экспорт всех сдач с результатами
 при добавлении новых параметров в конфигурационный файл, теперь считывается старая информация, а не происходит полный сброс настроек, как раньше. В частности при установке более поздней версии поверх старой, будут считываться старые настройки, остальные будут установлены по умолчанию. Порядок строк в файле при чтении теперь не важен.
 если в языковом файле если не указан id, то берется номер предыдущего id и увеличивается на единицу
 при считывании файла языка отличного от английского и русского, если идентификатор не найден, то используется соответствующая строка из файла английского языка
@@ -67,7 +68,7 @@
 application is adapted for windows 10 because it is impossible to write to the files where the program is installed
 due to algorithm changes, the application will only work on 64-bit windows
 added mathematical expectation calculator for the value of contracts for the option "solve all the deals"
-option "solve all deals" has been added for bridge. Pair of players with unknown cards can be chosen. You can do a search when the pair has at least one card left
+option "solve all deals" has been added for bridge. Pair of players with unknown cards can be chosen, cards of players can be fixed. You can do a search when the pair has at least one card left
 option "solve all deals" was expanded for preferans, now you can do a search when there is at least one card left for defenders
 optimal moves panel added, which you can click on to make a several of them
 added score calculator for preference
@@ -80,6 +81,7 @@ the source code is published on github
 added menu problem/open from library
 added menu addons/reset settings
 all moves evaluation function is accelerated for bridge since it has become multitasking, it now also uses a reduced search interval
+export of calculation results to csv file was added for the option "solve all deals", also export of all deals with results was added
 when new parameters are added to the configuration file, the old information is now read instead of a full reset, as before. In particular, when installing a later version over the old one, the old settings will be read and the rest will be set by default. The order of the lines in the file when reading is no longer important.
 if there is no id in the language file, the number of previous id is taken and incremented by one
 when reading a language file other than English and Russian, if the id is not found, then the corresponding string from the English file is used.

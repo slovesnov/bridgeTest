@@ -1480,6 +1480,7 @@ void proceedOFiles(){
 	VT v;
 
 	for(i=0;i<6;i++){
+//		std::ifstream f("prefNT"+std::to_string(i)+".txt");
 		std::ifstream f("o"+std::to_string(i)+".txt");
 		if(!f.is_open()){
 			printl("error");
