@@ -426,13 +426,14 @@ const int SEARCH_MOVES_PARAMETERS_TRUMP=1;
 const int SEARCH_MOVES_PARAMETERS_NT=2;
 const int SEARCH_MOVES_PARAMETERS_MISERE=3;
 /* special mode for searching moves parameters can be defined in moves.bat
+ * SEARCH_MOVES_PARAMETERS not defined - other modes
  * SEARCH_MOVES_PARAMETERS=1 - only trump problems
  * SEARCH_MOVES_PARAMETERS=2 - only no trump & non misere problems
  * SEARCH_MOVES_PARAMETERS=3 - only misere problems
- * SEARCH_MOVES_PARAMETERS not defined - other modes
  */
 //TODO
-#define SEARCH_MOVES_PARAMETERS 3
+//#define SEARCH_MOVES_PARAMETERS 3
+#define SEARCH_MOVES_PARAMETERS 2
 
 /* TYPE 0 - count nodes
  * TYPE 1 - compare old and new algorithm or count for one of the algorithms
@@ -889,6 +890,7 @@ std::vector<int> parseThreeParameters(int i) {
 void printDealDataFromFile(const char* path);
 void proceedOFiles();
 
+#ifdef SEARCH_MOVES_PARAMETERS
 int getUpper(){
 	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_NT || SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_MISERE){
 		return MOVES_ONE_SUIT_OPTIONS * MOVES_MANY_SUITS_OPTIONS_NT
@@ -898,6 +900,7 @@ int getUpper(){
 		return MOVES_MANY_SUITS_OPTIONS;
 	}
 }
+#endif
 
 int main(int argc, char *argv[]) {
 #ifdef SEARCH_MOVES_PARAMETERS
@@ -1067,7 +1070,6 @@ std::string parseDeal(const std::string& deal, int firstmove, int cards[10],
 }
 
 void run(int nodes, int problem, bool old,int*result) {
-
 	int i, j, k;
 	CARD_INDEX ptr[52];
 	int cards[10], absent[2], sorted[12], lead, o[20];
@@ -1473,6 +1475,7 @@ l1539:
 	}
 }
 
+#ifdef SEARCH_MOVES_PARAMETERS
 void proceedOFiles(){
 	std::string s;
 	int i,j;
@@ -1480,10 +1483,11 @@ void proceedOFiles(){
 	VT v;
 
 	for(i=0;i<6;i++){
-//		std::ifstream f("prefNT"+std::to_string(i)+".txt");
-		std::ifstream f("o"+std::to_string(i)+".txt");
+//		s="prefNT"+std::to_string(i)+".txt";
+		s="o"+std::to_string(i)+".txt";
+		std::ifstream f(s);
 		if(!f.is_open()){
-			printl("error");
+			printl("error cann't open file",s);
 			break;
 		}
 
@@ -1540,3 +1544,5 @@ void proceedOFiles(){
 		i++;
 	}
 }
+#endif
+
