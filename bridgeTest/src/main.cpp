@@ -431,7 +431,7 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
  * SEARCH_MOVES_PARAMETERS=2 - only no trump & non misere problems
  * SEARCH_MOVES_PARAMETERS=3 - only misere problems
  */
-#define SEARCH_MOVES_PARAMETERS 1
+#define SEARCH_MOVES_PARAMETERS 3
 //#define SEARCH_MOVES_PARAMETERS 2
 
 /* TYPE 0 - count nodes
@@ -522,9 +522,17 @@ const CARD_INDEX PREFERANS_PLAYER[] = {
 void printDealDataFromFile(const char* path);
 void proceedOFiles();
 
+bool isBridge(){
+#ifdef BRIDGE_TEST
+	return true;
+#else
+	return false;
+#endif
+}
+
 #ifdef SEARCH_MOVES_PARAMETERS
 int getUpper(){
-	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_TRUMP){
+	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_TRUMP && isBridge()){
 		return MOVES_ONE_SUIT_OPTIONS * MOVES_ONE_SUIT_OPTIONS
 				* MOVES_MANY_SUITS_OPTIONS * MOVES_MANY_SUITS_OPTIONS;
 	}
@@ -930,12 +938,7 @@ VInt parseAllParameters(int i) {
 	VInt v = parseTwoParameters(i, MOVES_MANY_SUITS_OPTIONS);
 	int a = v[0];
 	const int ORDER = v[1];
-#ifdef BRIDGE_TEST
-	const bool bridge=1;
-#else
-	const bool bridge=0;
-#endif
-	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_TRUMP && !bridge){
+	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_TRUMP && !isBridge()){
 		//like in moves.h
 		v = { ORDER % MOVES_ONE_SUIT_OPTIONS, (ORDER / MOVES_ONE_SUIT_OPTIONS)
 				% MOVES_ONE_SUIT_OPTIONS, ORDER / MOVES_ONE_SUIT_OPTIONS
