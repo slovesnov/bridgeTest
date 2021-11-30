@@ -431,9 +431,8 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
  * SEARCH_MOVES_PARAMETERS=2 - only no trump & non misere problems
  * SEARCH_MOVES_PARAMETERS=3 - only misere problems
  */
-//TODO
-//#define SEARCH_MOVES_PARAMETERS 3
-#define SEARCH_MOVES_PARAMETERS 2
+#define SEARCH_MOVES_PARAMETERS 1
+//#define SEARCH_MOVES_PARAMETERS 2
 
 /* TYPE 0 - count nodes
  * TYPE 1 - compare old and new algorithm or count for one of the algorithms
@@ -518,6 +517,51 @@ const CARD_INDEX PREFERANS_PLAYER[] = {
 		CARD_INDEX_EAST };
 
 #endif
+
+
+void printDealDataFromFile(const char* path);
+void proceedOFiles();
+
+#ifdef SEARCH_MOVES_PARAMETERS
+int getUpper(){
+	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_TRUMP){
+		return MOVES_ONE_SUIT_OPTIONS * MOVES_ONE_SUIT_OPTIONS
+				* MOVES_MANY_SUITS_OPTIONS * MOVES_MANY_SUITS_OPTIONS;
+	}
+	else if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_NT || SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_MISERE){
+		return MOVES_ONE_SUIT_OPTIONS * MOVES_MANY_SUITS_OPTIONS_NT
+				* MOVES_MANY_SUITS_OPTIONS_NT;
+	}
+	else{
+		assert(0);
+		return 0;
+	}
+}
+
+std::string getSearchTypeString(){
+	//PROBLEM_TYPE = SEARCH_MOVES_PARAMETERS
+	if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP) {
+		return "trump";
+	} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_NT) {
+		return "nt";
+	} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_MISERE) {
+		return "misere";
+	}else {
+		return "unknown";
+	}
+}
+
+std::string getOutputFileName(int thread){
+	std::string s;
+#ifdef BRIDGE_TEST
+	s = "bridge";
+#else
+	s = "preferans";
+#endif
+	return s + getSearchTypeString()+std::to_string(thread)+".txt";
+}
+#endif
+
 
 double routine(bool movesOptimization=false) {
 	double tt=0;
@@ -643,25 +687,26 @@ double routine(bool movesOptimization=false) {
 	sa+=", only long";
 #endif
 
-	if (PROBLEM_TYPE == 1) {
-		sa += format(" trump_params(%d,%d)",
+	sa+=" "+getSearchTypeString()+"_params(";
+	if (PROBLEM_TYPE == SEARCH_MOVES_PARAMETERS_TRUMP) {
+		sa += format("%d,%d",
 				PREFERANS_ORDER_FIRST_MOVE,
 				PREFERANS_ORDER_OTHER_MOVES
 				);
 	}
-	else if (PROBLEM_TYPE == 2) {
-		sa += format(" nt_params(%d,%d)",
+	else if (PROBLEM_TYPE == SEARCH_MOVES_PARAMETERS_NT) {
+		sa += format("%d,%d",
 				PREFERANS_ORDER_FIRST_MOVE_NT,
 				PREFERANS_ORDER_OTHER_MOVES_NT
 				);
 	}
-	else if (PROBLEM_TYPE == 3) {
-		sa += format(" misere_params(%d,%d)",
+	else if (PROBLEM_TYPE == SEARCH_MOVES_PARAMETERS_MISERE) {
+		sa += format("%d,%d",
 				PREFERANS_ORDER_FIRST_MOVE_MISERE,
 				PREFERANS_ORDER_OTHER_MOVES_MISERE
 				);
 	}
-	sa+="\n";
+	sa+=")\n";
 
 	if(verbose){
 		printf("%s",sa.c_str());
@@ -876,31 +921,33 @@ int getNextProceedValue(){
 	return v;
 }
 
-std::pair<int, int> parseTwoParameters(int i, int n =
-		MOVES_MANY_SUITS_OPTIONS_NT) {
+//VInt parseTwoParameters(int i, int n =MOVES_MANY_SUITS_OPTIONS_NT)
+VInt parseTwoParameters(int i, int n) {
 	return {i%n, i/n};
 }
 
-std::vector<int> parseThreeParameters(int i) {
-	auto [a,second]=parseTwoParameters(i);
-	auto [b,c]=parseTwoParameters(second,MOVES_ONE_SUIT_OPTIONS);
-	return {a, b, c };
-}
-
-void printDealDataFromFile(const char* path);
-void proceedOFiles();
-
-#ifdef SEARCH_MOVES_PARAMETERS
-int getUpper(){
-	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_NT || SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_MISERE){
-		return MOVES_ONE_SUIT_OPTIONS * MOVES_MANY_SUITS_OPTIONS_NT
-				* MOVES_MANY_SUITS_OPTIONS_NT;
+VInt parseAllParameters(int i) {
+	VInt v = parseTwoParameters(i, MOVES_MANY_SUITS_OPTIONS);
+	int a = v[0];
+	const int ORDER = v[1];
+#ifdef BRIDGE_TEST
+	const bool bridge=1;
+#else
+	const bool bridge=0;
+#endif
+	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_TRUMP && !bridge){
+		//like in moves.h
+		v = { ORDER % MOVES_ONE_SUIT_OPTIONS, (ORDER / MOVES_ONE_SUIT_OPTIONS)
+				% MOVES_ONE_SUIT_OPTIONS, ORDER / MOVES_ONE_SUIT_OPTIONS
+				/ MOVES_ONE_SUIT_OPTIONS };
 	}
 	else{
-		return MOVES_MANY_SUITS_OPTIONS;
+		//like in moves.h
+		v = { ORDER % MOVES_ONE_SUIT_OPTIONS, ORDER / MOVES_ONE_SUIT_OPTIONS };
 	}
+	v.insert(v.begin(), a);
+	return v;
 }
-#endif
 
 int main(int argc, char *argv[]) {
 #ifdef SEARCH_MOVES_PARAMETERS
@@ -911,6 +958,8 @@ int main(int argc, char *argv[]) {
 	VT v;
 
 	if(argc==1){
+		upper=getUpper();
+		printl(upper,getSearchTypeString());
 //		printl(PREFERANS_SOLVE_ALL_DEALS_POSITIONS);
 //		fflush(stdout);
 //		time=routine(true);
@@ -926,8 +975,9 @@ int main(int argc, char *argv[]) {
 
 	thread=atoi(argv[1]);
 	start=atoi(argv[2]);
-	printv(thread,start)
 	upper=getUpper();
+	s=getSearchTypeString();
+	printv(s,thread,start,upper)
 
 	if(!fileExists(SHARED_FILE_NAME)){
 		printl("error shared file not exists");
@@ -937,20 +987,24 @@ int main(int argc, char *argv[]) {
 	preventThreadSleep();
 
 	while ( (i=getNextProceedValue()) < upper ) {
-		if (PROBLEM_TYPE == 2) {
-			auto p=parseTwoParameters(i);
-			PREFERANS_ORDER_FIRST_MOVE_NT = p.first;
-			PREFERANS_ORDER_OTHER_MOVES_NT= p.second;
-		}
-		else{
-			auto p=parseTwoParameters(i);
-			PREFERANS_ORDER_FIRST_MOVE_MISERE = p.first;
-			PREFERANS_ORDER_OTHER_MOVES_MISERE= p.second;
-/*
+		auto p = parseTwoParameters(i,
+				SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP ?
+						MOVES_MANY_SUITS_OPTIONS : MOVES_MANY_SUITS_OPTIONS_NT);
+		if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP) {
+			PREFERANS_ORDER_FIRST_MOVE = p[0];
+			PREFERANS_ORDER_OTHER_MOVES = p[1];
+		} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_NT) {
+			PREFERANS_ORDER_FIRST_MOVE_NT = p[0];
+			PREFERANS_ORDER_OTHER_MOVES_NT = p[1];
+		} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_MISERE) {
+			/*
 			 0 <= PREFERANS_ORDER_FIRST_MOVE_MISERE < OM_NT
 			 0 <= PREFERANS_ORDER_OTHER_MOVES_MISERE < O1*OM_NT
-*/
-
+			 */
+			PREFERANS_ORDER_FIRST_MOVE_MISERE = p[0];
+			PREFERANS_ORDER_OTHER_MOVES_MISERE = p[1];
+		}else{
+			assert(0);
 		}
 
 		//time=randomDouble(0,100);
@@ -968,7 +1022,7 @@ int main(int argc, char *argv[]) {
 		printf(sa.c_str());
 		fflush(stdout);
 
-		s=format("o%d.txt",thread);
+		s=getOutputFileName(thread);
 		FILE*f=fopen(s.c_str(),"a");
 		fprintf(f,sa.c_str());
 		fclose(f);
@@ -1483,8 +1537,7 @@ void proceedOFiles(){
 	VT v;
 
 	for(i=0;i<6;i++){
-//		s="prefNT"+std::to_string(i)+".txt";
-		s="o"+std::to_string(i)+".txt";
+		s=getOutputFileName(i);
 		std::ifstream f(s);
 		if(!f.is_open()){
 			printl("error cann't open file",s);
@@ -1500,7 +1553,7 @@ void proceedOFiles(){
 		}
 	}
 
-	std::sort(v.begin(), v.end(), [](const auto &a, const auto &b) {
+	std::sort(v.begin(), v.end(), [](auto &a, auto &b) {
 		return a.first < b.first;
 	});
 
@@ -1526,7 +1579,7 @@ void proceedOFiles(){
 		printan("run.bat",std::min(i,j),i,j);
 	}
 
-	std::sort(v.begin(), v.end(), [](const auto &a, const auto &b) {
+	std::sort(v.begin(), v.end(), [](auto &a, auto &b) {
 		return a.second < b.second;
 	});
 
@@ -1535,8 +1588,8 @@ void proceedOFiles(){
 	const int V=3;
 	for (const auto& a : v) {
 		if(i<V || v.size()-i-1<V){
-			s = joinV(parseThreeParameters(a.first), ',');
-			g_print("%3d (%s) %7.3lf\n", a.first, s.c_str(), a.second);
+			s = joinV(parseAllParameters(a.first), ',');
+			println("%3d (%s) %7.3lf", a.first, s.c_str(), a.second);
 		}
 		else if(i==V){
 			printl("...")
