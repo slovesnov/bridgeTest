@@ -696,26 +696,19 @@ double routine(bool movesOptimization=false) {
 	sa+=", only long";
 #endif
 
-	sa+=" "+getSearchTypeString()+"_params(";
+	std::pair<int,int> p;
 	if (PROBLEM_TYPE == SEARCH_MOVES_PARAMETERS_TRUMP) {
-		sa += format("%d,%d",
-				PREFERANS_ORDER_FIRST_MOVE,
-				PREFERANS_ORDER_OTHER_MOVES
-				);
+		p = { PREFERANS_ORDER_FIRST_MOVE, PREFERANS_ORDER_OTHER_MOVES };
 	}
 	else if (PROBLEM_TYPE == SEARCH_MOVES_PARAMETERS_NT) {
-		sa += format("%d,%d",
-				PREFERANS_ORDER_FIRST_MOVE_NT,
-				PREFERANS_ORDER_OTHER_MOVES_NT
-				);
+		p = { PREFERANS_ORDER_FIRST_MOVE_NT, PREFERANS_ORDER_OTHER_MOVES_NT };
 	}
 	else if (PROBLEM_TYPE == SEARCH_MOVES_PARAMETERS_MISERE) {
-		sa += format("%d,%d",
-				PREFERANS_ORDER_FIRST_MOVE_MISERE,
-				PREFERANS_ORDER_OTHER_MOVES_MISERE
-				);
+		p = { PREFERANS_ORDER_FIRST_MOVE_MISERE,
+				PREFERANS_ORDER_OTHER_MOVES_MISERE };
 	}
-	sa+=")\n";
+	sa += " " + getSearchTypeString() + "_params("
+			+ format("%d,%d", p.first, p.second) + ")\n";
 
 	if(verbose){
 		printf("%s",sa.c_str());

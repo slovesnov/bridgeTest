@@ -15,7 +15,7 @@ echo %a0% >shared.txt
 
 rem clear file contents
 rem https://stackoverflow.com/questions/19633676/how-to-delete-content-from-a-text-file-using-windows-batch-script/19633987
-break>results.txt
+rem break>results.txt
 
 FOR /L %%A IN (0,1,5) DO start Release\bridgeTest.exe %%A %a0%
 
