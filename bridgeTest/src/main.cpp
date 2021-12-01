@@ -974,7 +974,7 @@ int main(int argc, char *argv[]) {
 	start=atoi(argv[2]);
 	upper=getUpper();
 	s=getSearchTypeString();
-	printv(s,thread,start,upper)
+	printzi(s," thread=",thread," start=",start," upper=",upper)
 
 	if(!fileExists(SHARED_FILE_NAME)){
 		printl("error shared file not exists");
