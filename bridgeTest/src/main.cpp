@@ -560,17 +560,18 @@ std::string getSearchTypeString(){
 	}
 }
 
-std::string getOutputFileName(int thread){
-	std::string s;
+std::string getGameTypeString(){
 #ifdef BRIDGE_TEST
-	s = "bridge";
+	return "bridge";
 #else
-	s = "preferans";
+	return "preferans";
 #endif
-	return s + getSearchTypeString()+std::to_string(thread)+".txt";
+}
+
+std::string getOutputFileName(int thread){
+	return getGameTypeString() + getSearchTypeString()+std::to_string(thread)+".txt";
 }
 #endif
-
 
 double routine(bool movesOptimization=false) {
 	double tt=0;
@@ -928,6 +929,11 @@ VInt parseTwoParameters(int i, int n) {
 	return {i%n, i/n};
 }
 
+VInt parseTwoParametersValue(int i){
+	return parseTwoParameters(i,SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP ?
+				MOVES_MANY_SUITS_OPTIONS : MOVES_MANY_SUITS_OPTIONS_NT);
+}
+
 VInt parseAllParameters(int i) {
 	VInt v = parseTwoParameters(i, MOVES_MANY_SUITS_OPTIONS);
 	int a = v[0];
@@ -984,9 +990,7 @@ int main(int argc, char *argv[]) {
 	preventThreadSleep();
 
 	while ( (i=getNextProceedValue()) < upper ) {
-		auto p = parseTwoParameters(i,
-				SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP ?
-						MOVES_MANY_SUITS_OPTIONS : MOVES_MANY_SUITS_OPTIONS_NT);
+		auto p = parseTwoParametersValue(i);
 		if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP) {
 			PREFERANS_ORDER_FIRST_MOVE = p[0];
 			PREFERANS_ORDER_OTHER_MOVES = p[1];
@@ -1528,7 +1532,7 @@ l1539:
 
 #ifdef SEARCH_MOVES_PARAMETERS
 void proceedOFiles(){
-	std::string s;
+	std::string s,s1;
 	int i,j;
 	double vd;
 	VT v;
@@ -1580,13 +1584,40 @@ void proceedOFiles(){
 		return a.second < b.second;
 	});
 
-//	printl(map.size())
+	auto p = parseTwoParametersValue(v[0].first);
+
+	for(i=0;i<2;i++){
+		s=getGameTypeString()+"_ORDER_FIRST_MOVE";
+		if(i==1){
+			s+="S";
+		}
+		s1=getSearchTypeString();
+		if(s1!="trump"){
+			s+="_"+s1;
+		}
+		std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) {
+			return std::toupper(c);
+		} // correct
+		);
+		printzn(s," = ",p[i],";")
+	}
+//	if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP) {
+//		PREFERANS_ORDER_FIRST_MOVE = p[0];
+//		PREFERANS_ORDER_OTHER_MOVES = p[1];
+//	} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_NT) {
+//		PREFERANS_ORDER_FIRST_MOVE_NT = p[0];
+//		PREFERANS_ORDER_OTHER_MOVES_NT = p[1];
+//	} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_MISERE) {
+//		PREFERANS_ORDER_FIRST_MOVE_MISERE = p[0];
+//		PREFERANS_ORDER_OTHER_MOVES_MISERE = p[1];
+//	}
+
 	i=0;
 	const int V=3;
 	for (const auto& a : v) {
 		if(i<V || v.size()-i-1<V){
 			s = joinV(parseAllParameters(a.first), ',');
-			println("%3d (%s) %7.3lf", a.first, s.c_str(), a.second);
+			println("%*d (%s) %7.3lf",3+(getUpper()>=1000), a.first, s.c_str(), a.second);
 		}
 		else if(i==V){
 			printl("...")
