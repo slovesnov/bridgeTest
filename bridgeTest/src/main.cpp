@@ -961,12 +961,6 @@ int main(int argc, char *argv[]) {
 	VT v;
 
 	if(argc==1){
-		upper=getUpper();
-		printl(upper,getSearchTypeString());
-//		printl(PREFERANS_SOLVE_ALL_DEALS_POSITIONS);
-//		fflush(stdout);
-//		time=routine(true);
-//		printl(time);
 		proceedOFiles();
 		return 0;
 	}
@@ -1533,11 +1527,15 @@ l1539:
 #ifdef SEARCH_MOVES_PARAMETERS
 void proceedOFiles(){
 	std::string s,s1;
-	int i,j;
+	int i,j,k;
 	double vd;
 	VT v;
 
-	for(i=0;i<6;i++){
+	i=getUpper();
+	printl(i,getSearchTypeString());
+
+	k=getNumberOfCores();
+	for(i=0;i<k;i++){
 		s=getOutputFileName(i);
 		std::ifstream f(s);
 		if(!f.is_open()){
@@ -1576,7 +1574,7 @@ void proceedOFiles(){
 	}
 	else{
 		//need to modify o_i & shared.txt
-		printan("need to modify o_i & shared.txt");
+		printan("need to modify o_i & shared.txt, need to modify source code");
 		printan("run.bat",std::min(i,j),i,j);
 	}
 
@@ -1587,7 +1585,7 @@ void proceedOFiles(){
 	auto p = parseTwoParametersValue(v[0].first);
 
 	for(i=0;i<2;i++){
-		s=getGameTypeString()+"_ORDER_FIRST_MOVE";
+		s=getGameTypeString()+"_ORDER_"+(i?"OTHER":"FIRST")+"_MOVE";
 		if(i==1){
 			s+="S";
 		}
