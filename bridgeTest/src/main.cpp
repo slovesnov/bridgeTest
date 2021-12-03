@@ -16,6 +16,201 @@
 #include "BridgeCommon.h"
 #include "Deal.h"
 #include "Permutations.h"
+#include "Preferans.h"
+#include "old/PreferansOld.h"
+#include "Bridge.h"
+#include "old/BridgePosition.h"
+
+//#define BRIDGE_TEST
+
+const char SHARED_FILE_NAME[]="shared.txt";
+
+const int SEARCH_MOVES_PARAMETERS_TRUMP=1;
+const int SEARCH_MOVES_PARAMETERS_NT=2;
+const int SEARCH_MOVES_PARAMETERS_MISERE=3;
+/* special mode for searching moves parameters can be defined in moves.bat
+ * SEARCH_MOVES_PARAMETERS not defined - other modes
+ * SEARCH_MOVES_PARAMETERS=1 - only trump problems
+ * SEARCH_MOVES_PARAMETERS=2 - only no trump & non misere problems
+ * SEARCH_MOVES_PARAMETERS=3 - only misere problems
+ */
+#define SEARCH_MOVES_PARAMETERS 1
+//#define SEARCH_MOVES_PARAMETERS 3
+
+/* Bridge (old values type can be modified)
+ * TYPE 0 - search bridge parameters
+ * TYPE 1 - solve file
+ * TYPE 2 - output list of long problems
+ *
+ * Preferans
+ * TYPE 0 - count nodes
+ * TYPE 1 - compare old and new algorithm or count for one of the algorithms
+ * TYPE 2 - generate function headers/bodies for class Bridge/Preferans
+ * TYPE 3 - sort moves file
+ */
+#if defined(SEARCH_MOVES_PARAMETERS)
+#define TYPE 1
+#else
+#define TYPE 2
+#endif
+
+#if TYPE==3
+#include <fstream>
+#endif
+
+/* SOLVE_TYPE 0 184 756 positions
+ * SOLVE_TYPE 1 20 000 positions
+ */
+//#if SEARCH_MOVES_PARAMETERS==1
+//#define SOLVE_TYPE 1
+//#elif SEARCH_MOVES_PARAMETERS==2
+//#define SOLVE_TYPE 0
+//#else
+//#define SOLVE_TYPE 1
+//#endif
+#define SOLVE_TYPE 0
+
+/* FP=0 old and new algorithms
+ * FP=1 only new algorithm
+ */
+const int FP=1;
+
+/* 1 - full with results
+ * 2 - short table
+ * 3 - short table headers
+ */
+#define OUTPUT_TYPE 2
+
+/* 0 - all problems
+ * 1 - only trump problems
+ * 2 - only no trump & non misere problems
+ * 3 - only misere problems
+ */
+//const int PROBLEM_TYPE=0;
+#if defined(SEARCH_MOVES_PARAMETERS)
+const int PROBLEM_TYPE=SEARCH_MOVES_PARAMETERS;
+#else
+const int PROBLEM_TYPE=0;
+#endif
+
+const int MAX_PROBLEM=10;
+
+//#define SHOW_ACCELERATION
+const bool WRITE_TO_FILE=0;
+
+#ifdef SEARCH_MOVES_PARAMETERS
+	#define ONLY_LONG_PROBLEMS
+#else
+	//#define ONLY_LONG_PROBLEMS
+#endif
+
+//after SOLVE_TYPE is defined
+#include "DealData.h"
+
+#if TYPE==0
+enum {
+	SPADES,HEARTS,DIAMONDS,CLUBS
+};
+const char SUITS_CHAR[] = "shdcn";//Base.h
+#elif TYPE==1
+
+void run(int nodes, int problem, bool old,int*result);
+#else
+void generate ();
+#endif
+
+#if TYPE!=2
+const CARD_INDEX PREFERANS_PLAYER[] = {
+		CARD_INDEX_WEST,
+		CARD_INDEX_NORTH,
+		CARD_INDEX_EAST };
+
+#endif
+
+bool isBridge(){
+#ifdef BRIDGE_TEST
+	return true;
+#else
+	return false;
+#endif
+}
+
+//VInt parseTwoParameters(int i, int n =MOVES_MANY_SUITS_OPTIONS_NT)
+VInt parseTwoParameters(int i, int n) {
+	return {i%n, i/n};
+}
+
+#ifdef SEARCH_MOVES_PARAMETERS
+VInt parseTwoParametersValue(int i){
+	return parseTwoParameters(i,SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP ?
+				MOVES_MANY_SUITS_OPTIONS : MOVES_MANY_SUITS_OPTIONS_NT);
+}
+
+VInt parseAllParameters(int i) {
+	VInt v = parseTwoParameters(i, MOVES_MANY_SUITS_OPTIONS);
+	int a = v[0];
+	const int ORDER = v[1];
+	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_TRUMP && !isBridge()){
+		//like in moves.h
+		v = { ORDER % MOVES_ONE_SUIT_OPTIONS, (ORDER / MOVES_ONE_SUIT_OPTIONS)
+				% MOVES_ONE_SUIT_OPTIONS, ORDER / MOVES_ONE_SUIT_OPTIONS
+				/ MOVES_ONE_SUIT_OPTIONS };
+	}
+	else{
+		//like in moves.h
+		v = { ORDER % MOVES_ONE_SUIT_OPTIONS, ORDER / MOVES_ONE_SUIT_OPTIONS };
+	}
+	v.insert(v.begin(), a);
+	return v;
+}
+#endif
+
+void printDealDataFromFile(const char* path);
+void proceedOutFiles();
+
+#ifdef SEARCH_MOVES_PARAMETERS
+int getUpper(){
+	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_TRUMP){
+		return MOVES_ONE_SUIT_OPTIONS
+				* (isBridge() ? 1 : MOVES_ONE_SUIT_OPTIONS)
+				* MOVES_MANY_SUITS_OPTIONS * MOVES_MANY_SUITS_OPTIONS;
+	}
+	else if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_NT || SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_MISERE){
+		return MOVES_ONE_SUIT_OPTIONS * MOVES_MANY_SUITS_OPTIONS_NT
+				* MOVES_MANY_SUITS_OPTIONS_NT;
+	}
+	else{
+		assert(0);
+		return 0;
+	}
+}
+
+std::string getSearchTypeString(){
+	//PROBLEM_TYPE = SEARCH_MOVES_PARAMETERS
+	if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP) {
+		return "trump";
+	} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_NT) {
+		return "nt";
+	} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_MISERE) {
+		return "misere";
+	}else {
+		return "unknown";
+	}
+}
+
+std::string getGameTypeString(){
+#ifdef BRIDGE_TEST
+	return "bridge";
+#else
+	return "preferans";
+#endif
+}
+
+std::string getOutputFileName(int thread){
+	return getGameTypeString() + getSearchTypeString()+std::to_string(thread)+".txt";
+}
+#endif
+
 
 bool signalFileExists(){return false;}
 
@@ -24,7 +219,7 @@ const char PLAYER_CHAR[] = "nesw";
 using T=std::pair<int,double>;
 using VT=std::vector<T>;
 bool cmpLess(T const &a, T const &b) { return a.second < b.second; }//old name "cmp"
-bool cmpGreater(T const &a, T const &b) { return a.second > b.second; }//old name "cmp1"
+bool cmpGreater(T const &a, T const &b) { return a.second > b.second; }
 
 int BRIDGE_ORDER_FIRST_MOVE=2;
 int BRIDGE_ORDER_OTHER_MOVES=36;
@@ -33,46 +228,40 @@ int BRIDGE_ORDER_FIRST_MOVE_NT=0;
 int BRIDGE_ORDER_OTHER_MOVES_NT=0;
 
 
-int PREFERANS_ORDER_FIRST_MOVE= 0;
-int PREFERANS_ORDER_OTHER_MOVES= 13;
+int PREFERANS_ORDER_FIRST_MOVE = 2;
+int PREFERANS_ORDER_OTHER_MOVES = 246;
 
-int PREFERANS_ORDER_FIRST_MOVE_NT=0;
-int PREFERANS_ORDER_OTHER_MOVES_NT=0;
+int PREFERANS_ORDER_FIRST_MOVE_NT = 2;
+int PREFERANS_ORDER_OTHER_MOVES_NT = 6;
 
-int PREFERANS_ORDER_FIRST_MOVE_MISERE= 4;
-int PREFERANS_ORDER_OTHER_MOVES_MISERE= 2;
-
-//#define BRIDGE_TEST
+int PREFERANS_ORDER_FIRST_MOVE_MISERE = 5;
+int PREFERANS_ORDER_OTHER_MOVES_MISERE = 0;
 
 #ifdef BRIDGE_TEST
 
-#include "Bridge.h"
-#include "old/BridgePosition.h"
 
-/* TYPE 0 - search bridge parameters
- * TYPE 1 - solve file
- * TYPE 2 - sort moves file
- * TYPE 3 - output list of long problems
- */
-#define TYPE 1
-
+#if TYPE==2
+struct BridgeProblemInfo{
+	int index;
+	double time;
+	int trump;
+};
+using VBridgeProblemInfo = std::vector<BridgeProblemInfo>;
+VBridgeProblemInfo vBridgeProblemInfo;
+#endif
 /*
  * trumpOption=0 all problems
  * trumpOption=1 only trump
  * trumpOption=2 only no trump
+ *
+ * type=0 solve new+old
+ * type=1 solve new only
+ * type=2 solve old only
+ * type=3 some test
  */
-double loadProblem(const char*fn,int begin,int end=-1,bool movesOptimization=false,int trumpOption=0,VInt*numbers=0){
-	//type=0 solve new+old
-	//type=1 solve new only
-	//type=2 solve old only
-	//type=3 some test
-	const int type = movesOptimization ? 1 : 0;
-	const bool verbose=!movesOptimization;
-
-	const bool outputonlylong=0;
-	const double minTime=1;
-
-
+double loadBridgeProblems(const char *fn, int begin, int end, int type,
+		bool verbose, bool outputonlylong, double minTime, int trumpOption = 0,
+		VInt *numbers = 0) {
 	const int MAX_END=10000;
 	if(end==-1){
 		end=begin;
@@ -180,7 +369,11 @@ double loadProblem(const char*fn,int begin,int end=-1,bool movesOptimization=fal
 			tt+=t;
 			//problem number/cards e time/total_time
 			if(verbose){
-				sprintf(so,"%2d e=%2d time=%5.2lf move=%c%c",n,br.m_e,t,RANK[br.m_best%13],SUITS_CHAR[br.m_best/13]);
+				sprintf(so,"%2d e=%2d time=%5.2lf trump=%d",n,br.m_e,t,trump);
+#if TYPE==2
+				vBridgeProblemInfo.push_back({n,t,trump});
+#endif
+//				sprintf(so,"%2d e=%2d time=%5.2lf move=%c%c trump=%d",n,br.m_e,t,RANK[br.m_best%13],SUITS_CHAR[br.m_best/13],trump);
 				if (!outputonlylong || t > minTime) {
 					pr=1;
 					printf(so);
@@ -192,6 +385,7 @@ double loadProblem(const char*fn,int begin,int end=-1,bool movesOptimization=fal
 		if(type==0 || type==2){
 			start = clock();
 			BridgePosition::solve( (int*)d.c, trump, first,true);
+			t=0;
 			to = double(clock() - start) / CLOCKS_PER_SEC;
 			tto+=to;
 			if(j==-1){//no first move
@@ -244,57 +438,22 @@ double loadProblem(const char*fn,int begin,int end=-1,bool movesOptimization=fal
 	return tt;
 }
 
-double loadProblem(const char*fn,VInt& numbers){
-	return loadProblem(fn,0,-1,true,0,&numbers);
+double loadBridgeProblems(const char*fn,int begin,int end=-1,bool movesOptimization=false,int trumpOption=0,VInt*numbers=0){
+	const int type = movesOptimization ? 1 : 0;
+	const bool verbose=!movesOptimization;
+
+	const bool outputonlylong=0;
+	const double minTime=1;
+
+	return loadBridgeProblems(fn,begin,end=-1,type,verbose,outputonlylong,minTime,trumpOption,numbers);
+}
+
+double loadBridgeProblems(const char*fn,VInt& numbers){
+	return loadBridgeProblems(fn,0,-1,true,0,&numbers);
 }
 
 
 #if TYPE==2 || TYPE==3
-
-#include <iostream>
-#include <fstream>
-
-/* total new moves 79.02, old moves 65.21
- * old 46.53 with quick & sure tricks, 60.48 without quick & sure tricks
- *
- * */
-
-void sortfiles(){
-	std::string s;
-	std::string tm = "time=";
-	std::string files[]={"oldmoves.txt","newmoves.txt","newmoves_oldWithoutSureAndQuick.txt","oldmoves_oldWithoutSureAndQuick.txt"};
-	VT a;
-	VString vs;
-	for(auto file:files){
-		vs.clear();
-		a.clear();
-
-		std::ifstream input( file );
-		while( getline( input, s ) ){
-			auto p=s.find(tm);
-			if(p==std::string::npos){
-				vs.push_back(s);
-			}
-			else{
-				auto t=atof(s.c_str()+p+tm.length());
-				a.push_back({s,t});
-			}
-		}
-
-		std::sort(a.begin(), a.end(),cmp1 );
-
-		auto p=file.find('.');
-		s=file.substr(0,p)+"_o.txt";
-		std::ofstream o( s );
-
-		for(auto&v:vs){
-			o<<v<<std::endl;
-		}
-		for(auto&v:a){
-			o<<v.first<<std::endl;
-		}
-	}
-}
 
 void longProblemsLists(){
 	std::string s;
@@ -360,9 +519,9 @@ int main() {
 					BRIDGE_ORDER_OTHER_MOVES=j;
 				}
 
-				t=loadProblem("c:/slovesno/eclipse/bridge/problems/solvealldeals.bts",nt?vproblemsNT:vproblems);
-				//t=loadProblem("GeorgeCoffin.bts",vp, 1, 6,true,1);//1 68
-	//			t=loadProblem("GeorgeCoffin.bts",vp, 1, 6,true,1);//1 68
+				t=loadBridgeProblems("c:/slovesno/eclipse/bridge/problems/solvealldeals.bts",nt?vproblemsNT:vproblems);
+				//t=loadBridgeProblems("GeorgeCoffin.bts",vp, 1, 6,true,1);//1 68
+	//			t=loadBridgeProblems("GeorgeCoffin.bts",vp, 1, 6,true,1);//1 68
 				if(nt){
 					s=format("(%d,%d)",BRIDGE_ORDER_FIRST_MOVE_NT,BRIDGE_ORDER_OTHER_MOVES_NT);
 				}
@@ -391,187 +550,67 @@ int main() {
 
 	int t=0;
 	if(t==0){
-		//loadProblem("ra.bts", 1);
-		//loadProblem("#1.bts", 1);
-		//double loadProblem(const char*fn,int begin,int end=-1,bool movesOptimization=false,int trumpOption=0,VInt*numbers=0){
-		loadProblem("c:/slovesno/eclipse/bridge/problems/solvealldeals.bts", 1,0,false,1);
-//			loadProblem("GeorgeCoffin.bts", 1, 666,false,0);//2 68
+		//loadBridgeProblems("ra.bts", 1);
+		//loadBridgeProblems("#1.bts", 1);
+		//double loadBridgeProblems(const char*fn,int begin,int end=-1,bool movesOptimization=false,int trumpOption=0,VInt*numbers=0){
+		loadBridgeProblems("c:\\Users\\user\\git\\bridge\\bridge\\bridge\\problems\\old.bts", 1,0,false,1);
+//			loadBridgeProblems("GeorgeCoffin.bts", 1, 666,false,0);//2 68
 	}
 	else{
-		loadProblem("#1.bts", 1);
-//		loadProblem("#2.bts", 1);
-//		loadProblem("#3.bts", 1);
-//		loadProblem("ra.bts", 1);
-//		loadProblem("GeorgeCoffin.bts", 1, 68);//2 68
+		loadBridgeProblems("#1.bts", 1);
+//		loadBridgeProblems("#2.bts", 1);
+//		loadBridgeProblems("#3.bts", 1);
+//		loadBridgeProblems("ra.bts", 1);
+//		loadBridgeProblems("GeorgeCoffin.bts", 1, 68);//2 68
 	}
 
 	BridgePosition::freeTables();
 
 	printf("the end");
 #elif TYPE==2
-	sortfiles();
-#else
-	longProblemsLists();
+	BridgePosition::allocateTables();
+
+
+	 /* trumpOption=0 all problems
+	 * trumpOption=1 only trump
+	 * trumpOption=2 only no trump
+	 *
+	 * type=0 solve new+old
+	 * type=1 solve new only
+	 * type=2 solve old only
+	 * type=3 some test
+	 */
+//	double loadBridgeProblems(const char *fn, int begin, int end, int type,
+//			bool verbose, bool outputonlylong, double minTime, int trumpOption = 0,
+//			VInt *numbers = 0) {
+
+
+	//loadBridgeProblems("c:\\Users\\user\\git\\bridge\\bridge\\bridge\\problems\\old.bts", 1,0,1,1,0,0);
+	loadBridgeProblems("c:\\Users\\user\\git\\bridge\\bridge\\bridge\\problems\\oldWithoutFirst.bts", 1,0,1,1,0,0);
+
+	BridgePosition::freeTables();
+
+	std::sort(vBridgeProblemInfo.begin(), vBridgeProblemInfo.end(), [](auto &a, auto &b) {
+		return a.time> b.time;
+	});
+
+	double totalTimeTrump=0,totalTimeNT=0;
+	for(auto a:vBridgeProblemInfo){
+		bool nt=a.trump==NT;
+		if(nt){
+			totalTimeNT+=a.time;
+		}
+		else{
+			totalTimeTrump+=a.time;
+		}
+		println("%2d %5.3lf trump=%s",a.index,a.time,nt?"NT":std::to_string(a.trump).c_str());
+	}
+	printv(totalTimeTrump,totalTimeNT);
+
 #endif
 }
 
 #else //not BRIDGE_TEST
-
-#include "Preferans.h"
-#include "old/PreferansOld.h"
-
-const char SHARED_FILE_NAME[]="shared.txt";
-
-const int SEARCH_MOVES_PARAMETERS_TRUMP=1;
-const int SEARCH_MOVES_PARAMETERS_NT=2;
-const int SEARCH_MOVES_PARAMETERS_MISERE=3;
-/* special mode for searching moves parameters can be defined in moves.bat
- * SEARCH_MOVES_PARAMETERS not defined - other modes
- * SEARCH_MOVES_PARAMETERS=1 - only trump problems
- * SEARCH_MOVES_PARAMETERS=2 - only no trump & non misere problems
- * SEARCH_MOVES_PARAMETERS=3 - only misere problems
- */
-#define SEARCH_MOVES_PARAMETERS 1
-//#define SEARCH_MOVES_PARAMETERS 3
-
-/* TYPE 0 - count nodes
- * TYPE 1 - compare old and new algorithm or count for one of the algorithms
- * TYPE 2 - generate function headers/bodies for class Bridge/Preferans
- * TYPE 3 - sort moves file
- */
-#if defined(SEARCH_MOVES_PARAMETERS)
-#define TYPE 1
-#else
-#define TYPE 1
-#endif
-
-#if TYPE==3
-#include <fstream>
-#endif
-
-/* SOLVE_TYPE 0 184 756 positions
- * SOLVE_TYPE 1 20 000 positions
- */
-//#if SEARCH_MOVES_PARAMETERS==1
-//#define SOLVE_TYPE 1
-//#elif SEARCH_MOVES_PARAMETERS==2
-//#define SOLVE_TYPE 0
-//#else
-//#define SOLVE_TYPE 1
-//#endif
-#define SOLVE_TYPE 0
-
-/* FP=0 old and new algorithms
- * FP=1 only new algorithm
- */
-const int FP=1;
-
-/* 1 - full with results
- * 2 - short table
- * 3 - short table headers
- */
-#define OUTPUT_TYPE 2
-
-/* 0 - all problems
- * 1 - only trump problems
- * 2 - only no trump & non misere problems
- * 3 - only misere problems
- */
-//const int PROBLEM_TYPE=0;
-#if defined(SEARCH_MOVES_PARAMETERS)
-const int PROBLEM_TYPE=SEARCH_MOVES_PARAMETERS;
-#else
-const int PROBLEM_TYPE=0;
-#endif
-
-const int MAX_PROBLEM=10;
-
-//#define SHOW_ACCELERATION
-const bool WRITE_TO_FILE=0;
-
-#ifdef SEARCH_MOVES_PARAMETERS
-	#define ONLY_LONG_PROBLEMS
-#else
-	//#define ONLY_LONG_PROBLEMS
-#endif
-
-//after SOLVE_TYPE is defined
-#include "DealData.h"
-
-#if TYPE==0
-enum {
-	SPADES,HEARTS,DIAMONDS,CLUBS
-};
-const char SUITS_CHAR[] = "shdcn";//Base.h
-#elif TYPE==1
-
-void run(int nodes, int problem, bool old,int*result);
-#else
-void generate ();
-#endif
-
-#if TYPE!=2
-const CARD_INDEX PREFERANS_PLAYER[] = {
-		CARD_INDEX_WEST,
-		CARD_INDEX_NORTH,
-		CARD_INDEX_EAST };
-
-#endif
-
-
-void printDealDataFromFile(const char* path);
-void proceedOutFiles();
-
-bool isBridge(){
-#ifdef BRIDGE_TEST
-	return true;
-#else
-	return false;
-#endif
-}
-
-#ifdef SEARCH_MOVES_PARAMETERS
-int getUpper(){
-	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_TRUMP){
-		return MOVES_ONE_SUIT_OPTIONS
-				* (isBridge() ? 1 : MOVES_ONE_SUIT_OPTIONS)
-				* MOVES_MANY_SUITS_OPTIONS * MOVES_MANY_SUITS_OPTIONS;
-	}
-	else if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_NT || SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_MISERE){
-		return MOVES_ONE_SUIT_OPTIONS * MOVES_MANY_SUITS_OPTIONS_NT
-				* MOVES_MANY_SUITS_OPTIONS_NT;
-	}
-	else{
-		assert(0);
-		return 0;
-	}
-}
-
-std::string getSearchTypeString(){
-	//PROBLEM_TYPE = SEARCH_MOVES_PARAMETERS
-	if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP) {
-		return "trump";
-	} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_NT) {
-		return "nt";
-	} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_MISERE) {
-		return "misere";
-	}else {
-		return "unknown";
-	}
-}
-
-std::string getGameTypeString(){
-#ifdef BRIDGE_TEST
-	return "bridge";
-#else
-	return "preferans";
-#endif
-}
-
-std::string getOutputFileName(int thread){
-	return getGameTypeString() + getSearchTypeString()+std::to_string(thread)+".txt";
-}
-#endif
 
 double routine(bool movesOptimization=false) {
 	double tt=0;
@@ -923,35 +962,6 @@ int getNextProceedValue(){
 	fclose(f);
 	return v;
 }
-
-//VInt parseTwoParameters(int i, int n =MOVES_MANY_SUITS_OPTIONS_NT)
-VInt parseTwoParameters(int i, int n) {
-	return {i%n, i/n};
-}
-
-VInt parseTwoParametersValue(int i){
-	return parseTwoParameters(i,SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP ?
-				MOVES_MANY_SUITS_OPTIONS : MOVES_MANY_SUITS_OPTIONS_NT);
-}
-
-VInt parseAllParameters(int i) {
-	VInt v = parseTwoParameters(i, MOVES_MANY_SUITS_OPTIONS);
-	int a = v[0];
-	const int ORDER = v[1];
-	if(SEARCH_MOVES_PARAMETERS==SEARCH_MOVES_PARAMETERS_TRUMP && !isBridge()){
-		//like in moves.h
-		v = { ORDER % MOVES_ONE_SUIT_OPTIONS, (ORDER / MOVES_ONE_SUIT_OPTIONS)
-				% MOVES_ONE_SUIT_OPTIONS, ORDER / MOVES_ONE_SUIT_OPTIONS
-				/ MOVES_ONE_SUIT_OPTIONS };
-	}
-	else{
-		//like in moves.h
-		v = { ORDER % MOVES_ONE_SUIT_OPTIONS, ORDER / MOVES_ONE_SUIT_OPTIONS };
-	}
-	v.insert(v.begin(), a);
-	return v;
-}
-
 int main(int argc, char *argv[]) {
 #ifdef SEARCH_MOVES_PARAMETERS
 	int i,upper,thread,start;
@@ -1620,9 +1630,6 @@ void proceedOutFiles(){
 				//after checking j>k
 				s1+=s+"\n";
 			}
-
-
-
 		}
 
 	}
@@ -1633,20 +1640,23 @@ void proceedOutFiles(){
 
 	auto p = parseTwoParametersValue(v[0].first);
 
-	for(i=0;i<2;i++){
-		s=getGameTypeString()+"_ORDER_"+(i?"OTHER":"FIRST")+"_MOVE";
-		if(i==1){
-			s+="S";
+	for (j = 0; j < 2; j++) {
+		for (i = 0; i < 2; i++) {
+			s = getGameTypeString() + "_ORDER_" + (i ? "OTHER" : "FIRST")
+					+ "_MOVE";
+			if (i == 1) {
+				s += "S";
+			}
+			s1 = getSearchTypeString();
+			if (s1 != "trump") {
+				s += "_" + s1;
+			}
+			std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) {
+				return std::toupper(c);
+			}
+			);
+			printzn(j?"":"const ","int ", s, " = ", p[i], ";")
 		}
-		s1=getSearchTypeString();
-		if(s1!="trump"){
-			s+="_"+s1;
-		}
-		std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) {
-			return std::toupper(c);
-		} // correct
-		);
-		printzn(s," = ",p[i],";")
 	}
 
 	i=0;
