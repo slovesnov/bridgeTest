@@ -432,7 +432,7 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
  * SEARCH_MOVES_PARAMETERS=3 - only misere problems
  */
 #define SEARCH_MOVES_PARAMETERS 1
-//#define SEARCH_MOVES_PARAMETERS 2
+//#define SEARCH_MOVES_PARAMETERS 3
 
 /* TYPE 0 - count nodes
  * TYPE 1 - compare old and new algorithm or count for one of the algorithms
@@ -520,7 +520,7 @@ const CARD_INDEX PREFERANS_PLAYER[] = {
 
 
 void printDealDataFromFile(const char* path);
-void proceedOFiles();
+void proceedOutFiles();
 
 bool isBridge(){
 #ifdef BRIDGE_TEST
@@ -961,7 +961,7 @@ int main(int argc, char *argv[]) {
 	VT v;
 
 	if(argc==1){
-		proceedOFiles();
+		proceedOutFiles();
 		return 0;
 	}
 
@@ -973,7 +973,7 @@ int main(int argc, char *argv[]) {
 	thread=atoi(argv[1]);
 	start=atoi(argv[2]);
 	upper=getUpper();
-	s=getSearchTypeString();
+	s=getGameTypeString()+" "+getSearchTypeString();
 	printzi(s," thread=",thread," start=",start," upper=",upper)
 
 	if(!fileExists(SHARED_FILE_NAME)){
@@ -1525,17 +1525,19 @@ l1539:
 }
 
 #ifdef SEARCH_MOVES_PARAMETERS
-void proceedOFiles(){
-	std::string s,s1;
+void proceedOutFiles(){
+	std::string s,s1,s2;
 	int i,j,k;
-	double vd;
+	double vd,t;
 	VT v;
+	std::vector<double> totalTime;
+	VString vs;
 
 	i=getUpper();
 	printl(i,getSearchTypeString());
 
-	k=getNumberOfCores();
-	for(i=0;i<k;i++){
+	const int cores=getNumberOfCores();
+	for(i=0;i<cores;i++){
 		s=getOutputFileName(i);
 		std::ifstream f(s);
 		if(!f.is_open()){
@@ -1543,14 +1545,32 @@ void proceedOFiles(){
 			break;
 		}
 
+		t=0;
 		while( std::getline( f, s ) ){
 			if(sscanf(s.c_str(),"i=%d %lf",&j,&vd)!=2){
 				printl("error");
 			}
 			v.push_back({j,vd});
+			t+=vd;
 //			break;
 		}
+
+		totalTime.push_back(t);
 	}
+
+	//max goes first
+	std::sort(totalTime.begin(), totalTime.end(), [](auto &a, auto &b) {
+		return a> b;
+	});
+
+//	s="";
+//	for(auto a:totalTime){
+//		s+=secondsToString(a)+" "+formata(a)+", ";
+//	}
+//	printl(s);
+
+	//all totalTime[.] approximately the same, output longest
+	printl("time "+secondsToString(totalTime[0]));
 
 	std::sort(v.begin(), v.end(), [](auto &a, auto &b) {
 		return a.first < b.first;
@@ -1559,7 +1579,6 @@ void proceedOFiles(){
 	j=int(v.size());
 	for(i=0;i<j;i++){
 		if(v[i].first!=i){
-			printi
 			break;
 		}
 	}
@@ -1573,9 +1592,39 @@ void proceedOFiles(){
 		}
 	}
 	else{
-		//need to modify o_i & shared.txt
-		printan("need to modify o_i & shared.txt, need to modify source code");
-		printan("run.bat",std::min(i,j),i,j);
+		assert(i<j);
+		printan("run.bat",i);
+		k=i;
+
+		for(i=0;i<cores;i++){
+			s=getOutputFileName(i);
+			std::ifstream f(s);
+			if(!f.is_open()){
+				printl("error cann't open file",s);
+				break;
+			}
+
+			s1="";
+			while( std::getline( f, s ) ){
+				if(sscanf(s.c_str(),"i=%d %lf",&j,&vd)!=2){
+					printl("error");
+				}
+				if(j>k){
+					s2=getOutputFileName(i);
+					f.close();
+					std::ofstream of(s2);
+					of<<s1;
+					printan("file",s2,"is modified");
+					break;
+				}
+				//after checking j>k
+				s1+=s+"\n";
+			}
+
+
+
+		}
+
 	}
 
 	std::sort(v.begin(), v.end(), [](auto &a, auto &b) {
@@ -1599,16 +1648,6 @@ void proceedOFiles(){
 		);
 		printzn(s," = ",p[i],";")
 	}
-//	if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP) {
-//		PREFERANS_ORDER_FIRST_MOVE = p[0];
-//		PREFERANS_ORDER_OTHER_MOVES = p[1];
-//	} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_NT) {
-//		PREFERANS_ORDER_FIRST_MOVE_NT = p[0];
-//		PREFERANS_ORDER_OTHER_MOVES_NT = p[1];
-//	} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_MISERE) {
-//		PREFERANS_ORDER_FIRST_MOVE_MISERE = p[0];
-//		PREFERANS_ORDER_OTHER_MOVES_MISERE = p[1];
-//	}
 
 	i=0;
 	const int V=3;
