@@ -21,7 +21,7 @@
 #include "Bridge.h"
 #include "old/BridgePosition.h"
 
-//#define BRIDGE_TEST
+#define BRIDGE_TEST
 
 const char SHARED_FILE_NAME[]="shared.txt";
 
@@ -34,13 +34,12 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
  * SEARCH_MOVES_PARAMETERS=2 - only no trump & non misere problems
  * SEARCH_MOVES_PARAMETERS=3 - only misere problems
  */
-#define SEARCH_MOVES_PARAMETERS 1
+//#define SEARCH_MOVES_PARAMETERS 1
 //#define SEARCH_MOVES_PARAMETERS 3
 
 /* Bridge (old values type can be modified)
- * TYPE 0 - search bridge parameters
- * TYPE 1 - solve file
- * TYPE 2 - output list of long problems
+ * TYPE 0 - search bridge problems
+ * TYPE 1 - solve file search parameters like for preferans
  *
  * Preferans
  * TYPE 0 - count nodes
@@ -51,7 +50,7 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
 #if defined(SEARCH_MOVES_PARAMETERS)
 #define TYPE 1
 #else
-#define TYPE 2
+#define TYPE 0
 #endif
 
 #if TYPE==3
@@ -111,7 +110,6 @@ const bool WRITE_TO_FILE=0;
 enum {
 	SPADES,HEARTS,DIAMONDS,CLUBS
 };
-const char SUITS_CHAR[] = "shdcn";//Base.h
 #elif TYPE==1
 
 void run(int nodes, int problem, bool old,int*result);
@@ -240,7 +238,7 @@ int PREFERANS_ORDER_OTHER_MOVES_MISERE = 0;
 #ifdef BRIDGE_TEST
 
 
-#if TYPE==2
+#if TYPE==0
 struct BridgeProblemInfo{
 	int index;
 	double time;
@@ -290,27 +288,55 @@ double loadBridgeProblems(const char *fn, int begin, int end, int type,
 
 	if(verbose){
 		if(begin==end){
-			printf("file %s %d\n",fn,begin);
+			println("file %s %d",fn,begin);
 		}
 		else{
-			printf("file %s %d-%d\n",fn,begin,end);
+			println("file %s %d-%d",fn,begin,end);
 		}
 		fflush(stdout);
 	}
 
 	const char* z[]={"contract ","play "};
 	for( nn=numbers?0:begin ; nn< (numbers?int(numbers->size()):end+1) ; nn++ ){
+		printl(numbers,nn,end+1)
 		n=numbers?(*numbers)[nn]:nn;
+		printi
+		fflush(stdout);
+//		if(n==27){
+//			break;
+//		}
+		if(n<27){
+			continue;
+		}
+		printi
+		fflush(stdout);
 		sprintf(a,"deal %d ",n);
+		printi
+		fflush(stdout);
 		while((pc=fgets(b,256,f))!=0){
+			printl(b,strlen(pc))
+			fflush(stdout);
+
 			if(strncmp(b,a,strlen(a))==0){
+				printi
 				break;
 			}
 		}
+		printi
+		fflush(stdout);
+		printl(pc==0)
+		fflush(stdout);
+		printl(pc)
 		if(!pc){
+			printi
+			fflush(stdout);
 			if(end!=MAX_END){
+				printi
+				fflush(stdout);
 				printf("problem not found");
 			}
+			printi
+			fflush(stdout);
 			break;
 		}
 		j=-1;
@@ -345,7 +371,7 @@ double loadBridgeProblems(const char *fn, int begin, int end, int type,
 				trump = first;
 			}
 		}
-		fflush(stdout);
+		//fflush(stdout);
 
 		if( (trumpOption==1 && trump==NT) || (trumpOption==2 && trump!=NT)){
 			continue;
@@ -363,25 +389,30 @@ double loadBridgeProblems(const char *fn, int begin, int end, int type,
 
 		if(type==0 || type==1){
 			start = clock();
+			printi
 			br.solveFull(d.c, trump, cf, true);
+			printi
 
 			t = double(clock() - start) / CLOCKS_PER_SEC;
 			tt+=t;
 			//problem number/cards e time/total_time
 			if(verbose){
 				sprintf(so,"%2d e=%2d time=%5.2lf trump=%d",n,br.m_e,t,trump);
-#if TYPE==2
+				printi
+
+#if TYPE==0
 				vBridgeProblemInfo.push_back({n,t,trump});
 #endif
 //				sprintf(so,"%2d e=%2d time=%5.2lf move=%c%c trump=%d",n,br.m_e,t,RANK[br.m_best%13],SUITS_CHAR[br.m_best/13],trump);
 				if (!outputonlylong || t > minTime) {
 					pr=1;
-					printf(so);
+					printl(so);
 				}
 			}
 
 		}
 
+		printl(type)
 		if(type==0 || type==2){
 			start = clock();
 			BridgePosition::solve( (int*)d.c, trump, first,true);
@@ -410,21 +441,32 @@ double loadBridgeProblems(const char *fn, int begin, int end, int type,
 			}
 			if(type==0 && eo!=br.m_e){
 				println("error e=%d old=%d",br.m_e,eo);
-				exit(1);
+				//exit(1);
 				break;
 			}
 		}
-		if(pr){
-			printf("\n");
-		}
-		fflush(stdout);
+//		if(pr){
+//			printi;
+//			//printf("\n");
+//		}
+//		fflush(stdout);
+		printi
 	}//for n
+
+	printi
+	fflush(stdout);
+
 	fclose(f);
 
+	printi
+	fflush(stdout);
+
 	if(type==3){
-		printf("total slow fast %.3lf %.3lf\n",tto,tt);//slow fast
+		println("total slow fast %.3lf %.3lf",tto,tt);//slow fast
 	}
 
+	printi
+	fflush(stdout);
 	if(verbose){
 		printf("total");
 		if(type==0 || type==1){
@@ -435,6 +477,8 @@ double loadBridgeProblems(const char *fn, int begin, int end, int type,
 		}
 		printf("\n");
 	}
+	printi
+	fflush(stdout);
 	return tt;
 }
 
@@ -488,13 +532,76 @@ void longProblemsLists(){
 #endif
 
 int main() {
+#ifndef NEW_MOVES_ORDER
+#error NEW_MOVES_ORDER not defined
+#endif
 
 #if TYPE==0
-	//TODO
-	#ifndef NEW_MOVES_ORDER
-#error NEW_MOVES_ORDER not defined
-	#endif
+	int i;
+	double totalTimeTrump[2],totalTimeNT[2];
+	const double minTime=1;
+	double v;
 
+	 /* trumpOption=0 all problems
+	 * trumpOption=1 only trump
+	 * trumpOption=2 only no trump
+	 *
+	 * type=0 solve new+old
+	 * type=1 solve new only
+	 * type=2 solve old only
+	 * type=3 some test
+	 */
+	int type=1;
+	const bool oldIsUsed=type==0 || type==2;
+	if(oldIsUsed){
+		BridgePosition::allocateTables();
+	}
+
+//	double loadBridgeProblems(const char *fn, int begin, int end, int type,
+//			bool verbose, bool outputonlylong, double minTime, int trumpOption = 0,
+//			VInt *numbers = 0) {
+
+	printi
+	loadBridgeProblems("c:\\Users\\user\\git\\bridge\\bridge\\bridge\\problems\\old.bts", 1,0,1,1,0,0);
+	printi
+	fflush(stdout);
+
+//	loadBridgeProblems("c:\\Users\\user\\git\\bridge\\bridge\\bridge\\problems\\Competition.bts", 1,0,type,1,0,0);
+
+	if(oldIsUsed){
+		printi
+		fflush(stdout);
+		BridgePosition::freeTables();
+	}
+	printi
+	fflush(stdout);
+
+	printl(vBridgeProblemInfo.size())
+	fflush(stdout);
+
+	std::sort(vBridgeProblemInfo.begin(), vBridgeProblemInfo.end(), [](auto &a, auto &b) {
+		return a.time> b.time;
+	});
+
+	for (i = 0; i < 2; i++) {
+		totalTimeTrump[i] = totalTimeNT[i] = 0;
+	}
+	for (auto a : vBridgeProblemInfo) {
+		bool nt = a.trump == NT;
+		v = a.time;
+		double *pd = nt ? totalTimeNT : totalTimeTrump;
+		pd[0] += v;
+		if (v > minTime) {
+			pd[1] += v;
+		}
+		println("%*2d %5.3lf trump=%s", 1 + int(log10(vBridgeProblemInfo.size())),
+				a.index, a.time, nt ? "NT" : std::to_string(a.trump).c_str());
+	}
+	printl("totalTimeTrump",totalTimeTrump[0],totalTimeTrump[1]);
+	printl("totalTimeNT",totalTimeNT[0],totalTimeNT[1]);
+	fflush(stdout);
+
+#else
 		VT v;
 		std::string s;
 		double t;
@@ -544,69 +651,6 @@ int main() {
 			printf("%s %.2lf\n",a.first.c_str(),a.second);
 		}
 		fclose(f);
-#elif TYPE==1
-
-	BridgePosition::allocateTables();
-
-	int t=0;
-	if(t==0){
-		//loadBridgeProblems("ra.bts", 1);
-		//loadBridgeProblems("#1.bts", 1);
-		//double loadBridgeProblems(const char*fn,int begin,int end=-1,bool movesOptimization=false,int trumpOption=0,VInt*numbers=0){
-		loadBridgeProblems("c:\\Users\\user\\git\\bridge\\bridge\\bridge\\problems\\old.bts", 1,0,false,1);
-//			loadBridgeProblems("GeorgeCoffin.bts", 1, 666,false,0);//2 68
-	}
-	else{
-		loadBridgeProblems("#1.bts", 1);
-//		loadBridgeProblems("#2.bts", 1);
-//		loadBridgeProblems("#3.bts", 1);
-//		loadBridgeProblems("ra.bts", 1);
-//		loadBridgeProblems("GeorgeCoffin.bts", 1, 68);//2 68
-	}
-
-	BridgePosition::freeTables();
-
-	printf("the end");
-#elif TYPE==2
-	BridgePosition::allocateTables();
-
-
-	 /* trumpOption=0 all problems
-	 * trumpOption=1 only trump
-	 * trumpOption=2 only no trump
-	 *
-	 * type=0 solve new+old
-	 * type=1 solve new only
-	 * type=2 solve old only
-	 * type=3 some test
-	 */
-//	double loadBridgeProblems(const char *fn, int begin, int end, int type,
-//			bool verbose, bool outputonlylong, double minTime, int trumpOption = 0,
-//			VInt *numbers = 0) {
-
-
-	//loadBridgeProblems("c:\\Users\\user\\git\\bridge\\bridge\\bridge\\problems\\old.bts", 1,0,1,1,0,0);
-	loadBridgeProblems("c:\\Users\\user\\git\\bridge\\bridge\\bridge\\problems\\oldWithoutFirst.bts", 1,0,1,1,0,0);
-
-	BridgePosition::freeTables();
-
-	std::sort(vBridgeProblemInfo.begin(), vBridgeProblemInfo.end(), [](auto &a, auto &b) {
-		return a.time> b.time;
-	});
-
-	double totalTimeTrump=0,totalTimeNT=0;
-	for(auto a:vBridgeProblemInfo){
-		bool nt=a.trump==NT;
-		if(nt){
-			totalTimeNT+=a.time;
-		}
-		else{
-			totalTimeTrump+=a.time;
-		}
-		println("%2d %5.3lf trump=%s",a.index,a.time,nt?"NT":std::to_string(a.trump).c_str());
-	}
-	printv(totalTimeTrump,totalTimeNT);
-
 #endif
 }
 
