@@ -11,7 +11,6 @@
 #ifndef DEAL_H_
 #define DEAL_H_
 
-#include <string>
 #include "BridgeCommon.h"
 
 class Deal {
@@ -39,8 +38,21 @@ public:
 		parse(deal, c);
 	}
 
+	Deal(std::initializer_list<int> ci, int trump, CARD_INDEX first) {
+		assert(ci.size() == 52);
+		int i=0;
+		for(int a:ci){
+			c[i++]=CARD_INDEX(a);
+		}
+		m_trump = trump;
+		m_first = first;
+	}
+
 	void parse(const char*deal, CARD_INDEX c[52]);
 
 };
+
+using VDeal = std::vector<Deal>;
+
 
 #endif /* DEAL_H_ */

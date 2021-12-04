@@ -10,19 +10,9 @@
 
 #include "Deal.h"
 
-#include <vector>
 #include <cstring>
 #include <cassert>
-#include <string>
 #include <algorithm>
-
-std::string trim(const char*b) {
-	const char* t = " \t\n\r\f\v";
-	std::string s = b;
-	s.erase(s.find_last_not_of(t) + 1);
-	s.erase(0, s.find_first_not_of(t));
-	return s;
-}
 
 void Deal::parse(const char*deal, CARD_INDEX c[52]) {
 	int i, j, k, l;

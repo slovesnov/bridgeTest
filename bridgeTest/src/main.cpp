@@ -11,19 +11,20 @@
 #include <cassert>
 #include <share.h>//_SH_DENYWR
 #include <unistd.h> //usleep
-#include <sys/stat.h>//stat
 
-#include "BridgeCommon.h"
-#include "Deal.h"
 #include "Permutations.h"
-#include "Preferans.h"
-#include "old/PreferansOld.h"
-#include "Bridge.h"
-#include "old/BridgePosition.h"
+#include "CommonHelp.h"
 
 #define BRIDGE_TEST
 
-const char SHARED_FILE_NAME[]="shared.txt";
+#include "BridgeCommon.h"
+#include "BridgeDeals.h"
+#include "Bridge.h"
+#include "old/BridgePosition.h"
+#include "BridgeHelp.h"
+
+#include "Preferans.h"
+#include "old/PreferansOld.h"
 
 const int SEARCH_MOVES_PARAMETERS_TRUMP=1;
 const int SEARCH_MOVES_PARAMETERS_NT=2;
@@ -31,15 +32,16 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
 /* special mode for searching moves parameters can be defined in moves.bat
  * SEARCH_MOVES_PARAMETERS not defined - other modes
  * SEARCH_MOVES_PARAMETERS=1 - only trump problems
- * SEARCH_MOVES_PARAMETERS=2 - only no trump & non misere problems
- * SEARCH_MOVES_PARAMETERS=3 - only misere problems
+ * SEARCH_MOVES_PARAMETERS=2 - bridge only no trump, preferans only no trump & non misere problems
+ * SEARCH_MOVES_PARAMETERS=3 - preferans only only misere problems
  */
-//#define SEARCH_MOVES_PARAMETERS 1
+#define SEARCH_MOVES_PARAMETERS 1
 //#define SEARCH_MOVES_PARAMETERS 3
 
 /* Bridge (old values type can be modified)
- * TYPE 0 - search bridge problems
+ * TYPE 0 - output list of long problems for further find optimal parameters
  * TYPE 1 - solve file search parameters like for preferans
+ * TYPE 2 - test mode (solve problem vector)
  *
  * Preferans
  * TYPE 0 - count nodes
@@ -212,12 +214,8 @@ std::string getOutputFileName(int thread){
 
 bool signalFileExists(){return false;}
 
-const char PLAYER_CHAR[] = "nesw";
-
 using T=std::pair<int,double>;
 using VT=std::vector<T>;
-bool cmpLess(T const &a, T const &b) { return a.second < b.second; }//old name "cmp"
-bool cmpGreater(T const &a, T const &b) { return a.second > b.second; }
 
 int BRIDGE_ORDER_FIRST_MOVE=2;
 int BRIDGE_ORDER_OTHER_MOVES=36;
@@ -235,426 +233,7 @@ int PREFERANS_ORDER_OTHER_MOVES_NT = 6;
 int PREFERANS_ORDER_FIRST_MOVE_MISERE = 5;
 int PREFERANS_ORDER_OTHER_MOVES_MISERE = 0;
 
-#ifdef BRIDGE_TEST
-
-
-#if TYPE==0
-struct BridgeProblemInfo{
-	int index;
-	double time;
-	int trump;
-};
-using VBridgeProblemInfo = std::vector<BridgeProblemInfo>;
-VBridgeProblemInfo vBridgeProblemInfo;
-#endif
-/*
- * trumpOption=0 all problems
- * trumpOption=1 only trump
- * trumpOption=2 only no trump
- *
- * type=0 solve new+old
- * type=1 solve new only
- * type=2 solve old only
- * type=3 some test
- */
-double loadBridgeProblems(const char *fn, int begin, int end, int type,
-		bool verbose, bool outputonlylong, double minTime, int trumpOption = 0,
-		VInt *numbers = 0) {
-	const int MAX_END=10000;
-	if(end==-1){
-		end=begin;
-	}
-	if(end==0){
-		end=MAX_END;
-	}
-
-	char b[256];
-	char a[256];
-	char *p;
-	const char*pc,*p1;
-	int i,j,n,nn,eo;
-	CARD_INDEX cf;
-	clock_t start;
-	double t,tt=0,to,tto=0;
-	int trump=-1,first=-1;
-	Bridge br;
-	FILE*f=fopen(fn,"r");
-	if(!f){
-		printf("[%s]",fn);
-	}
-	assert(f);
-
-	char so[256];
-
-	if(verbose){
-		if(begin==end){
-			println("file %s %d",fn,begin);
-		}
-		else{
-			println("file %s %d-%d",fn,begin,end);
-		}
-		fflush(stdout);
-	}
-
-	const char* z[]={"contract ","play "};
-	for( nn=numbers?0:begin ; nn< (numbers?int(numbers->size()):end+1) ; nn++ ){
-		printl(numbers,nn,end+1)
-		n=numbers?(*numbers)[nn]:nn;
-		printi
-		fflush(stdout);
-//		if(n==27){
-//			break;
-//		}
-		if(n<27){
-			continue;
-		}
-		printi
-		fflush(stdout);
-		sprintf(a,"deal %d ",n);
-		printi
-		fflush(stdout);
-		while((pc=fgets(b,256,f))!=0){
-			printl(b,strlen(pc))
-			fflush(stdout);
-
-			if(strncmp(b,a,strlen(a))==0){
-				printi
-				break;
-			}
-		}
-		printi
-		fflush(stdout);
-		printl(pc==0)
-		fflush(stdout);
-		printl(pc)
-		if(!pc){
-			printi
-			fflush(stdout);
-			if(end!=MAX_END){
-				printi
-				fflush(stdout);
-				printf("problem not found");
-			}
-			printi
-			fflush(stdout);
-			break;
-		}
-		j=-1;
-		sprintf(a,"%s",b+strlen(a));
-		for (i = 0; i < 2; i++) {
-			fgets(b, 256, f);
-			assert(strlen(b) + 1 > strlen(z[i]));
-			assert(strncmp(b, z[i], strlen(z[i])) == 0);
-			pc = i == 0 ? SUITS_CHAR : PLAYER_CHAR;
-			p1=b + strlen(z[i]) + 1 - i;
-			p = strchr(pc, tolower(*p1));
-			//printf("--%d %c %d %x %d\n",i,tolower(*p1),int(p1[1]),p, int(i==1 && !p) );
-			if((i==1 && !p) || (i==1 && strchr(RANK, tolower(p1[1])) ) ){
-				pc=SUITS_CHAR;
-				p = strchr(pc, tolower(*p1));
-				assert(p);
-				j=(p - pc)*13;
-
-				pc=RANK;
-				p = strchr(pc, tolower(p1[1]));
-				assert(p);
-				j += p - pc;
-			}
-			else{
-				if (!p) {
-					printf("%d[%s]", i, b);
-				}
-				assert(p);
-				first = p - pc;
-			}
-			if (i == 0) {
-				trump = first;
-			}
-		}
-		//fflush(stdout);
-
-		if( (trumpOption==1 && trump==NT) || (trumpOption==2 && trump!=NT)){
-			continue;
-		}
-
-		cf=CARD_INDEX(first+1);
-		Deal d(a, trump, cf);
-		if(j!=-1){
-			cf=d.c[j];
-			first=int(d.c[j])-1;
-			d.c[j]=CARD_INDEX(cf+4);
-		}
-
-		bool pr=0;
-
-		if(type==0 || type==1){
-			start = clock();
-			printi
-			br.solveFull(d.c, trump, cf, true);
-			printi
-
-			t = double(clock() - start) / CLOCKS_PER_SEC;
-			tt+=t;
-			//problem number/cards e time/total_time
-			if(verbose){
-				sprintf(so,"%2d e=%2d time=%5.2lf trump=%d",n,br.m_e,t,trump);
-				printi
-
-#if TYPE==0
-				vBridgeProblemInfo.push_back({n,t,trump});
-#endif
-//				sprintf(so,"%2d e=%2d time=%5.2lf move=%c%c trump=%d",n,br.m_e,t,RANK[br.m_best%13],SUITS_CHAR[br.m_best/13],trump);
-				if (!outputonlylong || t > minTime) {
-					pr=1;
-					printl(so);
-				}
-			}
-
-		}
-
-		printl(type)
-		if(type==0 || type==2){
-			start = clock();
-			BridgePosition::solve( (int*)d.c, trump, first,true);
-			t=0;
-			to = double(clock() - start) / CLOCKS_PER_SEC;
-			tto+=to;
-			if(j==-1){//no first move
-				eo= first%2==0 ? BridgePosition::northSouthTricks : BridgePosition::eastWestTricks;
-			}
-			else{//1 card on table, only this case now
-				eo= first%2==1 ? BridgePosition::northSouthTricks : BridgePosition::eastWestTricks;
-			}
-
-			//problem number/cards e time/total_time, olde time/total_time
-			if (!outputonlylong || to > minTime || (type==0 && t>minTime )) {
-				if(t<=minTime && !pr){
-					printf(so);
-				}
-				if(type==0){
-					printf(",");
-				}
-				printf(" old e=%2d time=%5.2lf %s move=%c%c trump=%d\n", eo, to
-						,to==t?"same time " : (to>t?"old slower":"new slower")
-						,RANK[12-int(BridgePosition::bc)],SUITS_CHAR[int(BridgePosition::bs)],trump);
-				pr=0;
-			}
-			if(type==0 && eo!=br.m_e){
-				println("error e=%d old=%d",br.m_e,eo);
-				//exit(1);
-				break;
-			}
-		}
-//		if(pr){
-//			printi;
-//			//printf("\n");
-//		}
-//		fflush(stdout);
-		printi
-	}//for n
-
-	printi
-	fflush(stdout);
-
-	fclose(f);
-
-	printi
-	fflush(stdout);
-
-	if(type==3){
-		println("total slow fast %.3lf %.3lf",tto,tt);//slow fast
-	}
-
-	printi
-	fflush(stdout);
-	if(verbose){
-		printf("total");
-		if(type==0 || type==1){
-			printf(" new %.2lf",tt);
-		}
-		if(type==0 || type==2){
-			printf(" old %.2lf",tto);
-		}
-		printf("\n");
-	}
-	printi
-	fflush(stdout);
-	return tt;
-}
-
-double loadBridgeProblems(const char*fn,int begin,int end=-1,bool movesOptimization=false,int trumpOption=0,VInt*numbers=0){
-	const int type = movesOptimization ? 1 : 0;
-	const bool verbose=!movesOptimization;
-
-	const bool outputonlylong=0;
-	const double minTime=1;
-
-	return loadBridgeProblems(fn,begin,end=-1,type,verbose,outputonlylong,minTime,trumpOption,numbers);
-}
-
-double loadBridgeProblems(const char*fn,VInt& numbers){
-	return loadBridgeProblems(fn,0,-1,true,0,&numbers);
-}
-
-
-#if TYPE==2 || TYPE==3
-
-void longProblemsLists(){
-	std::string s;
-	std::string tm = "time=";
-	std::string file="oldmoves.txt";
-	std::ifstream input( file );
-	VT a;
-	int j;
-	VInt v[2];
-	while( getline( input, s ) ){
-		auto p=s.find(tm);
-		if(p!=std::string::npos){
-			auto t=stod(s.substr(p+tm.length()));
-			if(t>1){
-				printf("%s\n",s.c_str());
-				v[s.find("trump=4")!=std::string::npos].push_back(stoi(s));
-			}
-		}
-	}
-
-	for(j=0;j<2;j++){
-		printf("VInt vproblems%s=",j==1?"NT":"");
-		bool f=1;
-		for(int i:v[j]){
-			printf("%c%d",f?'{':',',i);
-			f=0;
-		}
-		printf("};\n");
-	}
-}
-
-#endif
-
-int main() {
-#ifndef NEW_MOVES_ORDER
-#error NEW_MOVES_ORDER not defined
-#endif
-
-#if TYPE==0
-	int i;
-	double totalTimeTrump[2],totalTimeNT[2];
-	const double minTime=1;
-	double v;
-
-	 /* trumpOption=0 all problems
-	 * trumpOption=1 only trump
-	 * trumpOption=2 only no trump
-	 *
-	 * type=0 solve new+old
-	 * type=1 solve new only
-	 * type=2 solve old only
-	 * type=3 some test
-	 */
-	int type=1;
-	const bool oldIsUsed=type==0 || type==2;
-	if(oldIsUsed){
-		BridgePosition::allocateTables();
-	}
-
-//	double loadBridgeProblems(const char *fn, int begin, int end, int type,
-//			bool verbose, bool outputonlylong, double minTime, int trumpOption = 0,
-//			VInt *numbers = 0) {
-
-	printi
-	loadBridgeProblems("c:\\Users\\user\\git\\bridge\\bridge\\bridge\\problems\\old.bts", 1,0,1,1,0,0);
-	printi
-	fflush(stdout);
-
-//	loadBridgeProblems("c:\\Users\\user\\git\\bridge\\bridge\\bridge\\problems\\Competition.bts", 1,0,type,1,0,0);
-
-	if(oldIsUsed){
-		printi
-		fflush(stdout);
-		BridgePosition::freeTables();
-	}
-	printi
-	fflush(stdout);
-
-	printl(vBridgeProblemInfo.size())
-	fflush(stdout);
-
-	std::sort(vBridgeProblemInfo.begin(), vBridgeProblemInfo.end(), [](auto &a, auto &b) {
-		return a.time> b.time;
-	});
-
-	for (i = 0; i < 2; i++) {
-		totalTimeTrump[i] = totalTimeNT[i] = 0;
-	}
-	for (auto a : vBridgeProblemInfo) {
-		bool nt = a.trump == NT;
-		v = a.time;
-		double *pd = nt ? totalTimeNT : totalTimeTrump;
-		pd[0] += v;
-		if (v > minTime) {
-			pd[1] += v;
-		}
-		println("%*2d %5.3lf trump=%s", 1 + int(log10(vBridgeProblemInfo.size())),
-				a.index, a.time, nt ? "NT" : std::to_string(a.trump).c_str());
-	}
-	printl("totalTimeTrump",totalTimeTrump[0],totalTimeTrump[1]);
-	printl("totalTimeNT",totalTimeNT[0],totalTimeNT[1]);
-	fflush(stdout);
-
-#else
-		VT v;
-		std::string s;
-		double t;
-		VInt vproblems={7,18,21,22,24,27};
-		VInt vproblemsNT={8,9,12,13,14,15,17,19};
-		int i,j;
-		bool nt=true;
-		const int om=nt?MOVES_MANY_SUITS_OPTIONS_NT:MOVES_MANY_SUITS_OPTIONS;
-
-		for(i=0;i<om;i++){
-			if(nt){
-				BRIDGE_ORDER_FIRST_MOVE_NT=i;
-			}
-			else{
-				BRIDGE_ORDER_FIRST_MOVE=i;
-			}
-			for(j=0;j<MOVES_ONE_SUIT_OPTIONS*om;j++){
-				if(nt){
-					BRIDGE_ORDER_OTHER_MOVES_NT=j;
-				}
-				else{
-					BRIDGE_ORDER_OTHER_MOVES=j;
-				}
-
-				t=loadBridgeProblems("c:/slovesno/eclipse/bridge/problems/solvealldeals.bts",nt?vproblemsNT:vproblems);
-				//t=loadBridgeProblems("GeorgeCoffin.bts",vp, 1, 6,true,1);//1 68
-	//			t=loadBridgeProblems("GeorgeCoffin.bts",vp, 1, 6,true,1);//1 68
-				if(nt){
-					s=format("(%d,%d)",BRIDGE_ORDER_FIRST_MOVE_NT,BRIDGE_ORDER_OTHER_MOVES_NT);
-				}
-				else{
-					s=format("(%d,%d)",BRIDGE_ORDER_FIRST_MOVE,BRIDGE_ORDER_OTHER_MOVES);
-				}
-				v.push_back({s,t});
-				printf("%s %.2lf\n",s.c_str(),t);
-				fflush(stdout);
-			}
-		}
-
-		printf("ordered\n");
-
-		FILE*f=fopen("o.txt","w+");
-
-		std::sort(v.begin(), v.end(),cmp );
-		for(auto& a:v){
-			fprintf(f,"%s %.2lf\n",a.first.c_str(),a.second);
-			printf("%s %.2lf\n",a.first.c_str(),a.second);
-		}
-		fclose(f);
-#endif
-}
-
-#else //not BRIDGE_TEST
+#ifndef BRIDGE_TEST
 
 double routine(bool movesOptimization=false) {
 	double tt=0;
@@ -977,112 +556,6 @@ double routine(bool movesOptimization=false) {
 #endif
 
 	return tt;
-}
-
-FILE* openSharedFile(const char* fileName,const char *mode){
-	FILE*f;
-	double seconds=.05;
-	unsigned microseconds=seconds*1000*1000;
-	while( (f=_fsopen(fileName,mode,_SH_DENYWR))==NULL && errno==EACCES){
-		usleep(microseconds);
-	}
-	if(f==NULL){
-		printf("f==NULL error%d\n",errno);
-	}
-	return f;
-}
-
-bool fileExists (const char* path) {
-  struct stat buffer;
-  return (stat (path, &buffer) == 0);
-}
-
-int getNextProceedValue(){
-	auto f=openSharedFile(SHARED_FILE_NAME,"r+");
-	int v;
-	fscanf(f,"%d",&v);
-	fseek(f,0,SEEK_SET);
-	fprintf(f,"%d",v+1);
-	fclose(f);
-	return v;
-}
-int main(int argc, char *argv[]) {
-#ifdef SEARCH_MOVES_PARAMETERS
-	int i,upper,thread,start;
-	std::string s,s1,sa;
-	double time,durationTotal=0;
-	//int cores=getNumberOfCores();
-	VT v;
-
-	if(argc==1){
-		proceedOutFiles();
-		return 0;
-	}
-
-	if(argc!=3){
-		printl("error argc!=3");
-		return 0;
-	}
-
-	thread=atoi(argv[1]);
-	start=atoi(argv[2]);
-	upper=getUpper();
-	s=getGameTypeString()+" "+getSearchTypeString();
-	printzi(s," thread=",thread," start=",start," upper=",upper)
-
-	if(!fileExists(SHARED_FILE_NAME)){
-		printl("error shared file not exists");
-		return 0;
-	}
-
-	preventThreadSleep();
-
-	while ( (i=getNextProceedValue()) < upper ) {
-		auto p = parseTwoParametersValue(i);
-		if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP) {
-			PREFERANS_ORDER_FIRST_MOVE = p[0];
-			PREFERANS_ORDER_OTHER_MOVES = p[1];
-		} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_NT) {
-			PREFERANS_ORDER_FIRST_MOVE_NT = p[0];
-			PREFERANS_ORDER_OTHER_MOVES_NT = p[1];
-		} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_MISERE) {
-			/*
-			 0 <= PREFERANS_ORDER_FIRST_MOVE_MISERE < OM_NT
-			 0 <= PREFERANS_ORDER_OTHER_MOVES_MISERE < O1*OM_NT
-			 */
-			PREFERANS_ORDER_FIRST_MOVE_MISERE = p[0];
-			PREFERANS_ORDER_OTHER_MOVES_MISERE = p[1];
-		}else{
-			assert(0);
-		}
-
-		//time=randomDouble(0,100);
-		time=routine(true);
-
-		v.push_back({i,time});
-		durationTotal+=time;
-		/* for i+1-start steps take durationTotal, average time for one step durationTotal/(i+1-start)
-		 * total steps upper-start so left upper-i-1 steps or durationTotal*(upper-i-1)/(i+1-start)
-		 * not need to divide on number of cores
-		 */
-		s=secondsToString(durationTotal*(upper-i-1)/(i+1-start));
-		s1=secondsToString(time);
-		sa=format("i=%d %.3lf time %s, left %s\n",i,time,s1.c_str(),s.c_str());
-		printf(sa.c_str());
-		fflush(stdout);
-
-		s=getOutputFileName(thread);
-		FILE*f=fopen(s.c_str(),"a");
-		fprintf(f,sa.c_str());
-		fclose(f);
-	}
-	printv(i,upper)
-
-
-#else
-	printDealDataFromFile("c:/Users/user/git/bridge/bridge/bridge/problems/preferansRu.bts");
-//	printDealDataFromFile("c:/Users/user/git/bridge/bridge/bridge/problems/solvealldeals.pts");
-#endif
 }
 
 #if TYPE==1
@@ -1718,3 +1191,189 @@ void proceedOutFiles(){
 }
 #endif
 
+int main(int argc, char *argv[]) {
+#ifdef SEARCH_MOVES_PARAMETERS
+
+	int i,upper,thread,start;
+	std::string s,s1,sa;
+	double time,durationTotal=0;
+	//int cores=getNumberOfCores();
+	VT v;
+
+	if(argc==1){
+		printv(getUpper())
+		//proceedOutFiles();
+		return 0;
+	}
+
+	if(argc!=3){
+		printl("error argc!=3");
+		return 0;
+	}
+
+	thread=atoi(argv[1]);
+	start=atoi(argv[2]);
+	upper=getUpper();
+	s=getGameTypeString()+" "+getSearchTypeString();
+	printzi(s," thread=",thread," start=",start," upper=",upper)
+
+	if(!fileExists(SHARED_FILE_NAME)){
+		printl("error shared file not exists");
+		return 0;
+	}
+
+	preventThreadSleep();
+
+	while ( (i=getNextProceedValue()) < upper ) {
+		auto p = parseTwoParametersValue(i);
+#ifdef BRIDGE_TEST
+		if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP) {
+			BRIDGE_ORDER_FIRST_MOVE = p[0];
+			BRIDGE_ORDER_OTHER_MOVES = p[1];
+		} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_NT) {
+			BRIDGE_ORDER_FIRST_MOVE_NT = p[0];
+			BRIDGE_ORDER_OTHER_MOVES_NT = p[1];
+		}else{
+			assert(0);
+		}
+#else
+		if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_TRUMP) {
+			PREFERANS_ORDER_FIRST_MOVE = p[0];
+			PREFERANS_ORDER_OTHER_MOVES = p[1];
+		} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_NT) {
+			PREFERANS_ORDER_FIRST_MOVE_NT = p[0];
+			PREFERANS_ORDER_OTHER_MOVES_NT = p[1];
+		} else if (SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_MISERE) {
+			/*
+			 0 <= PREFERANS_ORDER_FIRST_MOVE_MISERE < OM_NT
+			 0 <= PREFERANS_ORDER_OTHER_MOVES_MISERE < O1*OM_NT
+			 */
+			PREFERANS_ORDER_FIRST_MOVE_MISERE = p[0];
+			PREFERANS_ORDER_OTHER_MOVES_MISERE = p[1];
+		}else{
+			assert(0);
+		}
+#endif
+
+		//time=randomDouble(0,100);
+#ifdef BRIDGE_TEST
+		time=bridgeRoutine(SEARCH_MOVES_PARAMETERS == SEARCH_MOVES_PARAMETERS_NT);
+#else
+		time=routine(true);
+#endif
+		v.push_back({i,time});
+		durationTotal+=time;
+		/* for i+1-start steps take durationTotal, average time for one step durationTotal/(i+1-start)
+		 * total steps upper-start so left upper-i-1 steps or durationTotal*(upper-i-1)/(i+1-start)
+		 * not need to divide on number of cores
+		 */
+		s=secondsToString(durationTotal*(upper-i-1)/(i+1-start));
+		s1=secondsToString(time);
+		sa=format("i=%d %.3lf time %s, left %s\n",i,time,s1.c_str(),s.c_str());
+		printf(sa.c_str());
+		fflush(stdout);
+
+		s=getOutputFileName(thread);
+		FILE*f=fopen(s.c_str(),"a");
+		fprintf(f,sa.c_str());
+		fclose(f);
+	}
+	printv(i,upper)
+
+
+#else
+#ifdef BRIDGE_TEST
+
+#ifndef NEW_MOVES_ORDER
+#error NEW_MOVES_ORDER not defined
+#endif
+
+#if TYPE==0
+	int i,j,k;
+	double totalTime[2][2];
+	const double minTime=1;
+	double v;
+	std::string s,sa[2];
+	VBridgeProblemInfo vBridgeProblemInfo;
+	VInt vi;
+
+	 /* trumpOption=0 all problems
+	 * trumpOption=1 only trump
+	 * trumpOption=2 only no trump
+	 *
+	 * type=0 solve new+old
+	 * type=1 solve new only
+	 * type=2 solve old only
+	 * type=3 some test
+	 */
+	int type=1;
+	const bool oldIsUsed=type==0 || type==2;
+	if(oldIsUsed){
+		BridgePosition::allocateTables();
+	}
+
+	const std::string file[]={"old.bts","Competition.bts","HughDarwen.bts","GeorgeCoffin.bts"};
+	//const std::string file[]={"old.bts"};
+	i=0;
+	for(auto a:file){
+		s="c:\\Users\\user\\git\\bridge\\bridge\\bridge\\problems\\"+a;
+		loadBridgeProblems(s.c_str(), 1,0,type,1,0,0,0,&vBridgeProblemInfo);
+		j=int(vBridgeProblemInfo.size());
+		vi.push_back(j-i);
+	}
+
+	if(oldIsUsed){
+		BridgePosition::freeTables();
+	}
+
+	printzn("\n\n\n\n");
+
+	std::sort(vBridgeProblemInfo.begin(), vBridgeProblemInfo.end(),
+			[](auto &a, auto &b) {
+				return a.time > b.time;
+			});
+
+	for (i = 0; i < 2; i++) {
+		for (j = 0; j < 2; j++) {
+			totalTime[i][j] = 0;
+		}
+	}
+	k=0;
+	for (auto a : vBridgeProblemInfo) {
+		bool nt = a.nt();
+		v = a.time;
+		double *pd = totalTime[nt];
+		pd[0] += v;
+		if (v > minTime) {
+			pd[1] += v;
+			sa[nt]+=a.toDealString()+",\n";
+			k++;
+		}
+		//Note vBridgeProblemInfo.size()>0 always so log10 is ok
+//		println("%*d %5.3lf trump=%s", 1 + int(log10(vBridgeProblemInfo.size())),
+//				a.index, a.time, nt ? "NT" : std::to_string(a.trump).c_str());
+	}
+	i=j=0;
+	for (auto a : vi) {
+		printzn(file[i]," total problems ",a);
+		j+=a;
+		i++;
+	}
+	printzn("total problems ",vBridgeProblemInfo.size(),", long problems ",k);
+	for(i=0;i<2;i++){
+		double *pd = totalTime[i];
+		printzn(i?"NT":"Trump",": total time ",pd[0],", long time ",pd[1]);
+	}
+
+	printzn("VDeal bridgeDeals[]={{\n",sa[0],"},{\n",sa[1],"}};\n");
+#else
+	solvebridgeDeals();
+#endif
+
+
+#else//#ifdef BRIDGE_TEST
+	printDealDataFromFile("c:/Users/user/git/bridge/bridge/bridge/problems/preferansRu.bts");
+//	printDealDataFromFile("c:/Users/user/git/bridge/bridge/bridge/problems/solvealldeals.pts");
+#endif
+#endif
+}
