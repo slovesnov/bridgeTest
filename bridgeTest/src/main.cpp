@@ -2,6 +2,7 @@
  * Project > Properties > C/C++ General > Paths and Symbols > Includes
  * use one solver for two projects bridge & bridgeTest
  *
+ * TODO remove all macros make variables from command line
  */
 #include <cstdio>
 #include <ctime>
@@ -35,7 +36,7 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
  * SEARCH_MOVES_PARAMETERS=2 - bridge only no trump, preferans only no trump & non misere problems
  * SEARCH_MOVES_PARAMETERS=3 - preferans only only misere problems
  */
-#define SEARCH_MOVES_PARAMETERS 1
+#define SEARCH_MOVES_PARAMETERS 2
 //#define SEARCH_MOVES_PARAMETERS 3
 
 /* Bridge (old values type can be modified)
@@ -217,11 +218,11 @@ bool signalFileExists(){return false;}
 using T=std::pair<int,double>;
 using VT=std::vector<T>;
 
-int BRIDGE_ORDER_FIRST_MOVE=2;
-int BRIDGE_ORDER_OTHER_MOVES=36;
+int BRIDGE_ORDER_FIRST_MOVE = 2;
+int BRIDGE_ORDER_OTHER_MOVES = 6;
 
-int BRIDGE_ORDER_FIRST_MOVE_NT=0;
-int BRIDGE_ORDER_OTHER_MOVES_NT=0;
+int BRIDGE_ORDER_FIRST_MOVE_NT = 0;
+int BRIDGE_ORDER_OTHER_MOVES_NT = 36;
 
 
 int PREFERANS_ORDER_FIRST_MOVE = 2;
@@ -1201,8 +1202,8 @@ int main(int argc, char *argv[]) {
 	VT v;
 
 	if(argc==1){
-		printv(getUpper())
-		//proceedOutFiles();
+		//printv(getUpper())
+		proceedOutFiles();
 		return 0;
 	}
 
