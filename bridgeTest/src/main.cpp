@@ -1060,7 +1060,6 @@ void proceedOutFiles(){
 	VT v;
 	std::vector<double> totalTime;
 	VString vs;
-
 	i=getUpper();
 	printl(i,getSearchTypeString());
 
@@ -1070,7 +1069,7 @@ void proceedOutFiles(){
 		std::ifstream f(s);
 		if(!f.is_open()){
 			printl("error cann't open file",s);
-			break;
+			return;
 		}
 
 		t=0;
