@@ -36,7 +36,7 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
  * SEARCH_MOVES_PARAMETERS=2 - bridge only no trump, preferans only no trump & non misere problems
  * SEARCH_MOVES_PARAMETERS=3 - preferans only only misere problems
  */
-#define SEARCH_MOVES_PARAMETERS 2
+#define SEARCH_MOVES_PARAMETERS 1
 //#define SEARCH_MOVES_PARAMETERS 3
 
 /* Bridge (old values type can be modified)
@@ -1216,6 +1216,7 @@ int main(int argc, char *argv[]) {
 	upper=getUpper();
 	s=getGameTypeString()+" "+getSearchTypeString();
 	printzi(s," thread=",thread," start=",start," upper=",upper)
+	fflush(stdout);
 
 	if(!fileExists(SHARED_FILE_NAME)){
 		printl("error shared file not exists");
