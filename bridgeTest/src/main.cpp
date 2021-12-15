@@ -36,7 +36,7 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
  * SEARCH_MOVES_PARAMETERS=2 - bridge only no trump, preferans only no trump & non misere problems
  * SEARCH_MOVES_PARAMETERS=3 - preferans only only misere problems
  */
-#define SEARCH_MOVES_PARAMETERS 1
+#define SEARCH_MOVES_PARAMETERS 2
 //#define SEARCH_MOVES_PARAMETERS 3
 
 /* Bridge (old values type can be modified)
@@ -219,10 +219,10 @@ using T=std::pair<int,double>;
 using VT=std::vector<T>;
 
 int BRIDGE_ORDER_FIRST_MOVE = 2;
-int BRIDGE_ORDER_OTHER_MOVES = 6;
+int BRIDGE_ORDER_OTHER_MOVES = 36;
 
 int BRIDGE_ORDER_FIRST_MOVE_NT = 0;
-int BRIDGE_ORDER_OTHER_MOVES_NT = 36;
+int BRIDGE_ORDER_OTHER_MOVES_NT = 6;
 
 
 int PREFERANS_ORDER_FIRST_MOVE = 2;
