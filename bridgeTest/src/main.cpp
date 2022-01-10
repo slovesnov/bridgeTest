@@ -36,7 +36,7 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
  * SEARCH_MOVES_PARAMETERS=2 - bridge only no trump, preferans only no trump & non misere problems
  * SEARCH_MOVES_PARAMETERS=3 - preferans only only misere problems
  */
-#define SEARCH_MOVES_PARAMETERS 2
+//#define SEARCH_MOVES_PARAMETERS 2
 //#define SEARCH_MOVES_PARAMETERS 3
 
 /* Bridge (old values type can be modified)
@@ -1191,6 +1191,8 @@ void proceedOutFiles(){
 }
 #endif
 
+void endgame();
+
 int main(int argc, char *argv[]) {
 #ifdef SEARCH_MOVES_PARAMETERS
 
@@ -1283,6 +1285,8 @@ int main(int argc, char *argv[]) {
 
 
 #else
+	endgame();
+	return 0;
 #ifdef BRIDGE_TEST
 
 #ifndef NEW_MOVES_ORDER
@@ -1377,4 +1381,199 @@ int main(int argc, char *argv[]) {
 //	printDealDataFromFile("c:/Users/user/git/bridge/bridge/bridge/problems/solvealldeals.pts");
 #endif
 #endif
+}
+
+typedef std::vector<VInt> VVInt;
+
+enum class EndgameType{
+	ALL,NT,TRUMP,MISERE
+};
+
+VVInt suitLengthVector(const int n, bool bridge,EndgameType option) {
+	//l[] - number of cards in suit
+	int l[4];
+	const int nn = (bridge ? 4 : 3) * n;
+	const int up = std::min(bridge ? 13 : 8, nn);
+	VVInt v;
+	VInt vi;
+	for (l[0] = 0; l[0] <= up; l[0]++) {
+		for (l[1] = 0; l[1] <= up; l[1]++) {
+			for (l[2] = 0; l[2] <= up; l[2]++) {
+				l[3] = nn - l[0] - l[1] - l[2];
+				if (l[3] >= 0 && l[3]<=up) {
+					if (option == EndgameType::ALL
+							|| ((option == EndgameType::NT || option == EndgameType::MISERE ) && l[0] <= l[1] && l[1] <= l[2]
+									&& l[2] <= l[3])
+							|| (option == EndgameType::TRUMP && l[1] <= l[2]
+									&& l[2] <= l[3])) {
+						vi.assign(l, l+4);
+						v.push_back(vi);
+					}
+				}
+			}
+		}
+	}
+	return v;
+}
+
+void endgame(){
+	//TODO not sleep thread
+	int i,j,k,c,sc[4];
+	VInt freepos;
+	VVInt v;
+	VInt vb[4];
+	Permutations p[3];
+	Bridge br;
+	CARD_INDEX ci[52];
+	std::string s;
+
+	clock_t begin=clock();
+	int count=0;
+
+	const bool bridge=true;
+	const int n=bridge?3:4;//number of cards for each player
+	const int ntotal=(bridge?4:3)*n;//12
+	const EndgameType option=EndgameType::NT;
+	const bool print=0;
+
+	v=suitLengthVector(n, bridge, option);
+
+	for(i=0;i<3;i++){
+		p[i].init(n, ntotal-n*i, COMBINATION);
+	}
+	for(i=0;i<4;i++){
+		vb[i].resize(n);
+	}
+
+	//for (auto& len : v) {
+	auto &len = v[10];{
+		for (auto &p0 : p[0]) {
+			for (auto &p1 : p[1]) {
+				for (auto &p2 : p[2]) {
+					//bit code 24bits for bridge & preferans
+					freepos.clear();
+					for(i=0;i<ntotal;i++){
+						freepos.push_back(i);
+					}
+
+					const VInt* pv[]={&p0,&p1,&p2};
+					for(i=0;i<3;i++){
+						/* use reverse order to get more understandable vectors
+						 * and need to remove from freepos in reverse order
+						 * p0={0,1,2} vb[0]={2,1,0}
+						 * p1={0,1,2} vb[1]={5,4,3}
+						 * p2={0,1,2} vb[2]={8,7,6}
+						 * vb[3]={9,10,11}
+						 */
+
+						const VInt& q=*pv[i];
+						j=n-1;
+						for(auto it=q.rbegin();it!=q.rend();it++){
+							vb[i][j--]=freepos[*it];
+							freepos.erase(freepos.begin() + *it);
+						}
+						if(print){
+							printzn("vb[",i,"]={",joinV(vb[i],','),"}")
+						}
+					}
+
+					j=0;
+					for(auto& a:freepos){
+						vb[i][j++]=a;
+					}
+					if(print){
+						printzn("vb[",i,"]={",joinV(vb[i],','),"}")
+						//printl("len",joinV(len))
+					}
+
+					//len[i] length
+
+					//TODO remove v[3] make bit code v[0] - 01 bits, v[1] - 10, v[2] - 11
+					//TODO print bit code after all todos
+					//bit code v[0] - 00 bits, v[1] - 01, v[2] - 10, v[3] - 11
+					//TODO using function for bridge project
+					c=0;
+					for(i=1;i<4;i++){
+						for(j=0;j<n;j++){
+							c |= i<<2*vb[i][j];
+						}
+					}
+
+					k=c;
+					//get sc[]
+					for(i=0;i<4;k>>=2*len[i],i++){
+						//2^(2*len[i])-1
+						sc[i]=k & ((1<<(2*len[i]))-1);
+						if(print){
+							printzn("suit",i," code","=",binaryCodeString(sc[i]),format(" 0x%x",sc[i])," len=",len[i] );
+						}
+					}
+
+					if(print){
+						char buff[64];
+						printl(itoa(c,buff,2),binaryCodeString(c));
+					}
+
+					//c [0-12 - spades A-2], [13-25 hearts A-2], [26-38 diamonds A-2], [39-51 clubs A-2]
+					for(i=0;i<52;i++){
+						ci[i]=CARD_INDEX_ABSENT;
+					}
+
+					for(i=0;i<4;i++){
+						k=sc[i];
+						for(j=0;j<len[i];(k>>=2),j++){
+							ci[13*i+j]=CARD_INDEX(CARD_INDEX_NORTH+(k&3));
+						}
+					}
+
+					if(print){
+						s="";
+						for(i=0;i<52;i++){
+							auto c=ci[i];
+							j=c-CARD_INDEX_NORTH;
+							if(c==CARD_INDEX_ABSENT){
+								s+='-';
+							}
+							else if(j>=0 && j<4  ){
+								s+=PLAYER_CHAR[j];
+							}
+							else{
+								s+='?';
+							}
+							if((i+1)%13==0){
+								s+=' ';
+							}
+						}
+						printl(s)
+					}
+					const bool trumpChanged=true;
+					const CARD_INDEX first=CARD_INDEX_NORTH;
+					//	ALL,NT,TRUMP,MISERE
+
+					const int trump=option==EndgameType::TRUMP ? 0:NT;
+					//br.m_e [bridge.m_ns, bridge.m_ew]
+					br.solveEstimateOnly(ci, trump, first, trumpChanged);
+
+					if(print){
+						printl(br.m_e,br.m_ns, br.m_ew,timeElapse(begin))
+						exit(1);
+					}
+
+					count++;
+					if(count%100==0){
+						double o=timeElapse(begin)/count*50'265'600/3600./getNumberOfCores();
+						println("%s %d %.2lf, avgFull %.2lf (hours)",trump==NT?"NT":"trump",count,timeElapse(begin),o)
+						fflush(stdout);
+					}
+				}
+			}
+		}
+	}
+
+/* 34*369,600=12,566,400
+	12,566,400                               main.cpp:188 main()
+	time 1.42                                main.cpp:189 main()
+*/
+	printl(toString(count,',',3))
+	println("time %.2lf",timeElapse(begin))
 }
