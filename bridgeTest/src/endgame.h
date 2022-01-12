@@ -72,26 +72,26 @@ int bitCode(bool bridge, VInt const &p0, VInt const &p1, VInt const &p2) {
 	}
 
 	const VInt *pv[] = { &p0, &p1, &p2 };
-	for (i = 0; i < 3; i++) {
+	i=0;
+	for(auto q:pv){
 		/* use reverse order to get more understandable vectors
 		 * and need to remove from freepos in reverse order
 		 * p0={0,1,2} vb[0]={2,1,0}
 		 * p1={0,1,2} vb[1]={5,4,3}
 		 * p2={0,1,2} vb[2]={8,7,6}
 		 */
-
-		const VInt &q = *pv[i];
 		j = n - 1;
-		for (auto it = q.rbegin(); it != q.rend(); it++) {
+		for (auto it = q->rbegin(); it != q->rend(); it++) {
 			vb[i][j--] = freepos[*it];
 			freepos.erase(freepos.begin() + *it);
 		}
+		i++;
 	}
 
 	// bit code v[0] - 01 bits, v[1] - 10, v[2] - 11
 	int c=0;
 	for(i=0;i<3;i++){
-		for(j=0;j<int(vb[0].size());j++){
+		for(j=0;j<n;j++){
 			c |= (i+1)<<2*vb[i][j];
 		}
 	}
