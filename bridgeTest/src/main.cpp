@@ -1193,8 +1193,6 @@ void proceedOutFiles(){
 }
 #endif
 
-void endgame();
-
 int main(int argc, char *argv[]) {
 #ifdef SEARCH_MOVES_PARAMETERS
 
@@ -1287,7 +1285,7 @@ int main(int argc, char *argv[]) {
 
 
 #else
-	endgame();
+	endgame::routine();
 	return 0;
 #ifdef BRIDGE_TEST
 

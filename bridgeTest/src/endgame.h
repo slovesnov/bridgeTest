@@ -13,20 +13,28 @@
 #ifndef ENDGAME_H_
 #define ENDGAME_H_
 
+#include <numeric>//iota
+
+namespace endgame{
+
 typedef std::vector<VInt> VVInt;
 
 enum class EndgameType{
 	ALL,NT,TRUMP
 };
 
-int endgameGetN(bool bridge){
-	return bridge?2:4;//number of cards of each player
+int getN(bool bridge,bool total=false){
+	int i=bridge?2:4;//number of cards of each player
+	if(total){
+		i*= (bridge?4:3);
+	}
+	return i;
 };
 
 VVInt suitLengthVector(bool bridge,EndgameType option) {
 	//l[] - number of cards in suit
 	int l[4];
-	const int n=endgameGetN(bridge);
+	const int n=getN(bridge);
 	const int nn = (bridge ? 4 : 3) * n;
 	const int up = std::min(bridge ? 13 : 8, nn);
 	VVInt v;
@@ -51,7 +59,7 @@ VVInt suitLengthVector(bool bridge,EndgameType option) {
 	return v;
 }
 
-int getEndgameBitCode(VInt vb[3]){
+int bitCode(VInt vb[3]){
 	// bit code v[0] - 01 bits, v[1] - 10, v[2] - 11
 	int c=0;
 	for(int i=0;i<3;i++){
@@ -62,11 +70,132 @@ int getEndgameBitCode(VInt vb[3]){
 	return c;
 }
 
-void endgame(){
-	int i,j,k,c,sc[4];
-	VInt freepos;
-	VVInt v;
+int bitCode(bool bridge, VInt const &p0, VInt const &p1, VInt const &p2) {
+	int i,j;
+	int n=getN(bridge);
+	int ntotal=getN(bridge,true);
+	VInt freepos(ntotal);
+	std::iota(freepos.begin(), freepos.end(), 0);
+
 	VInt vb[3];
+	for (i = 0; i < 3; i++) {
+		vb[i].resize(n);
+	}
+
+	const VInt *pv[] = { &p0, &p1, &p2 };
+	for (i = 0; i < 3; i++) {
+		/* use reverse order to get more understandable vectors
+		 * and need to remove from freepos in reverse order
+		 * p0={0,1,2} vb[0]={2,1,0}
+		 * p1={0,1,2} vb[1]={5,4,3}
+		 * p2={0,1,2} vb[2]={8,7,6}
+		 */
+
+		const VInt &q = *pv[i];
+		j = n - 1;
+		for (auto it = q.rbegin(); it != q.rend(); it++) {
+			vb[i][j--] = freepos[*it];
+			freepos.erase(freepos.begin() + *it);
+		}
+	}
+	return bitCode(vb);
+}
+
+bool isBridge(int i) { return i < 2; };
+
+bool isMisere(int i) { return i == 4; };
+
+auto getOption(int i) { return (i==1 || i==3) ? EndgameType::TRUMP : EndgameType::NT;};
+
+auto cm (bool bridge) {//if bridge=1 C^n_4n*C^n_3n*C^n_2n, else C^n_3n*C^n_2n
+	int i=1;
+	const int n=getN(bridge);
+	Permutations p;
+	for(int j=0;j<3;j++){
+		p.init(n, ((bridge?4:3) -j)*n, COMBINATION);
+		i*=p.number();
+	}
+	return i;
+}
+
+auto totalPositions (bool bridge) {
+	int i=(bridge ?1:2)*suitLengthVector(bridge,EndgameType::NT).size()+suitLengthVector(bridge,EndgameType::TRUMP).size();
+	return i*cm(bridge);
+};
+
+void proceedFiles(){
+	bool bridge=true;
+	const int n = getN(bridge);
+	int i,j,k,l;
+	char byte;
+	std::string s;
+	VString v;
+	int steps[5];
+	for(i=0;i<5;i++){
+		const bool bridge=isBridge(i);
+		const EndgameType option=getOption(i);
+		steps[i]=suitLengthVector(bridge, option).size();
+	}
+
+//	double d=log2(n+1);
+//	const int bits=int(d)+(int(d)!=d);
+
+	const int chunkbits=n<=3?2:4;
+
+	//nt, trump
+	//printl(steps[0],steps[1],endgameCM(bridge))
+
+	for (j = 0; j < 2; j++) {
+		std::ofstream f(format("b%s.bin",j == 0 ? "nt" : "trump"),std::ofstream::binary);
+		k=chunkbits*steps[j]*cm(bridge);
+		//TODO k%8!=0
+		if(k%8!=0){
+			printl("todo totalbits%8!=0")
+		}
+		printl("totalbits",k,k/8,k%8);
+
+		l=0;
+		byte=0;
+		for (i = 0; i < steps[j]; i++) {
+			s = format("b%s%d.txt", j == 0 ? "nt" : "trump", i);
+			assert(fileExists(s.c_str()));
+
+			s = fileGetContent(s);
+			v=split(s);
+			assert(int(v.size())==cm(bridge)+1);
+			assert(v[v.size()-1]=="");
+			v.pop_back();
+
+			for(auto a:v){
+				assert(parseString(a, k));
+				parseString(a, k);
+				assert(k>=-n && k<=n);
+				assert(k%2==n%2);
+				k=(k+n)/2;
+				byte |= k<<l;
+				l+=chunkbits;
+				if(l==8){
+					f.write(&byte, 1);
+					l=0;
+					byte=0;
+				}
+			}
+//			printzn("[",v[v.size()-1],"[")
+//			k
+//			printl(parseString(d, k, radix))
+//			printl(v.size())
+		}
+	}
+	printl(n)
+	printi
+}
+
+void routine(){
+//	proceedFiles();
+//	return;
+
+	int i,j,k,sc[4];
+	VVInt v;
 	Permutations p[3];
 	Bridge br;
 	Preferans pr;
@@ -78,22 +207,8 @@ void endgame(){
 
 	const bool print=0;
 
-	auto totalPositions = [](bool bridge) {
-		const int n=endgameGetN(bridge);
-		int i=(bridge ?1:2)*suitLengthVector(bridge,EndgameType::NT).size()+suitLengthVector(bridge,EndgameType::TRUMP).size();
-		Permutations p;
-		for(int j=0;j<3;j++){
-			p.init(n, ((bridge?4:3) -j)*n, COMBINATION);
-			i*=p.number();
-		}
-		return i;
-	};
-
 //	printl(totalPositions(3,true),totalPositions(4,false))
 
-	auto isBridge = [](int i) { return i < 2; };
-	auto isMisere = [](int i) { return i == 4; };
-	auto getOption=[](int i) { return (i==1 || i==3) ? EndgameType::TRUMP : EndgameType::NT;};
 	auto getStepOptions=[](int i,int steps[5]) {
 		int j;
 		for(j=0;j<5;j++){
@@ -118,22 +233,9 @@ void endgame(){
 	upper=steps[0]+steps[1];
 //	printl(upper)
 
-/*
 	FILE*f=fopen(SHARED_FILE_NAME,"w+");
 	fprintf(f,"0");
 	fclose(f);
-	while ( (j=getNextProceedValue()) < upper ) {
-		auto pa=getStepOptions(j,steps);
-		i=pa.first;
-		const bool bridge=isBridge(i);
-		const EndgameType option=getOption(i);
-		printl(j,bridge?"bridge":"preferans",option==EndgameType::TRUMP? "trump":"nt",isMisere(i),pa.second)
-	}
-
-	fflush(stdout);
-	return;
-*/
-
 
 	if(!fileExists(SHARED_FILE_NAME)){
 		printl("error shared file not exists");
@@ -152,16 +254,14 @@ void endgame(){
 		printl(j,bridge?"bridge":"preferans",option==EndgameType::TRUMP? "trump":"nt",step)
 		fflush(stdout);
 
-		const int n = endgameGetN(bridge);
-		const int ntotal = (bridge ? 4 : 3) * n;
+		const int n = getN(bridge);
+		const int ntotal = getN(bridge ,true);
+
 		for (i = 0; i < 3; i++) {
 			p[i].init(n, ntotal - n * i, COMBINATION);
 		}
-		for (i = 0; i < 3; i++) {
-			vb[i].resize(n);
-		}
 
-		s = format("%c%s%d.txt", bridge ? 'b' : 'p',
+		s = format("_%c%s%d.txt", bridge ? 'b' : 'p',
 				option == EndgameType::TRUMP ? "trump" : "nt", step);
 		std::ofstream file(s);
 
@@ -169,35 +269,13 @@ void endgame(){
 		for (auto &p0 : p[0]) {
 			for (auto &p1 : p[1]) {
 				for (auto &p2 : p[2]) {
-					//bit code 24bits for bridge & preferans
-					freepos.clear();
-					for (i = 0; i < ntotal; i++) {
-						freepos.push_back(i);
+					k=bitCode(bridge,p0,p1,p2);
+
+					if (print) {
+						char buff[64];
+						printl(itoa(k,buff,2),binaryCodeString(k))
+						;
 					}
-
-					const VInt *pv[] = { &p0, &p1, &p2 };
-					for (i = 0; i < 3; i++) {
-						/* use reverse order to get more understandable vectors
-						 * and need to remove from freepos in reverse order
-						 * p0={0,1,2} vb[0]={2,1,0}
-						 * p1={0,1,2} vb[1]={5,4,3}
-						 * p2={0,1,2} vb[2]={8,7,6}
-						 */
-
-						const VInt &q = *pv[i];
-						j = n - 1;
-						for (auto it = q.rbegin(); it != q.rend(); it++) {
-							vb[i][j--] = freepos[*it];
-							freepos.erase(freepos.begin() + *it);
-						}
-						if (print) {
-							printzn("vb[", i, "]={", joinV(vb[i], ','), "}")
-						}
-					}
-
-					c = getEndgameBitCode(vb);
-
-					k = c;
 					//get sc[]
 					for (i = 0; i < 4; k >>= 2 * len[i], i++) {
 						//2^(2*len[i])-1
@@ -209,11 +287,6 @@ void endgame(){
 						}
 					}
 
-					if (print) {
-						char buff[64];
-						printl(itoa(c,buff,2),binaryCodeString(c))
-						;
-					}
 
 					//c [0-12 - spades A-2], [13-25 hearts A-2], [26-38 diamonds A-2], [39-51 clubs A-2]
 					for (i = 0; i < 52; i++) {
@@ -284,12 +357,13 @@ void endgame(){
 			}
 		}
 		file.close();
+		break;//TODO
 	}
 
 	println("time %.2lf", timeElapse(begin))
 }
 
 
-
+}
 
 #endif /* ENDGAME_H_ */
