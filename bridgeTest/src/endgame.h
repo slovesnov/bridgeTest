@@ -59,17 +59,6 @@ VVInt suitLengthVector(bool bridge,EndgameType option) {
 	return v;
 }
 
-int bitCode(VInt vb[3]){
-	// bit code v[0] - 01 bits, v[1] - 10, v[2] - 11
-	int c=0;
-	for(int i=0;i<3;i++){
-		for(int j=0;j<int(vb[0].size());j++){
-			c |= (i+1)<<2*vb[i][j];
-		}
-	}
-	return c;
-}
-
 int bitCode(bool bridge, VInt const &p0, VInt const &p1, VInt const &p2) {
 	int i,j;
 	int n=getN(bridge);
@@ -98,7 +87,15 @@ int bitCode(bool bridge, VInt const &p0, VInt const &p1, VInt const &p2) {
 			freepos.erase(freepos.begin() + *it);
 		}
 	}
-	return bitCode(vb);
+
+	// bit code v[0] - 01 bits, v[1] - 10, v[2] - 11
+	int c=0;
+	for(i=0;i<3;i++){
+		for(j=0;j<int(vb[0].size());j++){
+			c |= (i+1)<<2*vb[i][j];
+		}
+	}
+	return c;
 }
 
 bool isBridge(int i) { return i < 2; };
