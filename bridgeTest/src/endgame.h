@@ -19,10 +19,6 @@ namespace endgame{
 
 typedef std::vector<VInt> VVInt;
 
-enum class EndgameType{
-	ALL,NT,TRUMP
-};
-
 int getN(bool bridge,bool total=false){
 	//TODO
 	int i=bridge?2:4;//number of cards of each player
@@ -163,11 +159,15 @@ void proceedFiles(){
 			assert(v[v.size()-1]=="");
 			v.pop_back();
 
+			int gi=0;
 			for(auto a:v){
 				assert(parseString(a, k));
 				parseString(a, k);
 				assert(k>=-n && k<=n);
 				assert(k%2==n%2);
+				if(i==0 && (gi==1836 || gi==1452) ){
+					printl(gi,"e=",k,(k+n)/2,l)
+				}
 				k=(k+n)/2;
 				byte |= k<<l;
 				l+=chunkbits;
@@ -176,6 +176,7 @@ void proceedFiles(){
 					l=0;
 					byte=0;
 				}
+				gi++;
 			}
 //			printzn("[",v[v.size()-1],"[")
 //			k
@@ -210,11 +211,104 @@ void rotate(int n,int bits,int a[3]){
 
 
 void routine(){
+
+	{
+//		proceedFiles();
+
+//	int i=0,j=0;
+//	auto v = suitLengthVector(true,  EndgameType::NT);
+//	printl(joinV(v[i]));
+//
+//	auto s = format("b%s%d.txt", j == 0 ? "nt" : "trump", i);
+//	assert(fileExists(s.c_str()));
+//
+//	s = fileGetContent(s);
+//	auto v1=split(s);
+//	printl(v1[1836],v1[1452])
+//
+//	return;
+/*
+		int i,j,k;
+		bool bridge=true;
+		Permutations p[3];
+		Bridge br;
+		const int n = getN(bridge);
+		const int ntotal = getN(bridge ,true);
+
+		for (i = 0; i < 3; i++) {
+			p[i].init(n, ntotal - n * i, COMBINATION);
+		}
+
+		int jj=0;
+		auto v = suitLengthVector(true,  EndgameType::NT);
+		auto len=v[0];
+		int sc[4];
+		for (auto &p0 : p[0]) {
+			for (auto &p1 : p[1]) {
+				for (auto &p2 : p[2]) {
+					k=bitCode(bridge,p0,p1,p2);
+					if(jj==1836 || jj==1452){
+						printl(jj,binaryCodeString(k, ntotal*2))
+						println("0x%x",(k<<4)|8)
+						printl(binaryCodeString((k<<4)|8,ntotal*2))
+
+						for (i = 0; i < 4; k >>= 2 * len[i], i++) {
+							//2^(2*len[i])-1
+							sc[i] = k & ((1 << (2 * len[i])) - 1);
+							printzn("suit", i, " code", "=",
+									binaryCodeString(sc[i],len[i]*2),
+									format(" 0x%x", sc[i]), " len=", len[i]);
+						}
+
+						CARD_INDEX ci[52];
+
+						for (i = 0; i < 52; i++) {
+							ci[i] = CARD_INDEX_ABSENT;
+						}
+
+						for (i = 0; i < 4; i++) {
+							k = sc[i];
+							for (j = 0; j < len[i]; (k >>= 2), j++) {
+								ci[13 * i + j] = CARD_INDEX(
+										CARD_INDEX_NORTH + (k & 3));
+							}
+						}
+
+						const bool trumpChanged = true;
+						const CARD_INDEX first = CARD_INDEX_NORTH;
+						const int trump = NT;
+						//br.m_e br.m_ns br.m_ew
+						br.solveEstimateOnly(ci, trump, first, trumpChanged);
+						printl("eold=", br.m_ns-br.m_ew,br.m_ns,br.m_ew);
+						//	m_e = (m_cards + i) / 2;
+
+						printl("enew=", br.m_e*2-br.m_cards,br.m_e,br.m_cards);
+
+
+					}
+					jj++;
+				}
+			}
+		}
+*/
+	}
+
+//	return;
+	{
+		Bridge br;
+	auto& a=bridgeDeals[1][0];
+//	printl(a.m_trump,cm(true));
+//	start = clock();
+	br.solveFull(a.c, a.m_trump, a.m_first, true);
+	return;
+	}
+//	t=double(clock() - start) / CLOCKS_PER_SEC;
+
 	int i,j,k,sc[4];
 	VVInt v;
-	int* endgameLength[2];
+	//int* endgameLength[2];//NT+ trump
+//	int*pi;
 	int* endgameIndex[4];//4 number of rotates(players)
-	int*pi;
 	Permutations p[3];
 	clock_t begin;
 	int a[3];
@@ -234,28 +328,18 @@ void routine(){
 			return a[2] < b[2];
 		});
 
-/*
-		std::sort(v.begin(), v.end(), [](auto &a, auto &b) {
-			return a[2] > b[2];
-		});
-
-		for (auto a : v) {
-			printl (joinV(a))
-		}
-*/
-
 		const int size=(max[2]+1)*169;
 		printl("need memory",size)
-		endgameLength[i]=pi=new int[size];
-
-		k=0;
-		for (auto a : v) {
-			j = a[0] + 13 * (a[1] + 13 * a[2]);
-			assert(j < size);
-			pi[j] = k++;
-		}
-
-		delete[]pi;
+//		endgameLength[i]=pi=new int[size];
+//
+//		k=0;
+//		for (auto a : v) {
+//			j = a[0] + 13 * (a[1] + 13 * a[2]);
+//			assert(j < size);
+//			pi[j] = k++;
+//		}
+//
+//		delete[]pi;
 	}
 
 
@@ -296,6 +380,7 @@ void routine(){
 
 	printl(timeElapse(begin))
 
+	Bridge::staticInit();
 //	proceedFiles();
 	return;
 
