@@ -28,6 +28,18 @@ int getN(bool bridge,bool total=false){
 	return i;
 };
 
+int cm(bool bridge,int n){
+	printi
+	Permutations p;
+	int r=1;
+	int m=3+bridge;
+	for(int i=0;i<m-1;i++){
+		p.init(n, (m-i)*n, COMBINATION);
+		r*=p.number();
+	}
+	return r;
+}
+
 VVInt suitLengthVector(bool bridge,EndgameType option) {
 	//l[] - number of cards in suit
 	int l[4];
@@ -215,18 +227,6 @@ void routine(){
 	{
 //		proceedFiles();
 
-//	int i=0,j=0;
-//	auto v = suitLengthVector(true,  EndgameType::NT);
-//	printl(joinV(v[i]));
-//
-//	auto s = format("b%s%d.txt", j == 0 ? "nt" : "trump", i);
-//	assert(fileExists(s.c_str()));
-//
-//	s = fileGetContent(s);
-//	auto v1=split(s);
-//	printl(v1[1836],v1[1452])
-//
-//	return;
 /*
 		int i,j,k;
 		bool bridge=true;
@@ -249,15 +249,15 @@ void routine(){
 					k=bitCode(bridge,p0,p1,p2);
 					if(jj==1836 || jj==1452){
 						printl(jj,binaryCodeString(k, ntotal*2))
-						println("0x%x",(k<<4)|8)
-						printl(binaryCodeString((k<<4)|8,ntotal*2))
+//						println("0x%x",(k<<4)|8)
+//						printl(binaryCodeString((k<<4)|8,ntotal*2+4))
 
 						for (i = 0; i < 4; k >>= 2 * len[i], i++) {
 							//2^(2*len[i])-1
 							sc[i] = k & ((1 << (2 * len[i])) - 1);
-							printzn("suit", i, " code", "=",
-									binaryCodeString(sc[i],len[i]*2),
-									format(" 0x%x", sc[i]), " len=", len[i]);
+//							printzn("suit", i, " code", "=",
+//									binaryCodeString(sc[i],len[i]*2),
+//									format(" 0x%x", sc[i]), " len=", len[i]);
 						}
 
 						CARD_INDEX ci[52];
@@ -290,10 +290,12 @@ void routine(){
 				}
 			}
 		}
+
+
+	return;
 */
 	}
 
-//	return;
 	{
 		Bridge br;
 	auto& a=bridgeDeals[1][0];
@@ -303,7 +305,7 @@ void routine(){
 	return;
 	}
 //	t=double(clock() - start) / CLOCKS_PER_SEC;
-
+/*
 	int i,j,k,sc[4];
 	VVInt v;
 	//int* endgameLength[2];//NT+ trump
@@ -380,18 +382,18 @@ void routine(){
 
 	printl(timeElapse(begin))
 
-	Bridge::staticInit();
 //	proceedFiles();
 	return;
-
-//	int i,j,k,sc[4];
-//	VVInt v;
+*/
+	int i,j,k,sc[4];
+	VVInt v;
 	Bridge br;
 	Preferans pr;
 	CARD_INDEX ci[52];
 	std::string s;
+	Permutations p[3];
 
-	begin=clock();
+	auto begin=clock();
 	int count=0;
 
 	const bool print=0;
