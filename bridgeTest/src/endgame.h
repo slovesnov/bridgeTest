@@ -222,8 +222,38 @@ void rotate(int n,int bits,int a[3]){
 	}
 }
 
+void speedTest(bool ntproblems){
+	preventThreadSleep();
+	Bridge br;
+	clock_t begin;
+	double t,tt=0;
+	int i=0;
+	for(i=3;i<10;i++){
+		auto &a=bridgeDeals[ntproblems][i];
+//	}
+//	for(auto a:bridgeDeals[ntproblems]){
+//		if(i==0){
+//			i++;
+//			continue;
+//		}
+		begin = clock();
+		br.solveFull(a.c, a.m_trump, a.m_first, true);
+		t=timeElapse(begin);
+		tt+=t;
+
+		printl(i,t,br.m_e)
+		fflush(stdout);
+		i++;
+	}
+
+	printl("total time",tt)
+	fflush(stdout);
+}
 
 void routine(){
+
+	speedTest(0);
+	speedTest(1);
 
 	{
 //		proceedFiles();
