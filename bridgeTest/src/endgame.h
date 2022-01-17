@@ -15,6 +15,8 @@
 
 #include <numeric>//iota
 
+#include "BigUnsigned.h"
+
 namespace endgame{
 
 typedef std::vector<VInt> VVInt;
@@ -40,6 +42,11 @@ int cm(bool bridge,int n){
 	return r;
 }
 
+int cm(bool bridge){
+	return cm(bridge,getN(bridge));
+}
+
+//TODO call from BridgereferansBase
 VVInt suitLengthVector(bool bridge,EndgameType option) {
 	//l[] - number of cards in suit
 	int l[4];
@@ -67,6 +74,7 @@ VVInt suitLengthVector(bool bridge,EndgameType option) {
 	return v;
 }
 
+//TODO call from BridgereferansBase
 int bitCode(bool bridge, VInt const &p0, VInt const &p1, VInt const &p2) {
 	int i,j;
 	int n=getN(bridge);
@@ -111,18 +119,6 @@ bool isBridge(int i) { return i < 2; };
 bool isMisere(int i) { return i == 4; };
 
 auto getOption(int i) { return (i==1 || i==3) ? EndgameType::TRUMP : EndgameType::NT;};
-
-auto cm (bool bridge) {//if bridge=1 C^n_4n*C^n_3n*C^n_2n, else C^n_3n*C^n_2n
-	int i=1;
-	const int n=getN(bridge);
-	Permutations p;
-	const int k=bridge?4:3;
-	for(int j=0;j<k-1;j++){
-		p.init(n, (k -j)*n, COMBINATION);
-		i*=p.number();
-	}
-	return i;
-}
 
 auto totalPositions (bool bridge) {
 	int i=(bridge ?1:2)*suitLengthVector(bridge,EndgameType::NT).size()+suitLengthVector(bridge,EndgameType::TRUMP).size();
@@ -250,10 +246,91 @@ void speedTest(bool ntproblems){
 	fflush(stdout);
 }
 
+//need uint64_t type for showTablesBP()
+uint64_t getBinomialCoefficient(int k,int n){
+	uint64_t r = 1;
+	int i=1;
+	/* for big n,k
+	 * C(n,k)=n*C(n-1,k-1)/k
+	 * C(n,k)=n*C(n-1,k-1)/k=(n/k)*(n-1/k-1)...(n-k+1/1)C(n-k,0); C(n-k,0)=1
+	 */
+	for (i = 1; i <= k; i++) {
+		r *= n - k + i;
+		r /= i;
+	}
+	return r;
+}
+
+void showTablesBP(){
+	int i, j;
+	int n, a[3];
+	VVInt v;
+	for (i = 0; i < 2; i++) {
+		for (n = 1;; n++) {
+			bool bridge = i == 0;
+			for (j = 0; j < 3; j++) {
+				v = BridgePreferansBase::suitLengthVector(n, bridge, EndgameType(j));
+				if (v.empty()) {
+					goto l144;
+				}
+				if (!j) {
+					printf("\n<tr><td>%d", n);
+				}
+				a[j] = v.size();
+				printf("<td>%d</td>", a[j]);
+			}
+			printf("<td>%d", (bridge ? 1 : 2) * a[1] + a[2]);
+		}
+		l144: ;
+		printf("\n");
+	}
+}
+
+void showTablesBP1(){
+ 	const int digits=6;
+ 	const bool latex=0;
+	int i,j,l;
+	BigUnsigned r;
+	std::string s,s1;
+
+	auto cm=[](int l,bool bridge){
+		BigUnsigned i=1;
+		const int k=bridge?4:3;
+		for(int j=0;j<k-1;j++){
+			i*=getBinomialCoefficient(l, (k -j)*l);
+		}
+		return i;
+	};
+
+	for(j=0;j<2 ;j++){
+		const bool bridge=j==0;
+		printl(bridge?"bridge":"preferans")
+		for(l=1;l<=(bridge?13:10);l++){
+			i=(bridge?1:2)*BridgePreferansBase::suitLengthVector(l,bridge,EndgameType::NT).size()+BridgePreferansBase::suitLengthVector(l,bridge,EndgameType::TRUMP).size();
+			r=cm(l, bridge);
+			s=(r*i).toString();
+			if(latex){
+				prints(" & ",l,s,(r*i).toString(digits,',')+format(" $\\approx%c.%c \\cdot 10^{%d}$",s[0],s[1],int(s.length()-1)))
+				printan("\\\\")
+			}
+			else{
+				s1 = formats("</td><td>", l,
+						toString(i)+"&sdot;"+r.toString(digits, ',')+" = "+ (r * i).toString(digits, ',')
+								+ format(" &asymp; %c.%c&sdot;10<sup>%d</sup>",
+										s[0], s[1], int(s.length() - 1)));
+				printzn("<tr><td>",s1,"</td>")
+			}
+		}
+	}
+}
+
 void routine(){
 
-	speedTest(0);
-	speedTest(1);
+	showTablesBP1();
+	return;
+
+//	speedTest(0);
+//	speedTest(1);
 
 	{
 //		proceedFiles();
