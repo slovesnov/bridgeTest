@@ -96,14 +96,12 @@ void speedTest(bool ntproblems){
 	clock_t begin;
 	double t,tt=0;
 	int i=0;
-	for(i=3;i<10;i++){
+	const int from=3;
+	const int to=10;
+	assert(to>=from);
+	//printl(bridgeDeals[ntproblems].size())
+	for(i=from;i<to;i++){
 		auto &a=bridgeDeals[ntproblems][i];
-//	}
-//	for(auto a:bridgeDeals[ntproblems]){
-//		if(i==0){
-//			i++;
-//			continue;
-//		}
 		begin = clock();
 		br.solveFull(a.c, a.m_trump, a.m_first, true);
 		t=timeElapse(begin);
@@ -111,7 +109,6 @@ void speedTest(bool ntproblems){
 
 		printl(i,t,br.m_e)
 		fflush(stdout);
-		i++;
 	}
 
 	printl("total time",tt)
@@ -369,6 +366,8 @@ void createEndgameFiles(){
 
 void routine(){
 
+	speedTest(0);
+	speedTest(1);
 /*
 	showTablesBP();
 	showTablesBP1();
@@ -377,6 +376,7 @@ void routine(){
 	proceedFiles();
 	return;
 */
+
 
 /*
 	bool bridge=0;
@@ -406,7 +406,7 @@ void routine(){
 				printl(joinV(p1));
 				printl(joinV(p2));
 				printl(binaryCodeString(k,2*ntotal));
-				BridgePreferansBase::endgameRotate(bridge,k,2*ntotal,a);
+				BridgePreferansBase::endgameRotate(Preferans::m_w,k,2*ntotal,a);
 				for(i=0;i<2;i++){
 					printl(binaryCodeString(a[i],2*ntotal));
 				}
@@ -416,6 +416,7 @@ void routine(){
 	}
 	l403:;
 */
+
 
 	Bridge br;
 	auto &a = bridgeDeals[1][0];
