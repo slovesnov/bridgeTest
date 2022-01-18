@@ -30,8 +30,7 @@ int totalPositions (bool bridge) {
 	return i*BridgePreferansBase::endgameCm(bridge);
 };
 
-void proceedFiles(){
-	bool bridge=true;
+void proceedFiles(bool bridge){
 	const int n = BridgePreferansBase::endgameGetN(bridge);
 	int i,j,k,l;
 	char byte;
@@ -48,27 +47,29 @@ void proceedFiles(){
 //	const int bits=int(d)+(int(d)!=d);
 
 	const int chunkbits=n<=3?2:4;
+	//printl(chunkbits)
+	const char* T[]={"nt", "trump","misere"};
+	const char t=(bridge?'b':'p');
 
-	//nt, trump
-	//printl(steps[0],steps[1],endgameCM(bridge))
-
-	for (j = 0; j < 2; j++) {
-		std::ofstream f(format("b%s.bin",j == 0 ? "nt" : "trump"),std::ofstream::binary);
+	for (j = 0; j < 2+(!bridge); j++) {
+		const std::string fb=t+std::to_string(n)+T[j];
+		std::ofstream f( fb+".bin",std::ofstream::binary);
 		k=chunkbits*steps[j]*BridgePreferansBase::endgameCm(bridge);
 		//need TODO if k%8!=0
 		if(k%8!=0){
-			printl("todo totalbits%8!=0")
+			printl("todo totalbits%8!=0");
+			return;
 		}
 
 		l=0;
 		byte=0;
 		for (i = 0; i < steps[j]; i++) {
-			s = format("b%s%d.txt", j == 0 ? "nt" : "trump", i);
+			s =fb+std::to_string(i)+".txt";
 			assert(fileExists(s.c_str()));
 
 			s = fileGetContent(s);
 			v=split(s);
-			assert(int(v.size())==cm(bridge)+1);
+			assert(int(v.size())==(bridge?1:3)*BridgePreferansBase::endgameCm(bridge)+1);
 			assert(v[v.size()-1]=="");
 			v.pop_back();
 
@@ -76,7 +77,7 @@ void proceedFiles(){
 				assert(parseString(a, k));
 				parseString(a, k);
 				assert(k>=-n && k<=n);
-				assert(k%2==n%2);
+				assert(abs(k%2)==n%2);//-3%2=-1 so use abs(k%2) instead of k%2
 				k=(k+n)/2;
 				byte |= k<<l;
 				l+=chunkbits;
@@ -199,7 +200,7 @@ void createEndgameFiles(){
 	Bridge br;
 	Preferans pr;
 	CARD_INDEX ci[52];
-	std::string s;
+	std::string s,s1;
 	Permutations p[3];
 
 	auto begin=clock();
@@ -223,16 +224,20 @@ void createEndgameFiles(){
 		const bool bridge=isBridge(i);
 		const EndgameType option=getOption(i);
 		steps[i]=BridgePreferansBase::suitLengthVector(bridge, option).size();
-		//upper+=steps[i];
+		upper+=steps[i];
 		//printl(i,bridge,option==EndgameType::TRUMP? "trump":"nt",isMisere(i),steps[i])
 	}
 
+	//56 - -1 layer
+//	printl(steps[0]+steps[1])
+//	return;
 	//bridge only
-	upper=steps[0]+steps[1];
+	//upper=steps[0]+steps[1];
 //	printl(upper)
 
 	FILE*f=fopen(SHARED_FILE_NAME,"w+");
-	fprintf(f,"0");
+	//56
+	fprintf(f,"120");
 	fclose(f);
 
 	if(!fileExists(SHARED_FILE_NAME)){
@@ -247,9 +252,11 @@ void createEndgameFiles(){
 		i = pa.first;
 		const bool bridge = isBridge(i);
 		const EndgameType option = getOption(i);
-		const bool misere = isMisere(i);
+		const bool misere = !bridge && isMisere(i);
 		const int step = pa.second;
-		printl(j,bridge?"bridge":"preferans",option==EndgameType::TRUMP? "trump":"nt",step)
+		s1=option == EndgameType::TRUMP ? "trump" :(misere?"misere": "nt");
+
+		printl(j,bridge?"bridge":"preferans",s1,step)
 		fflush(stdout);
 
 		const int n = BridgePreferansBase::endgameGetN(bridge);
@@ -259,8 +266,7 @@ void createEndgameFiles(){
 			p[i].init(n, ntotal - n * i, COMBINATION);
 		}
 
-		s = format("_%c%s%d.txt", bridge ? 'b' : 'p',
-				option == EndgameType::TRUMP ? "trump" : "nt", step);
+		s = format("_%c%d%s%d.txt", bridge ? 'b' : 'p',n, s1.c_str(), step);
 		std::ofstream file(s);
 
 		auto len = BridgePreferansBase::suitLengthVector(bridge, option)[step];
@@ -321,21 +327,20 @@ void createEndgameFiles(){
 					const CARD_INDEX first = CARD_INDEX_NORTH;
 					const int trump = option == EndgameType::TRUMP ? 0 : NT;
 					if (bridge) {
-						//br.m_e br.m_ns br.m_ew
 						br.solveEstimateOnly(ci, trump, first, trumpChanged);
 						file << br.m_ns-br.m_ew<< " ";
+						//TODO assert( pr.m_e-(n-pr.m_e) == br.m_ns-br.m_ew)
+						//file << pr.m_e-(n-pr.m_e)<< " ";
 
 					} else {
 						//pr.solveEstimateOnly(c, trump, first, player, misere, preferansPlayer, trumpChanged)
 						CARD_INDEX preferansPlayer[] = { CARD_INDEX_NORTH,
 								CARD_INDEX_EAST, CARD_INDEX_SOUTH };
-						//TODO 3 players
-						const CARD_INDEX player = CARD_INDEX_NORTH;		//?
-						pr.solveEstimateOnly(ci, trump, first, player, misere,
-								preferansPlayer, trumpChanged);
-						//TODO
-						//file << br.m_ns-br.m_ew<< " ";
-						//pr.m_e
+						for(auto player:preferansPlayer){
+							pr.solveEstimateOnly(ci, trump, first, player, misere,
+									preferansPlayer, trumpChanged);
+							file << pr.m_e-(n-pr.m_e)<< " ";
+						}
 					}
 					if (print) {
 						printl(br.m_e,br.m_ns, br.m_ew,timeElapse(begin))
@@ -348,7 +353,7 @@ void createEndgameFiles(){
 								* totalPositions(bridge) / 3600.
 								/ getNumberOfCores();
 						println("%s %d %.2lf, avgFull %.2lf (hours)",
-								trump == NT ? "NT" : "trump", count,
+								s1.c_str(), count,
 								timeElapse(begin), o)
 						fflush(stdout);
 //						file.close();
@@ -358,7 +363,7 @@ void createEndgameFiles(){
 			}
 		}
 		file.close();
-		break;//TODO
+		//break;//TODO
 	}
 
 	println("time %.2lf", timeElapse(begin))
@@ -366,14 +371,15 @@ void createEndgameFiles(){
 
 void routine(){
 
-	speedTest(0);
-	speedTest(1);
+//	proceedFiles(true);
+
 /*
 	showTablesBP();
 	showTablesBP1();
 	speedTest(0);
 	speedTest(1);
-	proceedFiles();
+	createEndgameFiles();
+	proceedFiles(false);
 	return;
 */
 
@@ -418,12 +424,14 @@ void routine(){
 */
 
 
+
+
+
 	Bridge br;
-	auto &a = bridgeDeals[1][0];
+	auto &a = bridgeDeals[1][20];
 	br.solveFull(a.c, a.m_trump, a.m_first, true);
 
 
-//	createEndgameFiles();
 }
 
 
