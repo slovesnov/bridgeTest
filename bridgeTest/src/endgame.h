@@ -121,7 +121,7 @@ void speedTest(bool ntproblems){
 //need uint64_t type for showTablesBP()
 uint64_t getBinomialCoefficient(int k,int n){
 	uint64_t r = 1;
-	int i=1;
+	int i;
 	/* for big n,k
 	 * C(n,k)=n*C(n-1,k-1)/k
 	 * C(n,k)=n*C(n-1,k-1)/k=(n/k)*(n-1/k-1)...(n-k+1/1)C(n-k,0); C(n-k,0)=1
@@ -332,9 +332,12 @@ void createEndgameFiles(){
 						//pr.solveEstimateOnly(c, trump, first, player, misere, preferansPlayer, trumpChanged)
 						CARD_INDEX preferansPlayer[] = { CARD_INDEX_NORTH,
 								CARD_INDEX_EAST, CARD_INDEX_SOUTH };
+						//TODO 3 players
 						const CARD_INDEX player = CARD_INDEX_NORTH;		//?
 						pr.solveEstimateOnly(ci, trump, first, player, misere,
 								preferansPlayer, trumpChanged);
+						//TODO
+						//file << br.m_ns-br.m_ew<< " ";
 						//pr.m_e
 					}
 					if (print) {
@@ -364,30 +367,60 @@ void createEndgameFiles(){
 	println("time %.2lf", timeElapse(begin))
 }
 
-
 void routine(){
-
-	proceedFiles();
 
 /*
 	showTablesBP();
 	showTablesBP1();
+	speedTest(0);
+	speedTest(1);
+	proceedFiles();
 	return;
 */
 
-//	speedTest(0);
-//	speedTest(1);
-//		proceedFiles();
-
-
 /*
-	{
-		Bridge br;
-		auto &a = bridgeDeals[1][0];
-		br.solveFull(a.c, a.m_trump, a.m_first, true);
-		return;
+	bool bridge=0;
+	Permutations pe[3];
+	int i,j,k;
+	int a[3];
+	Preferans pref;//to init m_w
+
+	const int n = BridgePreferansBase::endgameGetN(bridge);
+	const int ntotal = BridgePreferansBase::endgameGetN(bridge ,true);
+	//printl(n,ntotal);
+
+	for (i = 0; i < 3; i++) {
+		pe[i].init(n, ntotal - n * i, COMBINATION);
 	}
+
+	j=0;
+	for (auto &p0 : pe[0]) {
+		for (auto &p1 : pe[1]) {
+			for (auto &p2 : pe[2]) {
+				j++;
+				if(j<256){
+					continue;
+				}
+				k=BridgePreferansBase::bitCode(bridge,p0,p1,p2);
+				printl(joinV(p0));
+				printl(joinV(p1));
+				printl(joinV(p2));
+				printl(binaryCodeString(k,2*ntotal));
+				BridgePreferansBase::endgameRotate(bridge,k,2*ntotal,a);
+				for(i=0;i<2;i++){
+					printl(binaryCodeString(a[i],2*ntotal));
+				}
+				goto l403;
+			}
+		}
+	}
+	l403:;
 */
+
+	Bridge br;
+	auto &a = bridgeDeals[1][0];
+	br.solveFull(a.c, a.m_trump, a.m_first, true);
+
 
 //	createEndgameFiles();
 }
