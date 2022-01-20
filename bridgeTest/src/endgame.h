@@ -427,13 +427,13 @@ void routine(){
 */
 
 
-
-
+/*
 
 	Bridge br;
 	auto &a = bridgeDeals[1][20];
 	br.solveFull(a.c, a.m_trump, a.m_first, true);
 
+*/
 
 }
 
