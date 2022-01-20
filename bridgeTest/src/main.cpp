@@ -111,23 +111,15 @@ const bool WRITE_TO_FILE=0;
 //after SOLVE_TYPE is defined
 #include "DealData.h"
 
-#if TYPE==0
-enum {
-	SPADES,HEARTS,DIAMONDS,CLUBS
-};
-#elif TYPE==1
 
+#if TYPE!=2
+#include "pcommon.h"
+#endif
+
+#if TYPE==1
 void run(int nodes, int problem, bool old,int*result);
 #else
 void generate ();
-#endif
-
-#if TYPE!=2
-const CARD_INDEX PREFERANS_PLAYER[] = {
-		CARD_INDEX_WEST,
-		CARD_INDEX_NORTH,
-		CARD_INDEX_EAST };
-
 #endif
 
 bool isBridge(){

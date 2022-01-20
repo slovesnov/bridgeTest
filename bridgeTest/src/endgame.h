@@ -13,8 +13,9 @@
 #ifndef ENDGAME_H_
 #define ENDGAME_H_
 
-#include <numeric>//iota
+//#include <numeric>//iota
 
+#include "pcommon.h"
 #include "BigUnsigned.h"
 
 namespace endgame{
@@ -91,7 +92,7 @@ void proceedFiles(bool bridge){
 	}
 }
 
-void speedTest(bool ntproblems){
+void bridgeSpeedTest(bool ntproblems){
 	preventThreadSleep();
 	Bridge br;
 	clock_t begin;
@@ -113,7 +114,66 @@ void speedTest(bool ntproblems){
 	}
 
 	printl("total time",tt)
-	fflush(stdout);
+	//fflush(stdout);
+}
+
+void preferansSpeedTest(int type){
+	preventThreadSleep();
+	Preferans pr;
+	clock_t begin;
+	double t,tt=0;
+	int i=0;
+	const int from=3;
+	const int to=10;
+	assert(to>=from);
+
+	//from double routine(bool movesOptimization=false) in main.cpp
+
+	Deal a[]= {
+		//"north east west" cards
+		Deal(" A98.AT98..T87 QT7.KQJ.A.KQJ KJ.7.KQJT9.A9 ",SPADES,CARD_INDEX_WEST,CARD_INDEX_EAST)//deal1 e=10
+		, Deal(" J9.97.8.87 87.KQ.KQ.J QT.A8.A97. ",SPADES,CARD_INDEX_NORTH,CARD_INDEX_EAST)//deal2 e=7
+		, Deal(" 87.KQ.KQ.J QT.A8.A97. J9.97.8.87 ",SPADES,CARD_INDEX_WEST,CARD_INDEX_NORTH)//deal2' e=7
+		, Deal(" QJT.J9.A97.KJ K9.Q87.QT8.QT A.AKT.KJ.A987 ",CLUBS,CARD_INDEX_WEST,CARD_INDEX_WEST)//deal3 e=7
+		, Deal("AJ98.87.87.87 .KT9.AQT.KQT9 KQT7.AQJ.KJ.A",SPADES,CARD_INDEX_WEST,CARD_INDEX_WEST)//deal4 e=4 time=53.6
+		, Deal(" T987.98.987.8 AK.AKQT.J.QJT QJ.J7.AKQT.97 ",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH,true)//deal5
+		, Deal(" 8.T987.987.98 AT9.KQ.K.AQJT J7.AJ.AQJT.K7 ",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH,true)//deal 6
+		, Deal("A8.AJ7.AJ8.KT QT.KT8.KT7.Q8 KJ7.Q9.Q9.AJ7",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH)//deal7 e=7 time=240s
+	};
+
+	auto&d=a[0];
+	begin = clock();
+
+/*
+	void solveEstimateOnly(const CARD_INDEX c[52], int trump, CARD_INDEX first,
+			CARD_INDEX player, bool misere, const CARD_INDEX preferansPlayer[3],
+			bool trumpChanged);
+*/
+	pr.solveEstimateOnly(d.c, d.m_trump,d.m_first,d.m_player, d.m_misere, PREFERANS_PLAYER,true);
+
+	t=timeElapse(begin);
+	tt+=t;
+	printl(i,t,pr.m_e)
+
+//	for(auto& d:a) {
+//		break;
+//	}
+
+/*
+	//printl(bridgeDeals[ntproblems].size())
+	for(i=from;i<to;i++){
+		auto &a=bridgeDeals[ntproblems][i];
+		begin = clock();
+		br.solveFull(a.c, a.m_trump, a.m_first, true);
+		t=timeElapse(begin);
+		tt+=t;
+
+		printl(i,t,br.m_e)
+		fflush(stdout);
+	}
+*/
+
+	printl("total time",tt)
 }
 
 //need uint64_t type for showTablesBP()
@@ -369,18 +429,81 @@ void createEndgameFiles(){
 	println("time %.2lf", timeElapse(begin))
 }
 
-void routine(){
+void test(){
+	//defined in preferans.cpp
+	const int MAX_SUIT_CODE=0x3aaaa;//240 298
+	const int MAX_SUIT_CODE_ARRAY_SIZE=MAX_SUIT_CODE+1;//240 299
 
-	speedTest(0);
-	speedTest(1);
+	int i,l,c;
+	Permutations p;
+	int endgameSuitLength[MAX_SUIT_CODE_ARRAY_SIZE];
+	clock_t begin=clock();
+
+#ifndef NDEBUG
+	printi;
+	for(i=0;i<MAX_SUIT_CODE_ARRAY_SIZE;i++){
+		endgameSuitLength[i]=-1;
+	}
+#endif
+
+	for(l=0;l<9;l++){
+		printv(l)
+		p.init(l, 3, PERMUTATIONS_WITH_REPLACEMENTS);
+		for(auto&a:p){
+			i=0;
+			c=0;
+			for(auto&b:a){
+				c|=b<<i;
+				i+=2;
+			}
+			c|=3<<i;
+			assert(c<MAX_SUIT_CODE_ARRAY_SIZE);
+			assert(endgameSuitLength[c]==-1);
+			endgameSuitLength[c]=l;
+			//printl(binaryCodeString(c, (l+1)*2),joinV(a) );
+		}
+	}
+	printl(timeElapse(begin));
+}
+
+void routine(){
+//	bridgeSpeedTest(0);
+//	bridgeSpeedTest(1);
+
+	preferansSpeedTest(0);
+
+/*
+	int m_w[23],a[2];
+	int i;
+
+	i=0;
+	for(int& a:m_w){
+		a=i%3;
+		i++;
+	}
+	int c=6;
+	int k=0b11000110;
+
+	BridgePreferansBase::endgameRotate(false,m_w,k,c,a);
+
+	printl(binaryCodeString(k));
+	for(auto& b:a){
+		printl(binaryCodeString(b,c+2));
+	}
+*/
+
+
+	//test();
+
+
 
 //	proceedFiles(true);
 
 /*
 	showTablesBP();
 	showTablesBP1();
-	speedTest(0);
-	speedTest(1);
+	bridgeSpeedTest(0);
+	bridgeSpeedTest(1);
 	createEndgameFiles();
 	proceedFiles(false);
 	return;
