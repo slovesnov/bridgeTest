@@ -371,6 +371,9 @@ void createEndgameFiles(){
 
 void routine(){
 
+	speedTest(0);
+	speedTest(1);
+
 //	proceedFiles(true);
 
 /*
