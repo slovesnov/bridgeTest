@@ -31,9 +31,9 @@ int totalPositions (bool bridge) {
 	return i*BridgePreferansBase::endgameCm(bridge);
 };
 
-void proceedFiles(bool bridge){
+void createBinFiles(bool bridge){
 	const int n = BridgePreferansBase::endgameGetN(bridge);
-	int i,j,k,l;
+	int i,j,k,l,st;
 	char byte;
 	std::string s;
 	VString v;
@@ -53,9 +53,11 @@ void proceedFiles(bool bridge){
 	const char t=(bridge?'b':'p');
 
 	for (j = 0; j < 2+(!bridge); j++) {
+		st=steps[j+(bridge?0:2)];
+		printl(j,st)
 		const std::string fb=t+std::to_string(n)+T[j];
 		std::ofstream f( fb+".bin",std::ofstream::binary);
-		k=chunkbits*steps[j]*BridgePreferansBase::endgameCm(bridge);
+		k=chunkbits*st*BridgePreferansBase::endgameCm(bridge);
 		//need TODO if k%8!=0
 		if(k%8!=0){
 			printl("todo totalbits%8!=0");
@@ -64,8 +66,8 @@ void proceedFiles(bool bridge){
 
 		l=0;
 		byte=0;
-		for (i = 0; i < steps[j]; i++) {
-			s =fb+std::to_string(i)+".txt";
+		for (i = 0; i < st; i++) {
+			s =std::string("p3/")+fb+std::to_string(i)+".txt";
 			assert(fileExists(s.c_str()));
 
 			s = fileGetContent(s);
@@ -126,52 +128,38 @@ void preferansSpeedTest(int type){
 	const int from=3;
 	const int to=10;
 	assert(to>=from);
+	std::string s;
 
 	//from double routine(bool movesOptimization=false) in main.cpp
 
 	Deal a[]= {
 		//"north east west" cards
-		Deal(" A98.AT98..T87 QT7.KQJ.A.KQJ KJ.7.KQJT9.A9 ",SPADES,CARD_INDEX_WEST,CARD_INDEX_EAST)//deal1 e=10
-		, Deal(" J9.97.8.87 87.KQ.KQ.J QT.A8.A97. ",SPADES,CARD_INDEX_NORTH,CARD_INDEX_EAST)//deal2 e=7
-		, Deal(" 87.KQ.KQ.J QT.A8.A97. J9.97.8.87 ",SPADES,CARD_INDEX_WEST,CARD_INDEX_NORTH)//deal2' e=7
-		, Deal(" QJT.J9.A97.KJ K9.Q87.QT8.QT A.AKT.KJ.A987 ",CLUBS,CARD_INDEX_WEST,CARD_INDEX_WEST)//deal3 e=7
-		, Deal("AJ98.87.87.87 .KT9.AQT.KQT9 KQT7.AQJ.KJ.A",SPADES,CARD_INDEX_WEST,CARD_INDEX_WEST)//deal4 e=4 time=53.6
-		, Deal(" T987.98.987.8 AK.AKQT.J.QJT QJ.J7.AKQT.97 ",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH,true)//deal5
-		, Deal(" 8.T987.987.98 AT9.KQ.K.AQJT J7.AJ.AQJT.K7 ",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH,true)//deal 6
-		, Deal("A8.AJ7.AJ8.KT QT.KT8.KT7.Q8 KJ7.Q9.Q9.AJ7",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH)//deal7 e=7 time=240s
+		/*0*/Deal(" A98.AT98..T87 QT7.KQJ.A.KQJ KJ.7.KQJT9.A9 ",SPADES,CARD_INDEX_WEST,CARD_INDEX_EAST)//deal1 e=10
+		/*1*/, Deal(" J9.97.8.87 87.KQ.KQ.J QT.A8.A97. ",SPADES,CARD_INDEX_NORTH,CARD_INDEX_EAST)//deal2 e=7
+		/*2*/, Deal(" 87.KQ.KQ.J QT.A8.A97. J9.97.8.87 ",SPADES,CARD_INDEX_WEST,CARD_INDEX_NORTH)//deal2' e=7
+		/*3*/, Deal(" QJT.J9.A97.KJ K9.Q87.QT8.QT A.AKT.KJ.A987 ",CLUBS,CARD_INDEX_WEST,CARD_INDEX_WEST)//deal3 e=7
+		/*4*/, Deal("AJ98.87.87.87 .KT9.AQT.KQT9 KQT7.AQJ.KJ.A",SPADES,CARD_INDEX_WEST,CARD_INDEX_WEST)//deal4 e=4 time=53.6
+		/*5*/, Deal(" T987.98.987.8 AK.AKQT.J.QJT QJ.J7.AKQT.97 ",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH,true)//deal5
+		/*6*/, Deal(" 8.T987.987.98 AT9.KQ.K.AQJT J7.AJ.AQJT.K7 ",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH,true)//deal 6
+		/*7*/, Deal("A8.AJ7.AJ8.KT QT.KT8.KT7.Q8 KJ7.Q9.Q9.AJ7",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH)//deal7 e=7 time=240s
 	};
 
-	auto&d=a[0];
 	begin = clock();
 
-/*
-	void solveEstimateOnly(const CARD_INDEX c[52], int trump, CARD_INDEX first,
-			CARD_INDEX player, bool misere, const CARD_INDEX preferansPlayer[3],
-			bool trumpChanged);
-*/
-	pr.solveEstimateOnly(d.c, d.m_trump,d.m_first,d.m_player, d.m_misere, PREFERANS_PLAYER,true);
-
+//	auto&d=a[0];
+	for(i=0;i<8;i++){
+		auto&d=a[i];
+//		s= d.m_trump==NT ? (d.m_misere ? "misere":"nt") : "trump";
+//		printl(s);
+		pr.solveEstimateOnly(d.c, d.m_trump,d.m_first,d.m_player, d.m_misere, PREFERANS_PLAYER,true);
+	}
 	t=timeElapse(begin);
 	tt+=t;
-	printl(i,t,pr.m_e)
+	printl(t,pr.m_e)
 
 //	for(auto& d:a) {
 //		break;
 //	}
-
-/*
-	//printl(bridgeDeals[ntproblems].size())
-	for(i=from;i<to;i++){
-		auto &a=bridgeDeals[ntproblems][i];
-		begin = clock();
-		br.solveFull(a.c, a.m_trump, a.m_first, true);
-		t=timeElapse(begin);
-		tt+=t;
-
-		printl(i,t,br.m_e)
-		fflush(stdout);
-	}
-*/
 
 	printl("total time",tt)
 }
@@ -295,10 +283,12 @@ void createEndgameFiles(){
 	//upper=steps[0]+steps[1];
 //	printl(upper)
 
+/*
 	FILE*f=fopen(SHARED_FILE_NAME,"w+");
 	//56
 	fprintf(f,"120");
 	fclose(f);
+*/
 
 	if(!fileExists(SHARED_FILE_NAME)){
 		printl("error shared file not exists");
@@ -326,7 +316,7 @@ void createEndgameFiles(){
 			p[i].init(n, ntotal - n * i, COMBINATION);
 		}
 
-		s = format("_%c%d%s%d.txt", bridge ? 'b' : 'p',n, s1.c_str(), step);
+		s = format("%c%d%s%d.txt", bridge ? 'b' : 'p',n, s1.c_str(), step);
 		std::ofstream file(s);
 
 		auto len = BridgePreferansBase::suitLengthVector(bridge, option)[step];
@@ -467,6 +457,8 @@ void test(){
 }
 
 void routine(){
+	//createEndgameFiles();
+//	createBinFiles(false);
 //	bridgeSpeedTest(0);
 //	bridgeSpeedTest(1);
 
@@ -497,15 +489,13 @@ void routine(){
 
 
 
-//	proceedFiles(true);
-
 /*
 	showTablesBP();
 	showTablesBP1();
 	bridgeSpeedTest(0);
 	bridgeSpeedTest(1);
 	createEndgameFiles();
-	proceedFiles(false);
+	createBinFiles(false);
 	return;
 */
 

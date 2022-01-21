@@ -8,4 +8,4 @@ IF "%1"=="" (set a0=0) ELSE (set a0=%1)
 echo %a0% >shared.txt
 
 rem FOR /L %%A IN (0,1,5) DO start Release\bridgeTest.exe %%A %a0%
-FOR /L %%A IN (0,1,2) DO start Release\bridgeTest.exe %%A %a0%
+FOR /L %%A IN (0,1,5) DO start Release\bridgeTest.exe %%A %a0%
