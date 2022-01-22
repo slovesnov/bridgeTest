@@ -28,7 +28,7 @@ EndgameType getOption(int i) { return (i==1 || i==3) ? EndgameType::TRUMP : Endg
 
 int totalPositions (bool bridge) {
 	int i=(bridge ?1:2)*BridgePreferansBase::suitLengthVector(bridge,EndgameType::NT).size()+BridgePreferansBase::suitLengthVector(bridge,EndgameType::TRUMP).size();
-	return i*BridgePreferansBase::endgameCm(bridge);
+	return i*(bridge?Bridge::endgameCN:Preferans::endgameCN);
 };
 
 void createBinFiles(bool bridge){
@@ -57,7 +57,7 @@ void createBinFiles(bool bridge){
 //		printl(j,st)
 		const std::string fb=t+std::to_string(n)+T[j];
 		std::ofstream f( fb+".bin",std::ofstream::binary);
-		k=chunkbits*st*BridgePreferansBase::endgameCm(bridge);
+		k=chunkbits*st*(bridge?Bridge::endgameCN:Preferans::endgameCN);
 		//need TODO if k%8!=0
 		if(k%8!=0){
 			printl("todo totalbits%8!=0");
@@ -72,7 +72,7 @@ void createBinFiles(bool bridge){
 
 			s = fileGetContent(s);
 			v=split(s);
-			assert(int(v.size())==(bridge?1:3)*BridgePreferansBase::endgameCm(bridge)+1);
+			assert(int(v.size())==(bridge?1:3)*(bridge?Bridge::endgameCN:Preferans::endgameCN)+1);
 			assert(v[v.size()-1]=="");
 			v.pop_back();
 
@@ -386,78 +386,47 @@ void showTablesBP1(){
 }
 
 void test(){
-	//defined in preferans.cpp
-	const int MAX_SUIT_CODE=0x3aaaa;//240 298
-	const int MAX_SUIT_CODE_ARRAY_SIZE=MAX_SUIT_CODE+1;//240 299
+	int i, l,j,n, a[2];
+	for (l = 0; l < 2; l++) {
+		bool bridge = l==0;
+		for (n = 0; n <= (bridge ? 13 : 8); n++) {
+			for (i = 0; i < 2; i++) {
+				VVInt v = BridgePreferansBase::suitLengthVector(n, bridge,
+						i ? EndgameType::TRUMP : EndgameType::NT);
+				VInt const &max = *std::max_element(v.begin(), v.end(),
+						[](auto &a, auto &b) {
+							return a[2] < b[2];
+						});
+				a[i] = max[2];
+				//const int size=(max[2]+1)*endgameMultiplier*endgameMultiplier;
 
-	int i,l,c;
-	Permutations p;
-	int endgameSuitLength[MAX_SUIT_CODE_ARRAY_SIZE];
-	clock_t begin=clock();
-
-#ifndef NDEBUG
-	printi;
-	for(i=0;i<MAX_SUIT_CODE_ARRAY_SIZE;i++){
-		endgameSuitLength[i]=-1;
-	}
-#endif
-
-	for(l=0;l<9;l++){
-		printv(l)
-		p.init(l, 3, PERMUTATIONS_WITH_REPLACEMENTS);
-		for(auto&a:p){
-			i=0;
-			c=0;
-			for(auto&b:a){
-				c|=b<<i;
-				i+=2;
 			}
-			c|=3<<i;
-			assert(c<MAX_SUIT_CODE_ARRAY_SIZE);
-			assert(endgameSuitLength[c]==-1);
-			endgameSuitLength[c]=l;
-			//printl(binaryCodeString(c, (l+1)*2),joinV(a) );
+			assert(a[0] == a[1]);
+			j=std::min((n*(bridge ? 4 : 3))>>1,bridge ? 13 : 8);
+			assert(a[0]==j);
+			printl(bridge?"b":"p",n, a[0],j, a[0]==j?"+":"-" )
+			//printzn(n,' ', a[0],',', a[1])
 		}
 	}
-	printl(timeElapse(begin));
+
 }
 
 void routine(){
-	//createEndgameFiles();
+	createEndgameFiles();
 	//createBinFiles(false);
 //	bridgeSpeedTest(0);
 //	bridgeSpeedTest(1);
-
-	preferansSpeedTest();
-
-/*
-	int m_w[23],a[2];
-	int i;
-
-	i=0;
-	for(int& a:m_w){
-		a=i%3;
-		i++;
-	}
-	int c=6;
-	int k=0b11000110;
-
-	BridgePreferansBase::endgameRotate(false,m_w,k,c,a);
-
-	printl(binaryCodeString(k));
-	for(auto& b:a){
-		printl(binaryCodeString(b,c+2));
-	}
-*/
+//
+//	preferansSpeedTest();
 
 
-	//test();
+//	test();
 
 
 
 /*
 	showTablesBP();
-	showTablesBP1();
+//	showTablesBP1();
 	bridgeSpeedTest(0);
 	bridgeSpeedTest(1);
 	createEndgameFiles();
