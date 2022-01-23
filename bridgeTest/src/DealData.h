@@ -15,6 +15,8 @@
 
 #include "BridgeCommon.h"
 
+void run(int nodes, int problem, bool old,int*result);
+
 class DealData {
 public:
 	std::string deal;
@@ -56,11 +58,17 @@ const DealData dealData[]={
 
 const int RESULT_SIZE = 11;
 
+/* need to define here
+ * SOLVE_TYPE 0 184 756 positions
+ * SOLVE_TYPE 1 20 000 positions
+ */
+#define SOLVE_TYPE 1
+
 #if SOLVE_TYPE==0
 const int PREFERANS_SOLVE_ALL_DEALS_POSITIONS=184756;
 const int results[][RESULT_SIZE] = {
-		{103936, 13832, 612, 9362, 35612, 20754, 648, 0, 0, 0, 0},
 		{8544, 147660, 1340, 9050, 15156, 2876, 130, 0, 0, 0, 0},
+		{103936, 13832, 612, 9362, 35612, 20754, 648, 0, 0, 0, 0},
 		{0, 0, 0, 0, 1016, 19625, 104962, 58993, 160, 0, 0},
 		{0, 0, 0, 3015, 134666, 46917, 158, 0, 0, 0, 0},
 		{441, 4547, 18204, 78510, 78762, 4292, 0, 0, 0, 0, 0},
@@ -73,8 +81,8 @@ const int results[][RESULT_SIZE] = {
 #else
 const int PREFERANS_SOLVE_ALL_DEALS_POSITIONS = 20000;
 const int results[][RESULT_SIZE] = {
-		{7978, 2338, 233, 2062, 5021, 2308, 60, 0, 0, 0, 0},
 		{906, 13958, 366, 2054, 2384, 325, 7, 0, 0, 0, 0},
+		{7978, 2338, 233, 2062, 5021, 2308, 60, 0, 0, 0, 0},
 		{0, 0, 0, 0, 226, 1643, 11300, 6799, 32, 0, 0},
 		{0, 0, 0, 0, 12740, 7222, 38, 0, 0, 0, 0},
 		{0, 229, 828, 9058, 9807, 78, 0, 0, 0, 0, 0},

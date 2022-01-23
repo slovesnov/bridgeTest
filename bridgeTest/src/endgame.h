@@ -14,8 +14,10 @@
 #define ENDGAME_H_
 
 //#include <numeric>//iota
+#include <set>
 
 #include "pcommon.h"
+#include "DealData.h"
 #include "BigUnsigned.h"
 
 namespace endgame{
@@ -268,47 +270,54 @@ void bridgeSpeedTest(bool ntproblems){
 
 void preferansSpeedTest(){
 	preventThreadSleep();
-	Preferans pr;
+	int i;
+	int r[RESULT_SIZE];
 	clock_t begin;
-	double t,tt=0;
-	int i=0;
-	const int from=3;
-	const int to=10;
-	assert(to>=from);
-	std::string s;
+	double t,tt;
+	std::string s,s1;
 
-	//from double routine(bool movesOptimization=false) in main.cpp
+	const bool type = 1;
 
-	Deal a[]= {
-		//"north east west" cards
-		/*0*/Deal(" A98.AT98..T87 QT7.KQJ.A.KQJ KJ.7.KQJT9.A9 ",SPADES,CARD_INDEX_WEST,CARD_INDEX_EAST)//deal1 e=10
-		/*1*/, Deal(" J9.97.8.87 87.KQ.KQ.J QT.A8.A97. ",SPADES,CARD_INDEX_NORTH,CARD_INDEX_EAST)//deal2 e=7
-		/*2*/, Deal(" 87.KQ.KQ.J QT.A8.A97. J9.97.8.87 ",SPADES,CARD_INDEX_WEST,CARD_INDEX_NORTH)//deal2' e=7
-		/*3*/, Deal(" QJT.J9.A97.KJ K9.Q87.QT8.QT A.AKT.KJ.A987 ",CLUBS,CARD_INDEX_WEST,CARD_INDEX_WEST)//deal3 e=7
-		/*4*/, Deal("AJ98.87.87.87 .KT9.AQT.KQT9 KQT7.AQJ.KJ.A",SPADES,CARD_INDEX_WEST,CARD_INDEX_WEST)//deal4 e=4 time=53.6
-		/*5*/, Deal(" T987.98.987.8 AK.AKQT.J.QJT QJ.J7.AKQT.97 ",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH,true)//deal5
-		/*6*/, Deal(" 8.T987.987.98 AT9.KQ.K.AQJT J7.AJ.AQJT.K7 ",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH,true)//deal 6
-		/*7*/, Deal("A8.AJ7.AJ8.KT QT.KT8.KT7.Q8 KJ7.Q9.Q9.AJ7",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH)//deal7 e=7 time=240s
-	};
-
-	begin = clock();
-
-//	auto&d=a[0];
-	for(i=0;i<8;i++){
-		auto&d=a[i];
-//		s= d.m_trump==NT ? (d.m_misere ? "misere":"nt") : "trump";
-//		printl(s);
-		pr.solveEstimateOnly(d.c, d.m_trump,d.m_first,d.m_player, d.m_misere, PREFERANS_PLAYER,true);
+	if (type == 0) {
+		Preferans pr;
+		i = 0;
+		for (auto &d : preferansDeal) {
+			pr.solveEstimateOnly(d.c, d.m_trump, d.m_first, d.m_player,
+					d.m_misere, PREFERANS_PLAYER, true);
+			assert(pr.m_e==preferansDealE[i]);
+			printl(i,pr.m_e)
+			;
+			i++;
+		}
+		return;
 	}
-	t=timeElapse(begin);
-	tt+=t;
-	printl(t,pr.m_e);
 
-//	for(auto& d:a) {
-//		break;
-//	}
+#ifdef PREFERANS_ENDGAME
+	printl("PREFERANS_ENDGAME is defined",PREFERANS_SOLVE_ALL_DEALS_POSITIONS);
+#else
+	printl("PREFERANS_ENDGAME is not defined",PREFERANS_SOLVE_ALL_DEALS_POSITIONS);
+#endif
+	//printl(PREFERANS_SOLVE_ALL_DEALS_POSITIONS);
+	fflush(stdout);
 
-	printl("total time",tt)
+	tt=0;
+	for (i=0;i<SIZEI(dealData);i++) {
+		begin = clock();
+		run(PREFERANS_SOLVE_ALL_DEALS_POSITIONS, i, false,r);
+		t = timeElapse(begin);
+		tt += t;
+		s=JOINS(results[i],',');
+		s1=JOINS(r,',');
+		if(s==s1){
+			printan(i,t,"ok");
+		}
+		else{
+			printan(i,t,"error",s,s1);
+		}
+		fflush(stdout);
+	}
+
+	printl(tt);
 }
 
 //need uint64_t type for showTablesBP()
@@ -389,40 +398,56 @@ void showTablesBP1(){
 	}
 }
 
-void test(){
-	int i, l,j,n, a[2];
-	for (l = 0; l < 2; l++) {
-		bool bridge = l==0;
-		for (n = 0; n <= (bridge ? 13 : 8); n++) {
-			for (i = 0; i < 2; i++) {
-				VVInt v = BridgePreferansBase::suitLengthVector(n, bridge,
-						i ? EndgameType::TRUMP : EndgameType::NT);
-				VInt const &max = *std::max_element(v.begin(), v.end(),
-						[](auto &a, auto &b) {
-							return a[2] < b[2];
-						});
-				a[i] = max[2];
-				//const int size=(max[2]+1)*endgameMultiplier*endgameMultiplier;
+int getMinBijectionMultiplier(int n,bool bridge) {
+	int i,j,k;
+	VVInt v[2];
+//	const int n=endgameGetN(bridge);
+	std::set<int> set;
 
+	for (i = 0; i < 2; i++) {
+		v[i] = BridgePreferansBase::suitLengthVector(n, bridge,
+				i == 0 ? EndgameType::NT : EndgameType::TRUMP);
+	}
+
+	for (j = 7; j < 15; j++) {
+		for(i=0;i<2;i++){
+			set.clear();
+			for (auto &a : v[i]) {
+				k = a[0] + j * (a[1] + j * a[2]);
+				if (set.find(k) == set.end()) {
+					set.insert(k);
+				} else {
+					goto l303;
+				}
 			}
-			assert(a[0] == a[1]);
-			j=std::min((n*(bridge ? 4 : 3))>>1,bridge ? 13 : 8);
-			assert(a[0]==j);
-			printl(bridge?"b":"p",n, a[0],j, a[0]==j?"+":"-" )
-			//printzn(n,' ', a[0],',', a[1])
 		}
+//		printl(bridge,j)
+		return j;
+		l303:;
+	}
+	assert(0);
+	return -1;
+}
+
+
+void test(){
+	for(int i=0;i<2;i++){
+		bool bridge =i==0;
+		const int n=BridgePreferansBase::endgameGetN(bridge)+1;
+		int j=getMinBijectionMultiplier(n,bridge);
+		printl(bridge,j)
 	}
 
 }
 
 void routine(){
 //	createEndgameFiles();
-	createBinFiles(true);
-	createBinFiles(false);
+//	createBinFiles(true);
+//	createBinFiles(false);
 //	bridgeSpeedTest(0);
 //	bridgeSpeedTest(1);
 //
-//	preferansSpeedTest();
+	preferansSpeedTest();
 
 
 //	test();

@@ -16,6 +16,7 @@
 #include "Permutations.h"
 #include "CommonHelp.h"
 
+//macro for base test, not used for endgame::routine()
 #define BRIDGE_TEST
 
 #include "BridgeCommon.h"
@@ -62,18 +63,6 @@ const int SEARCH_MOVES_PARAMETERS_MISERE=3;
 #include <fstream>
 #endif
 
-/* SOLVE_TYPE 0 184 756 positions
- * SOLVE_TYPE 1 20 000 positions
- */
-//#if SEARCH_MOVES_PARAMETERS==1
-//#define SOLVE_TYPE 1
-//#elif SEARCH_MOVES_PARAMETERS==2
-//#define SOLVE_TYPE 0
-//#else
-//#define SOLVE_TYPE 1
-//#endif
-#define SOLVE_TYPE 0
-
 /* FP=0 old and new algorithms
  * FP=1 only new algorithm
  */
@@ -116,9 +105,7 @@ const bool WRITE_TO_FILE=0;
 #include "pcommon.h"
 #endif
 
-#if TYPE==1
-void run(int nodes, int problem, bool old,int*result);
-#else
+#if TYPE!=1
 void generate ();
 #endif
 
@@ -162,6 +149,180 @@ VInt parseAllParameters(int i) {
 
 void printDealDataFromFile(const char* path);
 void proceedOutFiles();
+
+//always defined used in run() which is used in in endgame.h
+std::string parseDeal(const std::string& deal, int firstmove, int cards[10],
+		int absent[2], int sorted[12], int& leadCard) {
+	int suit = 0;
+	bool out, lead;
+	int i;
+	int*c = cards;
+	int*a = absent;
+	int*pi;
+	const char*p, *q;
+
+	leadCard = -1;
+
+	for (p = deal.c_str(); *p != 0; p++) {
+		if (*p == '.') {
+			if (suit == 3) {
+				return "too many dots";
+			}
+			suit++;
+			continue;
+		}
+		out = *p == '*';
+		lead = *p == '#';
+		if (out || lead) {
+			p++;
+		}
+		q = strchr(RANK, tolower(*p));
+		if (!q) {
+			printf("[%c%c%d]", *p, tolower(*p), int(*p));
+			return "invalid symbol";
+		}
+		if (q - RANK >= 8) { //'6'-'2'
+			return "invalid card";
+		}
+		if (out) {
+			if (a - absent == 2) {
+				return "too many absent cards";
+			}
+			pi = a++;
+		}
+		else if (lead) {
+			if (firstmove != 0) {
+				return "error lead card found when player is not north";
+			}
+			if (leadCard != -1) {
+				return "too many absent cards";
+			}
+			pi = &leadCard;
+		}
+		else {
+			if (c - cards == 10) {
+				return "too many player cards";
+			}
+			pi = c++;
+		}
+		*pi = suit * 13 + q - RANK; //in bridge project
+	}
+	if (a - absent != 2) {
+		return "too few absent cards";
+	}
+
+	const int pcards = c - cards;
+	if ((leadCard != -1 && pcards != 9) || (leadCard == -1 && pcards != 10)) {
+		return "too few player cards";
+	}
+
+	for (i = 0; i < pcards; i++) {
+		sorted[i] = cards[i];
+	}
+	for (; i < pcards + 2; i++) {
+		sorted[i] = absent[i - pcards];
+	}
+	if (leadCard != -1) {
+		sorted[i++] = leadCard;
+	}
+
+	std::sort(sorted, sorted + i);
+	for (i--; i > 0; i--) {
+		if (sorted[i] == sorted[i - 1]) {
+			return "same card appears two or more times";
+		}
+	}
+
+	return "";
+}
+
+//always defined used in endgame.h
+void run(int nodes, int problem, bool old,int*result) {
+	int i, j, k;
+	CARD_INDEX ptr[52];
+	int cards[10], absent[2], sorted[12], lead, o[20];
+	const int min = 0;
+	const int max = nodes;
+	Preferans position(false);
+	PreferansOld positionOld(false);
+
+	for (i = 0; i < RESULT_SIZE; i++) {
+		result[i] = 0;
+	}
+
+	//check params at first
+	DealData const&d=dealData[problem];
+
+	const int trump = d.nt() ?NT:d.trump;
+	const bool misere = d.misere();
+	i = d.first;
+	const int firstmove = i == 2 ? 3 : i;
+	std::string s = parseDeal(d.deal, i, cards, absent, sorted, lead);
+	if (s.length() != 0) {
+		return;
+	}
+
+	for (i = j = k = 0; i < 52; i++) {
+		if (i % 13 >= 8) { //skip 2,3,4,5,6
+			continue;
+		}
+		if (j < 12 && sorted[j] == i) {
+			j++;
+			continue;
+		}
+		assert(k<20);
+		o[k++] = i;
+	}
+	assert(k==20);
+
+	for (i = 0; i < (lead == -1 ? 10 : 9); i++) {
+		ptr[cards[i]] = CARD_INDEX_NORTH;
+	}
+	for (i = 0; i < 2; i++) {
+		ptr[absent[i]] = CARD_INDEX_ABSENT;
+	}
+	if (lead != -1) {
+		ptr[lead] = CARD_INDEX_NORTH_INNER;
+	}
+
+	Permutations p(10, 20, COMBINATION);
+
+	for (j = 0; j < min; j++) {
+		p.next();
+	}
+
+	for (; j < max; j++, p.next()) {
+		auto& pi = p.getIndexes();
+		for (i = 0; i < 20; i++) {
+			ptr[o[i]] = CARD_INDEX_EAST;
+		}
+		for (i = 0; i < p.getK(); i++) {
+			ptr[o[pi[i]]] = CARD_INDEX_WEST;
+		}
+
+		//firstmove index of player
+		const CARD_INDEX PLAYER[] = {
+				CARD_INDEX_NORTH,
+				CARD_INDEX_EAST,
+				CARD_INDEX_SOUTH,
+				CARD_INDEX_WEST };
+		if (old) {
+			positionOld.solveEstimateOnly(ptr, trump, PLAYER[firstmove],
+					CARD_INDEX_NORTH, misere, PREFERANS_PLAYER, j == min);
+			//here is number of whisters
+			i = 10-positionOld.m_playerTricks;
+		}
+		else {
+			position.solveEstimateOnly(ptr, trump, PLAYER[firstmove],
+					CARD_INDEX_NORTH, misere, PREFERANS_PLAYER, j == min);
+			//here is right
+			i = position.m_playerTricks;
+		}
+		assert(i>=0 && i<=10);
+		result[i]++;
+	}
+
+}
 
 #ifdef SEARCH_MOVES_PARAMETERS
 int getUpper(){
@@ -236,27 +397,13 @@ double routine(bool movesOptimization=false) {
 #ifndef PREFERANS_NODE_COUNT
 #error "define PREFERANS_NODE_COUNT in Preferans.h"
 #endif
-	Deal a[]= {
-		//"north east west" cards
-		Deal(" A98.AT98..T87 QT7.KQJ.A.KQJ KJ.7.KQJT9.A9 ",SPADES,CARD_INDEX_WEST,CARD_INDEX_EAST)//deal1 e=10
-		, Deal(" J9.97.8.87 87.KQ.KQ.J QT.A8.A97. ",SPADES,CARD_INDEX_NORTH,CARD_INDEX_EAST)//deal2 e=7
-		, Deal(" 87.KQ.KQ.J QT.A8.A97. J9.97.8.87 ",SPADES,CARD_INDEX_WEST,CARD_INDEX_NORTH)//deal2' e=7
-		, Deal(" QJT.J9.A97.KJ K9.Q87.QT8.QT A.AKT.KJ.A987 ",CLUBS,CARD_INDEX_WEST,CARD_INDEX_WEST)//deal3 e=7
-		, Deal("AJ98.87.87.87 .KT9.AQT.KQT9 KQT7.AQJ.KJ.A",SPADES,CARD_INDEX_WEST,CARD_INDEX_WEST)//deal4 e=4 time=53.6
-		, Deal(" T987.98.987.8 AK.AKQT.J.QJT QJ.J7.AKQT.97 ",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH,true)//deal5
-		, Deal(" 8.T987.987.98 AT9.KQ.K.AQJT J7.AJ.AQJT.K7 ",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH,true)//deal 6
-		, Deal("A8.AJ7.AJ8.KT QT.KT8.KT7.Q8 KJ7.Q9.Q9.AJ7",NT,CARD_INDEX_WEST,CARD_INDEX_NORTH)//deal7 e=7 time=240s
-	};
-	const int e[]= {10,7,7,7,4, 8,8, 7};
-	const int SIZE=sizeof(e)/sizeof(e[0]);
-	static_assert(SIZE==sizeof(a)/sizeof(a[0]));
 	int i,j,k;
 
 	struct Result {
 		double time;
 		int nodes;
 		int best;
-	}res[SIZE*2];
+	}res[preferansDealSize*2];
 
 	int n[]= {0,0};
 	double t[]= {0,0};
@@ -272,11 +419,12 @@ double routine(bool movesOptimization=false) {
 		Preferans
 #endif
 		position(j==0);
-		for(auto& d:a) {
+		for(auto& d:preferansDeal) {
 			sp = clock();
 #ifdef T0_OLD
 			if(d.m_misere) {
-				position.solvebMisere(d.c,d.m_trump,d.m_first,d.m_player,PREFERANS_PLAYER,true);
+				//solvebMizer for PreferansOld class
+				position.solvebMizer(d.c,d.m_trump,d.m_first,d.m_player,PREFERANS_PLAYER,true);
 			}
 			else {
 				position.solveb(d.c,d.m_trump,d.m_first,d.m_player,PREFERANS_PLAYER,true);
@@ -292,7 +440,7 @@ double routine(bool movesOptimization=false) {
 				position.solveb(d.c,d.m_trump,d.m_first,d.m_player,PREFERANS_PLAYER,true);
 			}
 #endif
-			if(e[i++]!=position.m_e) {
+			if(preferansDealE[i++]!=position.m_e) {
 				printf("error");
 				break;
 			}
@@ -305,11 +453,11 @@ double routine(bool movesOptimization=false) {
 	}
 
 	printf("-time-----nodes-best---time-----nodes-best\n");
-	for(i=0;i<SIZE;i++) {
+	for(i=0;i<preferansDealSize;i++) {
 		for(j=0;j<2;j++) {
-			k=j*SIZE+i;
+			k=j*preferansDealSize+i;
 			Result& r=res[k];
-			auto s=intToString(r.nodes);
+			auto s=toString(r.nodes);
 			printf("%.3lf %10s %c%c   ",r.time,s.c_str(),RANK[r.best%13],SUITS_CHAR[r.best/13]);
 			t[j]+=r.time;
 			n[j]+=r.nodes;
@@ -318,7 +466,7 @@ double routine(bool movesOptimization=false) {
 	}
 	printf("---smallHash---------------bigHash--------\n");
 	for(j=0;j<2;j++) {
-		auto s=intToString(n[j]);
+		auto s=toString(n[j]);
 		printf("%.3lf %10s      ",t[j],s.c_str());
 	}
 	printf("\nPreferans%s",
@@ -553,180 +701,7 @@ double routine(bool movesOptimization=false) {
 	return tt;
 }
 
-#if TYPE==1
-
-std::string parseDeal(const std::string& deal, int firstmove, int cards[10],
-		int absent[2], int sorted[12], int& leadCard) {
-	int suit = 0;
-	bool out, lead;
-	int i;
-	int*c = cards;
-	int*a = absent;
-	int*pi;
-	const char*p, *q;
-
-	leadCard = -1;
-
-	for (p = deal.c_str(); *p != 0; p++) {
-		if (*p == '.') {
-			if (suit == 3) {
-				return "too many dots";
-			}
-			suit++;
-			continue;
-		}
-		out = *p == '*';
-		lead = *p == '#';
-		if (out || lead) {
-			p++;
-		}
-		q = strchr(RANK, tolower(*p));
-		if (!q) {
-			printf("[%c%c%d]", *p, tolower(*p), int(*p));
-			return "invalid symbol";
-		}
-		if (q - RANK >= 8) { //'6'-'2'
-			return "invalid card";
-		}
-		if (out) {
-			if (a - absent == 2) {
-				return "too many absent cards";
-			}
-			pi = a++;
-		}
-		else if (lead) {
-			if (firstmove != 0) {
-				return "error lead card found when player is not north";
-			}
-			if (leadCard != -1) {
-				return "too many absent cards";
-			}
-			pi = &leadCard;
-		}
-		else {
-			if (c - cards == 10) {
-				return "too many player cards";
-			}
-			pi = c++;
-		}
-		*pi = suit * 13 + q - RANK; //in bridge project
-	}
-	if (a - absent != 2) {
-		return "too few absent cards";
-	}
-
-	const int pcards = c - cards;
-	if ((leadCard != -1 && pcards != 9) || (leadCard == -1 && pcards != 10)) {
-		return "too few player cards";
-	}
-
-	for (i = 0; i < pcards; i++) {
-		sorted[i] = cards[i];
-	}
-	for (; i < pcards + 2; i++) {
-		sorted[i] = absent[i - pcards];
-	}
-	if (leadCard != -1) {
-		sorted[i++] = leadCard;
-	}
-
-	std::sort(sorted, sorted + i);
-	for (i--; i > 0; i--) {
-		if (sorted[i] == sorted[i - 1]) {
-			return "same card appears two or more times";
-		}
-	}
-
-	return "";
-}
-
-void run(int nodes, int problem, bool old,int*result) {
-	int i, j, k;
-	CARD_INDEX ptr[52];
-	int cards[10], absent[2], sorted[12], lead, o[20];
-	const int min = 0;
-	const int max = nodes;
-	Preferans position(false);
-	PreferansOld positionOld(false);
-
-	for (i = 0; i < RESULT_SIZE; i++) {
-		result[i] = 0;
-	}
-
-	//check params at first
-	DealData const&d=dealData[problem];
-
-	const int trump = d.nt() ?NT:d.trump;
-	const bool misere = d.misere();
-	i = d.first;
-	const int firstmove = i == 2 ? 3 : i;
-	std::string s = parseDeal(d.deal, i, cards, absent, sorted, lead);
-	if (s.length() != 0) {
-		return;
-	}
-
-	for (i = j = k = 0; i < 52; i++) {
-		if (i % 13 >= 8) { //skip 2,3,4,5,6
-			continue;
-		}
-		if (j < 12 && sorted[j] == i) {
-			j++;
-			continue;
-		}
-		assert(k<20);
-		o[k++] = i;
-	}
-	assert(k==20);
-
-	for (i = 0; i < (lead == -1 ? 10 : 9); i++) {
-		ptr[cards[i]] = CARD_INDEX_NORTH;
-	}
-	for (i = 0; i < 2; i++) {
-		ptr[absent[i]] = CARD_INDEX_ABSENT;
-	}
-	if (lead != -1) {
-		ptr[lead] = CARD_INDEX_NORTH_INNER;
-	}
-
-	Permutations p(10, 20, COMBINATION);
-
-	for (j = 0; j < min; j++) {
-		p.next();
-	}
-
-	for (; j < max; j++, p.next()) {
-		auto& pi = p.getIndexes();
-		for (i = 0; i < 20; i++) {
-			ptr[o[i]] = CARD_INDEX_EAST;
-		}
-		for (i = 0; i < p.getK(); i++) {
-			ptr[o[pi[i]]] = CARD_INDEX_WEST;
-		}
-
-		//firstmove index of player
-		const CARD_INDEX PLAYER[] = {
-				CARD_INDEX_NORTH,
-				CARD_INDEX_EAST,
-				CARD_INDEX_SOUTH,
-				CARD_INDEX_WEST };
-		if (old) {
-			positionOld.solveEstimateOnly(ptr, trump, PLAYER[firstmove],
-					CARD_INDEX_NORTH, misere, PREFERANS_PLAYER, j == min);
-			//here is number of whisters
-			i = 10-positionOld.m_playerTricks;
-		}
-		else {
-			position.solveEstimateOnly(ptr, trump, PLAYER[firstmove],
-					CARD_INDEX_NORTH, misere, PREFERANS_PLAYER, j == min);
-			//here is right
-			i = position.m_playerTricks;
-		}
-		assert(i>=0 && i<=10);
-		result[i]++;
-	}
-
-}
-#elif TYPE==2
+#if TYPE==2
 const char*anm[]={"","NT","Misere"};
 const char*w[] = { "#ifdef MISERE", "#elif defined(NT)", "#else", };
 
