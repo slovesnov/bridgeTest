@@ -62,7 +62,7 @@ const int RESULT_SIZE = 11;
  * SOLVE_TYPE 0 184 756 positions
  * SOLVE_TYPE 1 20 000 positions
  */
-#define SOLVE_TYPE 1
+#define SOLVE_TYPE 0
 
 #if SOLVE_TYPE==0
 const int PREFERANS_SOLVE_ALL_DEALS_POSITIONS=184756;
