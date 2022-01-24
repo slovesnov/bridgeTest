@@ -130,6 +130,7 @@ void createEndgameFiles(){
 		const EndgameType option=getOption(i);
 		steps[i]=BridgePreferansBase::suitLengthVector(bridge, option).size();
 		upper+=steps[i];
+//		printl(i,steps[i])
 	}
 
 	//56 - -1 layer
@@ -139,12 +140,18 @@ void createEndgameFiles(){
 	//upper=steps[0]+steps[1];
 //	printl(upper)
 
+	//TODO remove
+#ifdef PREFERANS_ENDGAME
+printl("error");
+#endif
+
 /*
 	//56
 	FILE*f=fopen(SHARED_FILE_NAME,"w+");
-	fprintf(f,"56");
+//	fprintf(f,"56");
 	fclose(f);
 */
+
 
 	if(!fileExists(SHARED_FILE_NAME)){
 		printl("error shared file not exists");
@@ -156,6 +163,7 @@ void createEndgameFiles(){
 	while ((j = getNextProceedValue()) < upper) {
 		auto pa = getStepOptions(j, steps);
 		i = pa.first;
+
 		const bool bridge = isBridge(i);
 		const EndgameType option = getOption(i);
 		const bool misere = !bridge && isMisere(i);
@@ -398,45 +406,7 @@ void showTablesBP1(){
 	}
 }
 
-int getMinBijectionMultiplier(int n,bool bridge) {
-	int i,j,k;
-	VVInt v[2];
-//	const int n=endgameGetN(bridge);
-	std::set<int> set;
-
-	for (i = 0; i < 2; i++) {
-		v[i] = BridgePreferansBase::suitLengthVector(n, bridge,
-				i == 0 ? EndgameType::NT : EndgameType::TRUMP);
-	}
-
-	for (j = 7; j < 15; j++) {
-		for(i=0;i<2;i++){
-			set.clear();
-			for (auto &a : v[i]) {
-				k = a[0] + j * (a[1] + j * a[2]);
-				if (set.find(k) == set.end()) {
-					set.insert(k);
-				} else {
-					goto l303;
-				}
-			}
-		}
-//		printl(bridge,j)
-		return j;
-		l303:;
-	}
-	assert(0);
-	return -1;
-}
-
-
 void test(){
-	for(int i=0;i<2;i++){
-		bool bridge =i==0;
-		const int n=BridgePreferansBase::endgameGetN(bridge)+1;
-		int j=getMinBijectionMultiplier(n,bridge);
-		printl(bridge,j)
-	}
 
 }
 
