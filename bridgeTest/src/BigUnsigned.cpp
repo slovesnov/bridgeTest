@@ -919,6 +919,23 @@ uint64_t BigUnsigned::toUint64_t() const {
 	return uint64_t(*data);
 }
 
+double BigUnsigned::toDouble() const {
+	int i;
+	double v = 0;
+
+	for (i = 0; i <int(size); i++) {
+		v += data[i] * ::pow(2, sizeof(base) * 8*i);
+	}
+
+//	std::string s = toString();
+//	int l = s.length();
+//	for (i = l - 1; i >= 0; i--) {
+//		v += (s[i] - '0') * ::pow(10, l - 1 - i);
+//	}
+
+	return v;
+}
+
 std::ostream& operator<<(std::ostream& o, BigUnsigned const& u){
 	return o<<u.toString();
 }

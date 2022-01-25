@@ -507,6 +507,8 @@ N(>=,<)
 
 	uint64_t toUint64_t()const;
 
+	double toDouble()const;
+
 	/*
 	 * Note
 	 * operator+(const int& t) {return *this=*this+int64_t(t);}

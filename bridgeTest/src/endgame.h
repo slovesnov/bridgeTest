@@ -372,7 +372,7 @@ void showTablesBP1(){
  	const int digits=6;
  	const bool latex=0;
 	int i,j,l;
-	BigUnsigned r;
+	BigUnsigned r,r1;
 	std::string s,s1;
 
 	auto cm=[](int l,bool bridge){
@@ -390,17 +390,29 @@ void showTablesBP1(){
 		for(l=1;l<=(bridge?13:10);l++){
 			i=(bridge?1:2)*BridgePreferansBase::suitLengthVector(l,bridge,EndgameType::NT).size()+BridgePreferansBase::suitLengthVector(l,bridge,EndgameType::TRUMP).size();
 			r=cm(l, bridge);
-			s=(r*i).toString();
+			r1=r*i;
+			s=r1.toString();
 			if(latex){
 				prints(" & ",l,s,(r*i).toString(digits,',')+format(" $\\approx%c.%c \\cdot 10^{%d}$",s[0],s[1],int(s.length()-1)))
 				printan("\\\\")
 			}
 			else{
-				s1 = formats("</td><td>", l,
-						toString(i)+"&sdot;"+r.toString(digits, ',')+" = "+ (r * i).toString(digits, ',')
+				s1 =formats("</td><td>", l,
+						(l>11?"<small>":"")+toString(i)+"&sdot;"+r.toString(digits, ',')+" = "+ r1.toString(digits, ',')
 								+ format(" &asymp; %c.%c&sdot;10<sup>%d</sup>",
-										s[0], s[1], int(s.length() - 1)));
-				printzn("<tr><td>",s1,"</td>")
+										s[0], s[1], int(s.length()) - 1))+(l>11?"</small>":"");
+				s1 ="<tr><td>"+ s1+"</td>";
+				//(l>3 ? 2:4) l<=3 sufficient two bits, otherwise three bits
+				double v = r1.toDouble() * (bridge?1:3)/(l>3 ? 2:4);
+				const char *q[] = { "", "k", "m", "g", "t", "p", "e", "z", "y" };
+				for ( i = 0; i < SIZEI(q); i++) {
+					if (v < 1024) {
+						break;
+					}
+					v /= 1024.;
+				}
+				s1 += "<td>" + format("%.2lf %sb", v*(i==SIZEI(q) ? 1024 :1), q[i==SIZEI(q) ? i-1:i]) + "</td>";
+				printzn(s1)
 			}
 		}
 	}
@@ -411,13 +423,15 @@ void test(){
 }
 
 void routine(){
+	showTablesBP1();
+
 //	createEndgameFiles();
 //	createBinFiles(true);
 //	createBinFiles(false);
 //	bridgeSpeedTest(0);
 //	bridgeSpeedTest(1);
 //
-	preferansSpeedTest();
+//	preferansSpeedTest();
 
 
 //	test();
@@ -426,7 +440,7 @@ void routine(){
 
 /*
 	showTablesBP();
-//	showTablesBP1();
+	showTablesBP1();
 	bridgeSpeedTest(0);
 	bridgeSpeedTest(1);
 	createEndgameFiles();
