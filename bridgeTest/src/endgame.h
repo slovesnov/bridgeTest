@@ -13,8 +13,9 @@
 #ifndef ENDGAME_H_
 #define ENDGAME_H_
 
-//#include <numeric>//iota
 #include <set>
+#include <thread>
+#include <atomic>
 
 #include "pcommon.h"
 #include "DealData.h"
@@ -36,11 +37,12 @@ int totalPositions (bool bridge) {
 void createBinFiles(bool bridge){
 	const int n = BridgePreferansBase::endgameGetN(bridge);
 	const int cn = bridge?Bridge::endgameCN:Preferans::endgameCN;
-	int i,j,k,l,st;
+	int i,j,k,l,m,st,size;
 	char byte;
-	std::string s;
-	VString v;
+	std::string s,s1;
 	int steps[5];
+	char*p;
+	FILE*in;
 	for(i=0;i<5;i++){
 		const bool bridge=isBridge(i);
 		const EndgameType option=getOption(i);
@@ -57,9 +59,8 @@ void createBinFiles(bool bridge){
 
 	for (j = 0; j < 2+(!bridge); j++) {
 		st=steps[j+(bridge?0:2)];
-//		printl(j,st)
-		const std::string fb=t+std::to_string(n)+T[j];
-		std::ofstream f( fb+".bin",std::ofstream::binary);
+		s1=t+std::to_string(n);
+		std::ofstream f( s1+T[j]+".bin",std::ofstream::binary);
 		k=chunkbits*st*cn;
 		//need TODO if k%8!=0
 		if(k%8!=0){
@@ -70,24 +71,25 @@ void createBinFiles(bool bridge){
 		l=0;
 		byte=0;
 		for (i = 0; i < st; i++) {
-			s =t+std::to_string(n)+"/"+fb+std::to_string(i)+".txt";
+			s =s1+"/"+T[j]+std::to_string(i)+".bin";
 			if(!fileExists(s.c_str())){
-				printl(s)
+				printl(s);
+				return;
 			}
 			assert(fileExists(s.c_str()));
 
-			s = fileGetContent(s);
-			v=split(s);
-			assert(int(v.size())==(bridge?1:3)*cn+1);
-			assert(v[v.size()-1]=="");
-			v.pop_back();
+			size=getFileSize(s);
+			p=new char[size];
+			in=fopen(s.c_str(),"rb");
+			fread(p,size,1,in);
+			fclose(in);
 
-			for(auto a:v){
-				assert(parseString(a, k));
-				parseString(a, k);
-				assert(k>=-n && k<=n);
-				assert(abs(k%2)==n%2);//-3%2=-1 so use abs(k%2) instead of k%2
-				k=(k+n)/2;
+			for(m=0;m<size;m++){
+				k=p[m];
+				if(!(k>=0 && k<=n)){
+					printl(k,n);
+				}
+				assert(k>=0 && k<=n);
 				byte |= k<<l;
 				l+=chunkbits;
 				if(l==8){
@@ -96,22 +98,25 @@ void createBinFiles(bool bridge){
 					byte=0;
 				}
 			}
+			delete[]p;
 		}
 	}
 }
 
+std::atomic_int atom;
 
-void createEndgameFiles(){
+void createEndgameFilesThread(int thread){
 	int i,j,k,sc[4];
 	VVInt v;
 	Bridge br;
 	Preferans pr;
 	CARD_INDEX ci[52];
-	std::string s,s1;
+	std::string s,s1,s2;
 	Permutations p[3];
+	char e;
 
-	auto begin=clock();
-	int count=0;
+	clock_t begin;
+//	int count=0;
 
 	auto getStepOptions=[](int i,int steps[5]) {
 		int j;
@@ -132,35 +137,10 @@ void createEndgameFiles(){
 		upper+=steps[i];
 //		printl(i,steps[i])
 	}
-
-	//56 - -1 layer
-//	printl(steps[0]+steps[1])
-//	return;
-	//bridge only
-	//upper=steps[0]+steps[1];
-//	printl(upper)
-
-	//TODO remove
-#ifdef PREFERANS_ENDGAME
-printl("error");
-#endif
-
-/*
-	//56
-	FILE*f=fopen(SHARED_FILE_NAME,"w+");
-//	fprintf(f,"56");
-	fclose(f);
-*/
-
-
-	if(!fileExists(SHARED_FILE_NAME)){
-		printl("error shared file not exists");
-		return;
-	}
-
 	preventThreadSleep();
 
-	while ((j = getNextProceedValue()) < upper) {
+	while ((j = atom++) < upper ) {
+		begin=clock();
 		auto pa = getStepOptions(j, steps);
 		i = pa.first;
 
@@ -170,9 +150,6 @@ printl("error");
 		const int step = pa.second;
 		s1=option == EndgameType::TRUMP ? "trump" :(misere?"misere": "nt");
 
-		printl(j,bridge?"bridge":"preferans",s1,step)
-		fflush(stdout);
-
 		const int n = BridgePreferansBase::endgameGetN(bridge);
 		const int ntotal = BridgePreferansBase::endgameGetN(bridge ,true);
 
@@ -180,8 +157,9 @@ printl("error");
 			p[i].init(n, ntotal - n * i, COMBINATION);
 		}
 
-		s = format("%c%d%s%d.txt", bridge ? 'b' : 'p',n, s1.c_str(), step);
-		std::ofstream file(s);
+		s2=format("%c%d", bridge ? 'b' : 'p',n);
+		s = s2+'\\'+s1+std::to_string(step)+".bin";
+		std::ofstream file(s, std::ofstream::binary);
 
 		auto len = BridgePreferansBase::suitLengthVector(bridge, option)[step];
 		for (auto &p0 : p[0]) {
@@ -214,9 +192,8 @@ printl("error");
 					const int trump = option == EndgameType::TRUMP ? 0 : NT;
 					if (bridge) {
 						br.solveEstimateOnly(ci, trump, first, trumpChanged);
-						file << br.m_ns-br.m_ew<< " ";
-						//TODO assert( pr.m_e-(n-pr.m_e) == br.m_ns-br.m_ew)
-						//file << pr.m_e-(n-pr.m_e)<< " ";
+						e=char(br.m_e);
+						file.write(&e, 1);
 
 					} else {
 						CARD_INDEX preferansPlayer[] = { CARD_INDEX_NORTH,
@@ -227,28 +204,76 @@ printl("error");
 							 */
 							pr.solveEstimateOnly(ci, trump, first, preferansPlayer[i==0?0:(i==1?2:1)], misere,
 									preferansPlayer, trumpChanged);
-							file << pr.m_e-(n-pr.m_e)<< " ";
+							e=char(pr.m_e);
+							file.write(&e, 1);
 						}
 					}
 
-					count++;
-					if (count % 500 == 0) {
-						double o = timeElapse(begin) / count
-								* totalPositions(bridge) / 3600.
-								/ getNumberOfCores();
-						println("%s %d %.2lf, avgFull %.2lf (hours)",
-								s1.c_str(), count,
-								timeElapse(begin), o)
-						fflush(stdout);
-					}
+//					count++;
+//					if (count % 500 == 0) {
+//						double o = timeElapse(begin) / count
+//								* totalPositions(bridge) / 3600.
+//								/ getNumberOfCores();
+//						println("%s %d %.2lf, avgFull %.2lf (hours)",
+//								s1.c_str(), count,
+//								timeElapse(begin), o)
+//						fflush(stdout);
+//					}
 				}
 			}
 		}
 		file.close();
-		//break;//TODO
+		//break;
+
+		s = format("t%d %s %s %d/%d time ", thread,
+				bridge ? "bridge" : "preferans", s1.c_str(), step,
+				steps[pa.first]) + secondsToString(timeElapse(begin));
+		printl(s)
+		fflush(stdout);
+
 	}
 
-	println("time %.2lf", timeElapse(begin))
+}
+
+
+void createEndgameFiles(){
+	int i;
+	std::vector<std::thread> vt;
+	const int threads = getNumberOfCores()-1;
+	atom=0;
+	auto begin=clock();
+
+#if defined(BRIDGE_ENDGAME) || defined(PREFERANS_ENDGAME)
+	printl("error BRIDGE_ENDGAME or PREFERANS_ENDGAME is defined");
+	return;
+#endif
+
+	char c[3];
+	c[2]=0;
+	for (i = 0; i < 2; i++) {
+		bool bridge=i==0;
+		c[0]=bridge ? 'b' : 'p';
+		c[1]='0'+BridgePreferansBase::endgameGetN(bridge);
+		mkdir(c);
+	}
+
+	println("run %d thread(s)",threads)
+	fflush(stdout);
+
+
+	for (i = 0; i < threads; ++i) {
+		vt.push_back(std::thread(createEndgameFilesThread, i));
+	}
+
+	for (auto& a : vt){
+		a.join();
+	}
+
+
+	createBinFiles(true);
+	createBinFiles(false);
+	printl("the end total time "+secondsToString(timeElapse(begin)));
+
 }
 
 void bridgeSpeedTest(bool ntproblems){
@@ -423,11 +448,8 @@ void test(){
 }
 
 void routine(){
-	showTablesBP1();
 
-//	createEndgameFiles();
-//	createBinFiles(true);
-//	createBinFiles(false);
+//	createEndgameFiles();//multithread with union bin files create
 //	bridgeSpeedTest(0);
 //	bridgeSpeedTest(1);
 //
@@ -436,61 +458,17 @@ void routine(){
 
 //	test();
 
-
-
 /*
+	createEndgameFiles();//multithread with union bin files create
 	showTablesBP();
 	showTablesBP1();
 	bridgeSpeedTest(0);
 	bridgeSpeedTest(1);
-	createEndgameFiles();
+	createBinFiles(true);
 	createBinFiles(false);
-	return;
 */
 
-
 /*
-	bool bridge=0;
-	Permutations pe[3];
-	int i,j,k;
-	int a[3];
-	Preferans pref;//to init m_w
-
-	const int n = BridgePreferansBase::endgameGetN(bridge);
-	const int ntotal = BridgePreferansBase::endgameGetN(bridge ,true);
-	//printl(n,ntotal);
-
-	for (i = 0; i < 3; i++) {
-		pe[i].init(n, ntotal - n * i, COMBINATION);
-	}
-
-	j=0;
-	for (auto &p0 : pe[0]) {
-		for (auto &p1 : pe[1]) {
-			for (auto &p2 : pe[2]) {
-				j++;
-				if(j<256){
-					continue;
-				}
-				k=BridgePreferansBase::bitCode(bridge,p0,p1,p2);
-				printl(joinV(p0));
-				printl(joinV(p1));
-				printl(joinV(p2));
-				printl(binaryCodeString(k,2*ntotal));
-				BridgePreferansBase::endgameRotate(Preferans::m_w,k,2*ntotal,a);
-				for(i=0;i<2;i++){
-					printl(binaryCodeString(a[i],2*ntotal));
-				}
-				goto l403;
-			}
-		}
-	}
-	l403:;
-*/
-
-
-/*
-
 	Bridge br;
 	auto &a = bridgeDeals[1][20];
 	br.solveFull(a.c, a.m_trump, a.m_first, true);
