@@ -37,12 +37,10 @@ int totalPositions (bool bridge) {
 void createBinFiles(bool bridge){
 	const int n = BridgePreferansBase::endgameGetN(bridge);
 	const int cn = bridge?Bridge::endgameCN:Preferans::endgameCN;
-	int i,j,k,l,m,st,size;
+	int i,j,l,st;
 	char byte;
-	std::string s,s1;
+	std::string s,s1,s2;
 	int steps[5];
-	char*p;
-	FILE*in;
 	for(i=0;i<5;i++){
 		const bool bridge=isBridge(i);
 		const EndgameType option=getOption(i);
@@ -61,9 +59,8 @@ void createBinFiles(bool bridge){
 		st=steps[j+(bridge?0:2)];
 		s1=t+std::to_string(n);
 		std::ofstream f( s1+T[j]+".bin",std::ofstream::binary);
-		k=chunkbits*st*cn;
-		//need TODO if k%8!=0
-		if(k%8!=0){
+		//need TODO if (chunkbits*st*cn)%8!=0
+		if((chunkbits*st*cn)%8!=0){
 			printl("todo totalbits%8!=0");
 			return;
 		}
@@ -78,14 +75,8 @@ void createBinFiles(bool bridge){
 			}
 			assert(fileExists(s.c_str()));
 
-			size=getFileSize(s);
-			p=new char[size];
-			in=fopen(s.c_str(),"rb");
-			fread(p,size,1,in);
-			fclose(in);
-
-			for(m=0;m<size;m++){
-				k=p[m];
+			s=fileGetContent(s, true);
+			for(auto k:s){
 				if(!(k>=0 && k<=n)){
 					printl(k,n);
 				}
@@ -98,7 +89,6 @@ void createBinFiles(bool bridge){
 					byte=0;
 				}
 			}
-			delete[]p;
 		}
 	}
 }
