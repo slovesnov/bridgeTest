@@ -6,9 +6,9 @@
  */
 
 #include "BigUnsigned.h"
-#include <string.h>//memset
-#include <math.h>//log10
-#include <stdlib.h>//strtoul
+#include <cstring>//memset
+#include <cmath>//log10
+#include <cstdlib>//strtoul
 #include <sstream>
 
 namespace NumberFormatter{
@@ -879,7 +879,6 @@ void BigUnsigned::div(const BigUnsigned& divisor, BigUnsigned& quotient,
 #undef W
 }
 
-
 BigUnsigned BigUnsigned::pow(unsigned exponent) const {
 	if(exponent==1){
 		return *this;
@@ -915,25 +914,32 @@ BigUnsigned BigUnsigned::pow(unsigned exponent) const {
 }
 
 uint64_t BigUnsigned::toUint64_t() const {
+	int i;
 	BIGNUMBER_ASSERT(size*sizeof(base)<=sizeof(uint64_t), "too big value to convert");
-	return uint64_t(*data);
+
+	uint64_t r=0;
+	for (i = 0; i <int(size); i++) {
+		r += data[i] * (1ull<<(sizeof(base) * 8*i));
+	}
+	return r;
 }
 
 double BigUnsigned::toDouble() const {
 	int i;
 	double v = 0;
-
 	for (i = 0; i <int(size); i++) {
 		v += data[i] * ::pow(2, sizeof(base) * 8*i);
 	}
-
-//	std::string s = toString();
-//	int l = s.length();
-//	for (i = l - 1; i >= 0; i--) {
-//		v += (s[i] - '0') * ::pow(10, l - 1 - i);
-//	}
-
 	return v;
+}
+
+std::pair<double, int> BigUnsigned::getMantissaExponent() const {
+	double v = toDouble();
+	if (v == 0) {
+		return {0,0};
+	}
+	double exponent = floor(log10(v));
+	return {v / ::pow(10, exponent),exponent};
 }
 
 std::ostream& operator<<(std::ostream& o, BigUnsigned const& u){

@@ -8,7 +8,8 @@
 #ifndef BIGUNSIGNED_H_
 #define BIGUNSIGNED_H_
 
-#include <stdint.h>
+#include <cstdint>
+#include <utility>
 #include "BigNumberException.h"
 
 namespace NumberFormatter{
@@ -509,6 +510,7 @@ N(>=,<)
 
 	double toDouble()const;
 
+	std::pair<double,int> getMantissaExponent()const;
 	/*
 	 * Note
 	 * operator+(const int& t) {return *this=*this+int64_t(t);}
@@ -559,7 +561,6 @@ N(>=,<)
 			const char separator=NumberFormatter::DEFAULT_SEPARATOR)const{
 		printf("%s%s",toString(positions,separator).c_str(),s);
 	}
-
 };
 
 /**

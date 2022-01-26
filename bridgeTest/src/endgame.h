@@ -409,6 +409,14 @@ void showTablesBP1(){
 		return i;
 	};
 
+	auto double2HtmlString=[](double v){
+		auto s=format("%.1le",v);
+		auto p=s.find('e');
+		assert(s[p+1]=='+');
+		int i=2+(s[p+2]=='0');
+		return s.substr(0,p)+"&sdot;10<sup>"+s.substr(p+i)+"</sup>";
+	};
+
 	for(j=0;j<2 ;j++){
 		const bool bridge=j==0;
 		printl(bridge?"bridge":"preferans")
@@ -417,6 +425,7 @@ void showTablesBP1(){
 			r=cm(l, bridge);
 			r1=r*i;
 			s=r1.toString();
+			double rd=r1.toDouble();
 			if(latex){
 				prints(" & ",l,s,(r*i).toString(digits,',')+format(" $\\approx%c.%c \\cdot 10^{%d}$",s[0],s[1],int(s.length()-1)))
 				printan("\\\\")
@@ -424,8 +433,7 @@ void showTablesBP1(){
 			else{
 				s1 =formats("</td><td>", l,
 						(l>11?"<small>":"")+toString(i)+"&sdot;"+r.toString(digits, ',')+" = "+ r1.toString(digits, ',')
-								+ format(" &asymp; %c.%c&sdot;10<sup>%d</sup>",
-										s[0], s[1], int(s.length()) - 1))+(l>11?"</small>":"");
+						+"  &asymp; "+double2HtmlString(rd))+(l>11?"</small>":"");
 				s1 ="<tr><td>"+ s1+"</td>";
 				//(l>3 ? 2:4) l<=3 sufficient two bits, otherwise three bits
 				double v = r1.toDouble() * (bridge?1:3)/(l>3 ? 2:4);
@@ -449,6 +457,8 @@ void test(){
 
 void routine(){
 
+	createBinFiles(1);
+	createBinFiles(0);
 //	createEndgameFiles();//multithread with union bin files create
 //	bridgeSpeedTest(0);
 //	bridgeSpeedTest(1);
