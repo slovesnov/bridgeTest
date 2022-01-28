@@ -383,7 +383,7 @@ void showTablesBP(){
 	}
 }
 
-void showTablesBP1(){
+void showTablesBP1(bool russianLanguage=true){
  	const int digits=6;
  	const bool latex=0;
 	int i,j,l;
@@ -399,42 +399,60 @@ void showTablesBP1(){
 		return i;
 	};
 
-	auto double2HtmlString=[](double v){
-		auto s=format("%.1le",v);
-		auto p=s.find('e');
-		assert(s[p+1]=='+');
-		int i=2+(s[p+2]=='0');
-		return s.substr(0,p)+"&sdot;10<sup>"+s.substr(p+i)+"</sup>";
+	auto wrapSmallForBigL=[&l](std::string const& s){
+		if(l<11){
+			return s;
+		}
+		return "<small>"+s+"</small>";
 	};
 
-	for(j=0;j<2 ;j++){
-		const bool bridge=j==0;
+	for (j = 0; j < 2; j++) {
+		const bool bridge = j == 0;
 		printl(bridge?"bridge":"preferans")
-		for(l=1;l<=(bridge?13:10);l++){
-			i=(bridge?1:2)*BridgePreferansBase::suitLengthVector(l,bridge,EndgameType::NT).size()+BridgePreferansBase::suitLengthVector(l,bridge,EndgameType::TRUMP).size();
-			r=cm(l, bridge);
-			r1=r*i;
-			s=r1.toString();
-			double rd=r1.toDouble();
-			if(latex){
-				prints(" & ",l,s,(r*i).toString(digits,',')+format(" $\\approx%c.%c \\cdot 10^{%d}$",s[0],s[1],int(s.length()-1)))
+		for (l = 1; l <= (bridge ? 13 : 10); l++) {
+			i = (bridge ? 1 : 2)
+					* BridgePreferansBase::suitLengthVector(l, bridge,
+							EndgameType::NT).size()
+					+ BridgePreferansBase::suitLengthVector(l, bridge,
+							EndgameType::TRUMP).size();
+			r = cm(l, bridge);
+			r1 = r * i;
+			s = r1.toString();
+			auto p=r1.getMantissaExponent();
+			if (latex) {
+				prints(" & ", l, s,
+						(r * i).toString(digits, ',')
+								+ format(" $\\approx%c.%c \\cdot 10^{%d}$",
+										s[0], s[1], int(s.length() - 1)))
 				printan("\\\\")
-			}
-			else{
-				s1 =formats("</td><td>", l,
-						(l>11?"<small>":"")+toString(i)+"&sdot;"+r.toString(digits, ',')+" = "+ r1.toString(digits, ',')
-						+"  &asymp; "+double2HtmlString(rd))+(l>11?"</small>":"");
-				s1 ="<tr><td>"+ s1+"</td>";
+			} else {
+				s1 = "<tr><td>" + std::to_string(l) + "<td>"
+						+ wrapSmallForBigL(
+								toString(i) + "&sdot;" + r.toString(digits, ',')
+										+ " = " + r1.toString(digits, ',')
+										+ "  &asymp; "
+										+ format("%.1lf&sdot;10<sup>%d</sup>",
+												p.first, p.second));
 				//(l>3 ? 2:4) l<=3 sufficient two bits, otherwise three bits
-				double v = r1.toDouble() * (bridge?1:3)/(l>3 ? 2:4);
-				const char *q[] = { "", "k", "m", "g", "t", "p", "e", "z", "y" };
-				for ( i = 0; i < SIZEI(q); i++) {
+				const int divisor=(l > 3 ? 2 : 4);
+				double v = r1.toDouble() * (bridge ? 1 : 3) / divisor ;
+				VString q;
+				if(russianLanguage){
+					q={ "", "ê", "ì", "ã", "ò", "ï", "ý", "ç", "é" };
+				}
+				else{
+					q={ "", "k", "m", "g", "t", "p", "e", "z", "y" };
+				}
+				int ql=q.size();
+				for (i = 0; i < ql; i++) {
 					if (v < 1024) {
 						break;
 					}
 					v /= 1024.;
 				}
-				s1 += "<td>" + format("%.2lf %sb", v*(i==SIZEI(q) ? 1024 :1), q[i==SIZEI(q) ? i-1:i]) + "</td>";
+				s1 += "<td>"
+						+ format("%sN(%d)/%d = %.2lf %s%c",bridge?"":"3&sdot;",l,divisor, v * (i == ql ? 1024 : 1),
+								q[i == ql ? i - 1 : i].c_str(),russianLanguage?'á':'b') + "</td>";
 				printzn(s1)
 			}
 		}
@@ -442,21 +460,75 @@ void showTablesBP1(){
 }
 
 void test(){
+//	Bridge br;
+//	Preferans pr;
+
+//	for(int i=1;i<2;i++){
+//	auto &a = bridgeDeals[i][20];
+//	br.solveFull(a.c, a.m_trump, a.m_first, true);
+//	}
+
+
+	int i, j, k, endgameMultiplier, m, n;
+	for (i = 0; i < 2; i++) {
+		bool bridge = !i;
+		//n==3
+		for (n = 3; n <= (bridge ? 13 : 8); n++) {
+			int N = n * (bridge ? 4 : 3);
+			//const int ml=bridge ? 13 : 8;
+			k = endgameMultiplier =
+					BridgePreferansBase::getMinBijectionMultiplier(n, bridge);
+			auto v = BridgePreferansBase::suitLengthVector(n, bridge,
+					EndgameType::TRUMP);
+			m = 0;
+			for (auto &l : v) {
+				j = l[0]
+						+ endgameMultiplier * (l[1] + endgameMultiplier * l[2]);
+				m = std::max(m, j);
+//				if(j==1071){
+//					printl(joinV(l))
+//				}
+
+			}
+/*
+			int i,l2max,l1max;
+			i=std::min(N>>1,ml);
+			if(N/2>ml){
+//				l3max=ml/2+ml%2;
+				l2max=N-ml;
+				l1max=1;
+			}
+			else{
+//				l3max=N/2+N%2;
+//				l2max=N/2;
+				l1max=N%2;
+			}
+*/
+
+			int size = k * k * (N/2) + k * (N%2) + 1;
+			//int size = k * k * l2max + k * l1max + 1;
+			printl(n,endgameMultiplier,size,'>',m,m==size-1?"ok":(m<size?"norm":"er"))
+
+			//break;
+		}
+	}
+
 
 }
 
 void routine(){
 
-	createBinFiles(1);
-	createBinFiles(0);
+//	createBinFiles(1);
+//	createBinFiles(0);
 //	createEndgameFiles();//multithread with union bin files create
 //	bridgeSpeedTest(0);
 //	bridgeSpeedTest(1);
 //
 //	preferansSpeedTest();
 
+//	showTablesBP1();
 
-//	test();
+	test();
 
 /*
 	createEndgameFiles();//multithread with union bin files create
