@@ -225,7 +225,6 @@ void createEndgameFilesThread(int thread){
 
 }
 
-
 void createEndgameFiles(){
 	int i;
 	std::vector<std::thread> vt;
@@ -451,7 +450,7 @@ void showTablesBP1(bool russianLanguage=true){
 					v /= 1024.;
 				}
 				s1 += "<td>"
-						+ format("%sN(%d)/%d = %.2lf %s%c",bridge?"":"3&sdot;",l,divisor, v * (i == ql ? 1024 : 1),
+						+ format("%sP(%d)/%d = %.2lf %s%c",bridge?"":"3&sdot;",l,divisor, v * (i == ql ? 1024 : 1),
 								q[i == ql ? i - 1 : i].c_str(),russianLanguage?'á':'b') + "</td>";
 				printzn(s1)
 			}
@@ -528,7 +527,7 @@ void routine(){
 
 //	showTablesBP1();
 
-	test();
+//	test();
 
 /*
 	createEndgameFiles();//multithread with union bin files create
