@@ -285,7 +285,7 @@ void run(int nodes, int problem, bool old,int*result) {
 		ptr[lead] = CARD_INDEX_NORTH_INNER;
 	}
 
-	Permutations p(10, 20, COMBINATION);
+	Permutations p(10, 20, Permutations::COMBINATION);
 
 	for (j = 0; j < min; j++) {
 		p.next();

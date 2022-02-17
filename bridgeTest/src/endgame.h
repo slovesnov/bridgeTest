@@ -144,7 +144,7 @@ void createEndgameFilesThread(int thread){
 		const int ntotal = BridgePreferansBase::endgameGetN(bridge ,true);
 
 		for (i = 0; i < 3; i++) {
-			p[i].init(n, ntotal - n * i, COMBINATION);
+			p[i].init(n, ntotal - n * i, Permutations::COMBINATION);
 		}
 
 		s2=format("%c%d", bridge ? 'b' : 'p',n);
@@ -228,7 +228,7 @@ void createEndgameFilesThread(int thread){
 void createEndgameFiles(){
 	int i;
 	std::vector<std::thread> vt;
-	const int threads = getNumberOfCores()-1;
+	const int threads = getNumberOfCores();
 	atom=0;
 	auto begin=clock();
 
@@ -342,21 +342,6 @@ void preferansSpeedTest(){
 	printl(tt);
 }
 
-//need uint64_t type for showTablesBP()
-uint64_t getBinomialCoefficient(int k,int n){
-	uint64_t r = 1;
-	int i;
-	/* for big n,k
-	 * C(n,k)=n*C(n-1,k-1)/k
-	 * C(n,k)=n*C(n-1,k-1)/k=(n/k)*(n-1/k-1)...(n-k+1/1)C(n-k,0); C(n-k,0)=1
-	 */
-	for (i = 1; i <= k; i++) {
-		r *= n - k + i;
-		r /= i;
-	}
-	return r;
-}
-
 void showTablesBP(){
 	int i, j;
 	int n, a[3];
@@ -393,7 +378,8 @@ void showTablesBP1(bool russianLanguage=true){
 		BigUnsigned i=1;
 		const int k=bridge?4:3;
 		for(int j=0;j<k-1;j++){
-			i*=getBinomialCoefficient(l, (k -j)*l);
+			i*=BigUnsigned::binomial(l, (k -j)*l);
+			//i*=getBinomialCoefficient(l, (k -j)*l);
 		}
 		return i;
 	};
@@ -519,7 +505,9 @@ void routine(){
 
 //	createBinFiles(1);
 //	createBinFiles(0);
-//	createEndgameFiles();//multithread with union bin files create
+	showTablesBP1();
+
+	//createEndgameFiles();//multithread with union bin files create
 //	bridgeSpeedTest(0);
 //	bridgeSpeedTest(1);
 //

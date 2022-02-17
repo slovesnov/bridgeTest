@@ -31,6 +31,16 @@
 			<location>C:/Users/user/git/aslov/aslov/src/aslov</location>
 		</link>
 		<link>
+			<name>bigInteger</name>
+			<type>2</type>
+			<location>C:/Users/user/git/bigInteger/bigInteger/src/bigInteger</location>
+		</link>
+		<link>
+			<name>permutations</name>
+			<type>2</type>
+			<location>C:/Users/user/git/permutations/permutations/src/permutations</location>
+		</link>
+		<link>
 			<name>solver</name>
 			<type>2</type>
 			<location>C:/Users/user/git/bridge/bridge/src/solver</location>
